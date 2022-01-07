@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "allowJs": true,                        
+      "esModuleInterop": true,                             
+      "forceConsistentCasingInFileNames": true,            
+      "skipLibCheck": true,
+      "removeComments": true,
+    },
+    "exclude": ["node_modules"],
+    "include": ["src"]
+  }
+  

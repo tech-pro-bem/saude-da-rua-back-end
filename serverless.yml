@@ -1,0 +1,43 @@
+service: saude-da-rua
+frameworkVersion: "2 || 3"
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    region: sa-east-1
+    stage: dev
+    lambdaHashingVersion: 20201221
+    environment:
+        imageUploadBucket: ${self:custom.imageUploadBucket}
+        region: ${self:provider.region}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - "s3:PutObject*"
+          Resource: "arn:aws:s3:::*"
+
+custom:
+    imageUploadBucket: saude-da-rua-admin-image-upload-test
+
+functions:
+    # imageUploadSaudeDaRuaProd:
+    #     handler: src/lambdas/imageUpload.handler
+    #     name: s3-image-uploader
+    #     description: A lambda handler that uploads a file to an S3 bucket
+    #     events:
+    #         - httpApi:
+    #               path: /image/upload
+    #               method: POST
+    #     environment:
+    #         FILE_UPLOAD_BUCKET_NAME: ${self:custom.imageUploadBucket}
+
+plugins:
+    - serverless-plugin-typescript
+
+resources:
+    Resources:
+        ImageUploadBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:custom.imageUploadBucket}
+                AccessControl: PublicRead

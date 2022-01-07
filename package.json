@@ -1,0 +1,28 @@
+{
+  "name": "saude-da-rua",
+  "version": "2.0.0",
+  "license": "MIT",
+  "repository": "https://github.com/Gabriel-Albuquerque-repo/saude-da-rua.git",
+  "scripts": {
+    "deploy": "serverless deploy --verbose"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.89",
+    "@types/aws-sdk": "^2.7.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1053.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
+    "serverless": "^2.70.0",
+    "serverless-plugin-typescript": "^2.1.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {}
+}
