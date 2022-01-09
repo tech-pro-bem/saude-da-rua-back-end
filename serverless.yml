@@ -33,6 +33,7 @@ functions:
 
 plugins:
     - serverless-plugin-typescript
+    - serverless-iam-roles-per-function
 
 resources:
     Resources:
