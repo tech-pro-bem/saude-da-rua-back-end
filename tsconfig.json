@@ -2,13 +2,14 @@
     "compilerOptions": {
       "target": "es2017",
       "module": "commonjs",
+      "lib": ["es2020", "dom"],
       "allowJs": true,                        
       "esModuleInterop": true,                             
       "forceConsistentCasingInFileNames": true,            
       "skipLibCheck": true,
       "removeComments": true,
     },
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules", ".build", ".serverless"],
     "include": ["src"]
   }
   
