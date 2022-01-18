@@ -21,7 +21,8 @@
             "error", 
             {
               "singleQuote": true,
-               "parser": "typescript"
+               "parser": "typescript",
+               "endOfLine": "crlf"
             }
           ],
           "import/extensions": "off",
