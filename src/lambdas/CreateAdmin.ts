@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+
 import createAdminUseCase from '../useCases/createAdmin';
 
 export const handler = async (
@@ -6,8 +7,11 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
     const response: APIGatewayProxyResult = {
         isBase64Encoded: false,
+
         statusCode: 201,
+
         body: '',
+
         headers: {
             'content-type': 'application/json',
         },
@@ -24,14 +28,18 @@ export const handler = async (
     } catch (error) {
         if (error.message === '400') {
             response.statusCode = 400;
+
             response.body = JSON.stringify({
                 mainMessage: 'Failed to create Admin account',
+
                 errorMessage: 'Incorrect body',
             });
         } else {
             response.statusCode = 500;
+
             response.body = JSON.stringify({
                 mainMessage: 'Failed to create Admin account',
+
                 errorMessage:
                     'There is an error on our servers, please try again laters',
             });
