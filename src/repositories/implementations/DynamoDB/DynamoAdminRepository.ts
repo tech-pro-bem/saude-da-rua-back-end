@@ -5,6 +5,8 @@ import {
     QueryInput,
     AttributeValue,
     QueryOutput,
+    PutItemInput,
+    PutItemInputAttributeMap,
 } from 'aws-sdk/clients/dynamodb';
 
 import Admin from '../../../entities/Admin';
@@ -29,7 +31,7 @@ class DynamoAdminRepository implements IAdminRepository {
             },
 
             ExpressionAttributeValues: {
-                ':username': email as AttributeValue,
+                ':email': email as AttributeValue,
             },
         };
 
@@ -44,7 +46,14 @@ class DynamoAdminRepository implements IAdminRepository {
     }
 
     public async saveAdmin(admin: Admin): Promise<boolean> {
-        const checkInDynamoWasSaved;
+        // Se não funcionar, usa o marshal()
+        const newAdminParamsToPut: PutItemInput = {
+            TableName: process.env.DYNAMODB_ADMIN_TABLE,
+            Item: admin as PutItemInputAttributeMap,
+        };
+
+        // Testar o comportamento lançando um erro
+        await this.dynamoClientDB.put(newAdminParamsToPut).promise();
 
         return true;
     }
