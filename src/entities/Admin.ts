@@ -5,9 +5,9 @@ import { hashSync } from 'bcryptjs';
 class Admin {
     public readonly id?: string;
 
-    public readonly createdAt?: Date;
+    public readonly createdAt?: Number;
 
-    public readonly updatedAt?: Date;
+    public readonly updatedAt?: Number;
 
     public email?: string;
 
@@ -20,9 +20,9 @@ class Admin {
     constructor(email: string, username: string, password: string) {
         this.id = uuidv4();
 
-        this.createdAt = new Date();
+        this.createdAt = Date.now();
 
-        this.updatedAt = new Date();
+        this.updatedAt = Date.now();
 
         this.email = email;
 
