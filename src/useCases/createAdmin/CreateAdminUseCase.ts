@@ -15,11 +15,11 @@ class CreateAdminUseCase {
         const adminAlreadyExists: boolean =
             await this.adminRepository.findByEmail(email);
 
-        if (adminAlreadyExists) {
+        if (adminAlreadyExists === false) {
             throw Error('400');
         }
 
-        const newAdmin = new Admin({ email, username, password });
+        const newAdmin = new Admin(email, username, password);
 
         await this.adminRepository.saveAdmin(newAdmin);
     }
