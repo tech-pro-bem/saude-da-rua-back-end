@@ -17,26 +17,18 @@ class Admin {
 
     public readonly permissionLevel? = 2;
 
-    constructor(
-        props: Omit<Admin, 'id' | 'createdAt' | 'updatedAt'>,
+    constructor(email: string, username: string, password: string) {
+        this.id = uuidv4();
 
-        id?: string,
+        this.createdAt = new Date();
 
-        createdAt?: Date,
+        this.updatedAt = new Date();
 
-        updatedAt?: Date
-    ) {
-        if (id) this.id = uuidv4();
+        this.email = email;
 
-        if (createdAt) this.createdAt = new Date();
+        this.username = username;
 
-        if (updatedAt) this.updatedAt = new Date();
-
-        this.email = props.email;
-
-        this.username = props.username;
-
-        this.password = hashSync(props.password);
+        this.password = hashSync(password);
     }
 }
 
