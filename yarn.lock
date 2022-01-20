@@ -570,6 +570,13 @@
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
   integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
 
+"@types/dotenv@^8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-8.2.0.tgz#5cd64710c3c98e82d9d15844375a33bf1b45d053"
+  integrity sha512-ylSC9GhfRH7m1EUXBXofhgx4lUWmFeQDINW5oLuS+gxWdfUeW4zJdeVTYVkexEW+e2VUvlZR2kGnGGipAWR7kw==
+  dependencies:
+    dotenv "*"
+
 "@types/glob@^7.1.1":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.2.0.tgz#bc1b5bf3aa92f25bd5dd39f35c57361bdce5b2eb"
@@ -1822,6 +1829,11 @@ dotenv-expand@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
+
+dotenv@*, dotenv@^14.2.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.2.0.tgz#7e77fd5dd6cff5942c4496e1acf2d0f37a9e67aa"
+  integrity sha512-05POuPJyPpO6jqzTNweQFfAyMSD4qa4lvsMOWyTRTdpHKy6nnnN+IYWaXF+lHivhBH/ufDKlR4IWCAN3oPnHuw==
 
 dotenv@^10.0.0:
   version "10.0.0"
