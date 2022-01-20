@@ -11,13 +11,13 @@ class Admin {
 
     public email?: string;
 
-    public username?: string;
+    public name?: string;
 
     public password?: string;
 
     public readonly permissionLevel? = 2;
 
-    constructor(email: string, username: string, password: string) {
+    constructor(email: string, name: string, password: string) {
         this.id = uuidv4();
 
         this.createdAt = Date.now();
@@ -26,7 +26,7 @@ class Admin {
 
         this.email = email;
 
-        this.username = username;
+        this.name = name;
 
         this.password = hashSync(password);
     }

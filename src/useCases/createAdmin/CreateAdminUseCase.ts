@@ -10,16 +10,16 @@ class CreateAdminUseCase {
     }
 
     async execute(createAdminData: ICreateAdminVolunteerRequestDTO) {
-        const { email, username, password } = createAdminData;
+        const { email, name, password } = createAdminData;
 
         const adminAlreadyExists: boolean =
             await this.adminRepository.findByEmail(email);
 
         if (adminAlreadyExists === false) {
-            throw Error('400');
+            throw new Error('400');
         }
 
-        const newAdmin = new Admin(email, username, password);
+        const newAdmin = new Admin(email, name, password);
 
         await this.adminRepository.saveAdmin(newAdmin);
     }
