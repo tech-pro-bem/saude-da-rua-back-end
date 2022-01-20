@@ -4,6 +4,18 @@ import createAdminUseCase from '../useCases/createAdmin';
 
 import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
 
+interface IParsedfromEventBody {
+    [name: string]: any;
+}
+
+interface IPayloadValidation {
+    email: string;
+
+    name: string;
+
+    password: string;
+}
+
 export const handler = async (
     event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
@@ -19,10 +31,13 @@ export const handler = async (
         },
     };
 
+    const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
+
     try {
         const createAdminValidation = new CreateAdminValidation(parsedBody);
 
-        const payloadValidation = await createAdminValidation.validateInput();
+        const payloadValidation: IPayloadValidation =
+            await createAdminValidation.validateInput();
 
         await createAdminUseCase.execute(payloadValidation);
 
