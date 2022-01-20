@@ -2,6 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 import createAdminUseCase from '../useCases/createAdmin';
 
+import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
+
 export const handler = async (
     event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
@@ -17,10 +19,12 @@ export const handler = async (
         },
     };
 
-    const parsedBody = JSON.parse(event.body);
-
     try {
-        await createAdminUseCase.execute(parsedBody);
+        const createAdminValidation = new CreateAdminValidation(parsedBody);
+
+        const payloadValidation = await createAdminValidation.validateInput();
+
+        await createAdminUseCase.execute(payloadValidation);
 
         response.body = JSON.stringify({
             message: 'Successfully create Admin account',
