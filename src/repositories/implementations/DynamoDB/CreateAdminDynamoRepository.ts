@@ -1,5 +1,4 @@
 import { AWSError, DynamoDB } from 'aws-sdk';
-
 import {
     DocumentClient,
     QueryInput,
@@ -8,9 +7,7 @@ import {
     PutItemInput,
     PutItemInputAttributeMap,
 } from 'aws-sdk/clients/dynamodb';
-
 import Admin from '../../../entities/Admin';
-
 import ICreateAdminRepository from '../../interfaces/ICreateAdminRepository';
 
 class CreateAdminDynamoRepository implements ICreateAdminRepository {
@@ -23,13 +20,10 @@ class CreateAdminDynamoRepository implements ICreateAdminRepository {
     public async findByEmail(email: string): Promise<boolean> {
         const queryAdminParams: QueryInput = {
             TableName: process.env.DYNAMO_USER_TABLE,
-
             KeyConditionExpression: '#email = :email',
-
             ExpressionAttributeNames: {
                 '#email': 'pk',
             },
-
             ExpressionAttributeValues: {
                 ':email': email as AttributeValue,
             },
