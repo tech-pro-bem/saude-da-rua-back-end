@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-
 import { hashSync } from 'bcryptjs';
 
 class Admin {
@@ -19,15 +18,10 @@ class Admin {
 
     constructor(email: string, name: string, password: string) {
         this.id = uuidv4();
-
         this.createdAt = Date.now();
-
         this.updatedAt = Date.now();
-
         this.email = email;
-
         this.name = name;
-
         this.password = hashSync(password);
     }
 }
