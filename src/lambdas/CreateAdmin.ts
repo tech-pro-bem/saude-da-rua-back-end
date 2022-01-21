@@ -8,7 +8,7 @@ interface IParsedfromEventBody {
     [name: string]: any;
 }
 
-interface IPayloadValidation {
+interface IPayloadCreateAdminValidation {
     email: string;
 
     name: string;
@@ -17,15 +17,13 @@ interface IPayloadValidation {
 }
 
 export const handler = async (
+    // Aqui passa pelo lambda auth, então mudar
     event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
     const response: APIGatewayProxyResult = {
         isBase64Encoded: false,
-
         statusCode: 201,
-
         body: '',
-
         headers: {
             'content-type': 'application/json',
         },
@@ -36,10 +34,10 @@ export const handler = async (
     try {
         const createAdminValidation = new CreateAdminValidation(parsedBody);
 
-        const payloadValidation: IPayloadValidation =
+        const createAdminPayloadValidation: IPayloadCreateAdminValidation =
             await createAdminValidation.validateInput();
 
-        await createAdminUseCase.execute(payloadValidation);
+        await createAdminUseCase.execute(createAdminPayloadValidation);
 
         response.body = JSON.stringify({
             message: 'Successfully create Admin account',
@@ -50,7 +48,6 @@ export const handler = async (
 
             response.body = JSON.stringify({
                 mainMessage: 'Failed to create Admin account',
-
                 errorMessage: 'Incorrect body',
             });
         } else {
@@ -58,9 +55,8 @@ export const handler = async (
 
             response.body = JSON.stringify({
                 mainMessage: 'Failed to create Admin account',
-
                 errorMessage:
-                    'There is an error on our servers, please try again laters',
+                    'There is an error on our servers, please try again later',
             });
         }
     }
