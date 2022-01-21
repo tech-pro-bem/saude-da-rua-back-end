@@ -15,7 +15,7 @@ class Admin {
 
     public password?: string;
 
-    public readonly permissionLevel? = 2;
+    public readonly permissionLevel? = '2';
 
     constructor(email: string, name: string, password: string) {
         this.id = uuidv4();
