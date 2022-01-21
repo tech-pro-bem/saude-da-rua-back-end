@@ -1,9 +1,8 @@
-import DynamoAdminRepository from '../../repositories/implementations/DynamoDB/DynamoAdminRepository';
-
+import CreateAdminDynamoRepository from '../../repositories/implementations/DynamoDB/CreateAdminDynamoRepository';
 import CreateAdminUseCase from './CreateAdminUseCase';
 
-const dynamoAdminRepository = new DynamoAdminRepository();
+const createAdminDynamoRepository = new CreateAdminDynamoRepository();
 
-const createAdminUseCase = new CreateAdminUseCase(dynamoAdminRepository);
+const createAdminUseCase = new CreateAdminUseCase(createAdminDynamoRepository);
 
 export default createAdminUseCase;

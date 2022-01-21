@@ -1,19 +1,19 @@
 import Admin from '../../entities/Admin';
-import IAdminRepository from '../../repositories/interfaces/IAdminRepository';
-import ICreateAdminVolunteerRequestDTO from './CreateAdminDTO';
+import ICreateAdminRepository from '../../repositories/interfaces/ICreateAdminRepository';
+import ICreateAdminRequestDTO from './CreateAdminRequestDTO';
 
 class CreateAdminUseCase {
-    private adminRepository: IAdminRepository;
+    private createAdminRepository: ICreateAdminRepository;
 
-    constructor(adminRepository: IAdminRepository) {
-        this.adminRepository = adminRepository;
+    constructor(createAdminRepository: ICreateAdminRepository) {
+        this.createAdminRepository = createAdminRepository;
     }
 
-    async execute(createAdminData: ICreateAdminVolunteerRequestDTO) {
-        const { email, name, password } = createAdminData;
+    async execute(createAdminRequestData: ICreateAdminRequestDTO) {
+        const { email, name, password } = createAdminRequestData;
 
         const adminAlreadyExists: boolean =
-            await this.adminRepository.findByEmail(email);
+            await this.createAdminRepository.findByEmail(email);
 
         if (adminAlreadyExists === false) {
             throw new Error('400');
@@ -21,7 +21,7 @@ class CreateAdminUseCase {
 
         const newAdmin = new Admin(email, name, password);
 
-        await this.adminRepository.saveAdmin(newAdmin);
+        await this.createAdminRepository.saveAdmin(newAdmin);
     }
 }
 

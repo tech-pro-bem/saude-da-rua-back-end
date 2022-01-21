@@ -4,8 +4,6 @@ interface IPayloadJwt {
     id: string;
 
     name: string;
-
-    permissionLevel: number;
 }
 
 class CreateJwt {
@@ -21,16 +19,13 @@ class CreateJwt {
 
     constructor(payload: IPayloadJwt, options: string) {
         this.payload = payload;
-
         this.options = options;
     }
 
     public buildToken(): string {
         const signOptions: SignOptions = {
             algorithm: this.algorithmType,
-
             expiresIn: this.lifeCycle,
-
             subject: this.options,
         };
 
