@@ -1,27 +1,21 @@
-import { decode, Jwt, JwtHeader, JwtPayload } from 'jsonwebtoken';
-import md5 from 'md5';
+import { decode } from 'jsonwebtoken';
 
-interface IDecoded extends Jwt {
-    header: JwtHeader;
-
-    payload: JwtPayload;
-
-    signature: string;
+interface IDecoded {
+    id: string;
+    sub: string; // PermissionLevel está aqui
 }
 
 class DecodeJWT {
-    private firstOption: string = md5(process.env.TOKEN_ONE);
-
     private token: string;
 
     constructor(token: string) {
         this.token = token;
     }
 
-    public authorize = (): IDecoded => {
-        const { sub } = decode(this.token, { complete: true }) as IDecoded;
+    public catchPermissionAndIdAdmin = (): IDecoded => {
+        const payload = decode(this.token, { json: true }) as IDecoded;
 
-        return decodedJWT;
+        return payload;
     };
 }
 

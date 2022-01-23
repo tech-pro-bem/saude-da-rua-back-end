@@ -5,14 +5,14 @@ class VerifyJWT {
 
     private token: string;
 
-    private option: string;
-
     constructor(token: string) {
         this.token = token;
     }
 
-    public authenticate = (): boolean => {
-        const  = verify(this.token, this.secretKey, { complete: false });
+    public checkToken = (): boolean => {
+        const checkToken = verify(this.token, this.secretKey);
+
+        return !!checkToken;
     };
 }
 
