@@ -3,14 +3,17 @@ import {
     APIGatewayProxyResult,
 } from 'aws-lambda';
 import loginAdminUseCase from '../useCases/loginAdmin';
+import LoginAdminValidation from '../utils/validations/LoginAdminValidation';
 
-interface IParsedBodyAfterPassLambdProxy {
+interface IParsedfromEventBody {
+    [name: string]: any;
+}
+
+interface IPayloadLoginAdminValidation {
     email: string;
 
     password: string;
 }
-
-// interface IPayloadLoginValidation {}
 
 export const handler = async (
     event: APIGatewayProxyEventV2WithRequestContext<any>
@@ -24,15 +27,13 @@ export const handler = async (
         },
     };
 
-    const parsedBody: IParsedBodyAfterPassLambdProxy = JSON.parse(
-        event.requestContext.authorizer.lambda
-    );
+    const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
     try {
-        // Fazer validação
-        const loginValidation = new LoginValidation(parsedBody);
+        const loginadminvalidation = new LoginAdminValidation(parsedBody);
 
-        const loginPayloadValidation = await loginValidation.validation();
+        const loginPayloadValidation: IPayloadLoginAdminValidation =
+            await loginadminvalidation.validateInput();
 
         const token = await loginAdminUseCase.execute(loginPayloadValidation);
 
