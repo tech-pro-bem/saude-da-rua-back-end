@@ -1,7 +1,8 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-
+import {
+    APIGatewayProxyEventV2WithRequestContext,
+    APIGatewayProxyResult,
+} from 'aws-lambda';
 import createAdminUseCase from '../useCases/createAdmin';
-
 import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
 
 interface IParsedfromEventBody {
@@ -17,8 +18,7 @@ interface IPayloadCreateAdminValidation {
 }
 
 export const handler = async (
-    // Aqui passa pelo lambda auth, então mudar
-    event: APIGatewayProxyEvent
+    event: APIGatewayProxyEventV2WithRequestContext<any>
 ): Promise<APIGatewayProxyResult> => {
     const response: APIGatewayProxyResult = {
         isBase64Encoded: false,
