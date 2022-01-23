@@ -4596,6 +4596,15 @@ semver@^7.2.1, semver@^7.3.4, semver@^7.3.5:
   dependencies:
     lru-cache "^6.0.0"
 
+serverless-dotenv-plugin@^3.12.2:
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/serverless-dotenv-plugin/-/serverless-dotenv-plugin-3.12.2.tgz#e3f70ba706f3525d4d838114ccdcedb22e1bf13e"
+  integrity sha512-uyukgQkZCWu+Kee+E0XQEmPlMWHHEEN+T9Kp+77VwZx4B3nfjIwd6rEyi5hCiqk1+RqBMc9NME3NP94b04dQFg==
+  dependencies:
+    chalk "^4.1.2"
+    dotenv "^10.0.0"
+    dotenv-expand "^5.1.0"
+
 serverless-iam-roles-per-function@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/serverless-iam-roles-per-function/-/serverless-iam-roles-per-function-3.2.0.tgz#8bb5f68e73f391ac8ff9809b8e7726e5bafba4c4"
@@ -4611,6 +4620,13 @@ serverless-plugin-typescript@^2.1.0:
     fs-extra "^7.0.1"
     globby "^10.0.2"
     lodash "^4.17.21"
+
+serverless-pseudo-parameters@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/serverless-pseudo-parameters/-/serverless-pseudo-parameters-2.6.1.tgz#0e9511f59741aa149ebe4476adaeaf2be6909ecc"
+  integrity sha512-mHedRk4l7O6OlzFh3++WInQoBfwUy/B10VL0eHMiiV4xwA5hJui45lp00eMSe7Ga0qj1eV91LqeYv8wu98Vekw==
+  dependencies:
+    semver "^7.3.5"
 
 serverless@^2.70.0:
   version "2.70.0"
