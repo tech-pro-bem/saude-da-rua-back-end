@@ -20,7 +20,9 @@ class LoginAdminUseCase {
             email
         );
 
-        // Talvez tenha que adicionar o marshal()
+        if (getAdminData === undefined) {
+            throw new Error('404');
+        }
         const comparePassword: boolean = compareSync(
             password,
             getAdminData.password
@@ -39,6 +41,7 @@ class LoginAdminUseCase {
 
             return getToken;
         }
+
         throw new Error('400');
     }
 }
