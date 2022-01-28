@@ -37,4 +37,4 @@
 -   Upload de Imagens;
 -   Upload de PDF;
 -   Consultas complexas;
--   Documentação de API com Swagger
+-   Documentação de API com Swagger UI com deploy no Github Pages
