@@ -1,5 +1,14 @@
 import { verify } from 'jsonwebtoken';
 
+interface IPayload {
+    admin: {
+        id: string;
+        name: string;
+    };
+
+    sub: string;
+}
+
 class VerifyJWT {
     private secretKey: string = process.env.JWT_SECRET;
 
@@ -9,10 +18,12 @@ class VerifyJWT {
         this.token = token;
     }
 
-    public checkToken = (): boolean => {
-        const checkToken = verify(this.token, this.secretKey);
+    public payloadFromCheckedToken = (): IPayload => {
+        const payload = verify(this.token, this.secretKey, {
+            complete: false,
+        }) as IPayload;
 
-        return !!checkToken;
+        return payload;
     };
 }
 
