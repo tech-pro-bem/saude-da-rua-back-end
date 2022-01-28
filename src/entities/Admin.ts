@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { hashSync } from 'bcryptjs';
+import md5 from 'md5';
 
 class Admin {
     public readonly id?: string;
@@ -14,7 +15,7 @@ class Admin {
 
     public password?: string;
 
-    public readonly permissionLevel? = '2';
+    public readonly permissionLevel? = md5(process.env.TOKEN_ONE);
 
     constructor(email: string, name: string, password: string) {
         this.id = uuidv4();
