@@ -19,10 +19,10 @@ class CreateAdminDynamoRepository implements ICreateAdminRepository {
 
     public async findByEmail(email: string): Promise<boolean> {
         const queryAdminParams: QueryInput = {
-            TableName: process.env.DYNAMO_USER_TABLE,
+            TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
             ExpressionAttributeNames: {
-                '#email': 'pk',
+                '#email': 'email',
             },
             ExpressionAttributeValues: {
                 ':email': email as AttributeValue,
@@ -40,13 +40,11 @@ class CreateAdminDynamoRepository implements ICreateAdminRepository {
     }
 
     public async saveAdmin(admin: Admin): Promise<boolean> {
-        // Se não funcionar, usa o marshal()
         const newAdminParamsToPut: PutItemInput = {
-            TableName: process.env.DYNAMODB_ADMIN_TABLE,
+            TableName: process.env.ADMINS_TABLE_NAME,
             Item: admin as PutItemInputAttributeMap,
         };
 
-        // Testar o comportamento lançando um erro
         await this.dynamoClientDB.put(newAdminParamsToPut).promise();
 
         return true;

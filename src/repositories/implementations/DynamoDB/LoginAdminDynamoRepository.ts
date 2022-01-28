@@ -17,10 +17,10 @@ class LoginAdminDynamoRepository implements ILoginAdminRepository {
 
     public async findByEmail(email: string): Promise<Admin | AWSError> {
         const queryAdminParams: QueryInput = {
-            TableName: process.env.DYNAMO_USER_TABLE,
+            TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
             ExpressionAttributeNames: {
-                '#email': 'pk',
+                '#email': 'email',
             },
             ExpressionAttributeValues: {
                 ':email': email as AttributeValue,
