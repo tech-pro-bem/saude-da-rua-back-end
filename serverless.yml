@@ -18,40 +18,43 @@ provider:
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
 
 custom:
-    adminsTableName: Admins Table
+    adminsTableName: Admins-Table
 
 functions:
     lambdaAuthProxy:
         name: lambda-auth
-        handler: src\lambdas\AuthAdminProxy.handler
+        handler: src/lambdas/AuthenticateAdminProxy.handler
     loginAdmin:
         name: login-admin
-        handler: src\lambdas\LoginAdmin.handler
+        handler: src/lambdas/LoginAdmin.handler
         events:
             - httpApi:
                   path: /login
-                  method: GET
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-              Resource:
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.userTable}"
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.userTable}/index/id"
-    createAdmin:
-        name: create-admin
-        handler: src\lambdas\CreateAdmin.handler
-        events:
-            - httpApi:
-                  path: /create/admin
                   method: POST
         iamRoleStatements:
             - Effect: "Allow"
               Action:
                   - "dynamodb:Query"
               Resource:
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.userTable}"
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.userTable}/index/id"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}/index/email"
+    createAdmin:
+        name: create-admin
+        handler: src/lambdas/CreateAdmin.handler
+        events:
+            - httpApi:
+                  path: /create/admin
+                  method: POST
+                  authorizer:
+                      name: lambdaAuthorizerJWT
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:PutItem"
+              Resource:
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}/index/email"
 
 plugins:
     - serverless-plugin-typescript
@@ -67,11 +70,11 @@ resources:
             Properties:
                 TableName: ${self:custom.adminsTableName}
                 AttributeDefinitions:
-                    - AttributeName: id
-                        AttributeType: S
-                    KeySchema:
-                    - AttributeName: id
-                        KeyType: HASH
-                    ProvisionedThroughput:
+                    - AttributeName: email
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: email
+                      KeyType: HASH
+                ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1
