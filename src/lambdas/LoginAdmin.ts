@@ -30,17 +30,16 @@ export const handler = async (
     const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
     try {
-        const loginadminvalidation = new LoginAdminValidation(parsedBody);
+        const loginAdminvalidation = new LoginAdminValidation(parsedBody);
 
         const loginPayloadValidation: IPayloadLoginAdminValidation =
-            await loginadminvalidation.validateInput();
+            await loginAdminvalidation.validateInput();
 
         const token = await loginAdminUseCase.execute(loginPayloadValidation);
 
         response.body = JSON.stringify({
             mainMessage: 'Sucessfully Log in',
             token,
-            data: 'Retorno dos dados',
         });
     } catch (error) {
         switch (error.message) {
