@@ -4,7 +4,6 @@ import {
 } from 'aws-lambda';
 import createAdminUseCase from '../useCases/createAdmin';
 import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
-import AuthorizeAdminMiddleware from '../middlewares/AuthorizeAdminMiddleware';
 
 interface IParsedfromEventBody {
     [name: string]: any;
@@ -16,10 +15,6 @@ interface IPayloadCreateAdminValidation {
     name: string;
 
     password: string;
-}
-
-interface ISbuject {
-    subject: string;
 }
 
 export const handler = async (
@@ -34,13 +29,7 @@ export const handler = async (
         },
     };
 
-    const { subject }: ISbuject = event.requestContext.authorizer.lambda;
-
-    const authorizeAdminMiddleware = new AuthorizeAdminMiddleware(subject);
-
     try {
-        authorizeAdminMiddleware.authorize();
-
         const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
         const createAdminValidation = new CreateAdminValidation(parsedBody);
