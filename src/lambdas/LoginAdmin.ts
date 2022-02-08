@@ -3,14 +3,17 @@ import {
     APIGatewayProxyResult,
 } from 'aws-lambda';
 import loginAdminUseCase from '../useCases/loginAdmin';
+import LoginAdminValidation from '../utils/validations/LoginAdminValidation';
 
-interface IParsedBodyAfterPassLambdProxy {
+interface IParsedfromEventBody {
+    [name: string]: any;
+}
+
+interface IPayloadLoginAdminValidation {
     email: string;
 
     password: string;
 }
-
-// interface IPayloadLoginValidation {}
 
 export const handler = async (
     event: APIGatewayProxyEventV2WithRequestContext<any>
@@ -24,39 +27,43 @@ export const handler = async (
         },
     };
 
-    const parsedBody: IParsedBodyAfterPassLambdProxy = JSON.parse(
-        event.requestContext.authorizer.lambda
-    );
+    const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
     try {
-        // Fazer validação
-        const loginValidation = new LoginValidation(parsedBody);
+        const loginAdminvalidation = new LoginAdminValidation(parsedBody);
 
-        const loginPayloadValidation = await loginValidation.validation();
+        const loginPayloadValidation: IPayloadLoginAdminValidation =
+            await loginAdminvalidation.validateInput();
 
         const token = await loginAdminUseCase.execute(loginPayloadValidation);
 
         response.body = JSON.stringify({
             mainMessage: 'Sucessfully Log in',
             token,
-            data: 'Retorno dos dados',
         });
     } catch (error) {
-        if (error.message === '400') {
-            response.statusCode = 400;
-
-            response.body = JSON.stringify({
-                mainMessage: 'Failed to Log in',
-                errorMessage: 'Incorrect body',
-            });
-        } else {
-            response.statusCode = 500;
-
-            response.body = JSON.stringify({
-                mainMessage: 'Failed to Log in',
-                errorMessage:
-                    'There is an error on our servers, please try again later',
-            });
+        switch (error.message) {
+            case '400':
+                response.statusCode = 400;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to create Admin account',
+                    errorMessage: 'Incorrect body',
+                });
+                break;
+            case '404':
+                response.statusCode = 404;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to Log in',
+                    errorMessage: 'Email not founded',
+                });
+                break;
+            default:
+                response.statusCode = 500;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to create Admin account',
+                    errorMessage:
+                        'There is an error on our servers, please try again later',
+                });
         }
     }
 

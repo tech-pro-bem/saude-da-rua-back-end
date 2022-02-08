@@ -1,18 +1,29 @@
 import { verify } from 'jsonwebtoken';
 
+interface IPayload {
+    admin: {
+        id: string;
+        name: string;
+    };
+
+    sub: string;
+}
+
 class VerifyJWT {
     private secretKey: string = process.env.JWT_SECRET;
 
     private token: string;
 
-    private option: string;
-
     constructor(token: string) {
         this.token = token;
     }
 
-    public authenticate = (): boolean => {
-        const  = verify(this.token, this.secretKey, { complete: false });
+    public payloadFromCheckedToken = (): IPayload => {
+        const payload = verify(this.token, this.secretKey, {
+            complete: false,
+        }) as IPayload;
+
+        return payload;
     };
 }
 

@@ -1,7 +1,8 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-
+import {
+    APIGatewayProxyEventV2WithRequestContext,
+    APIGatewayProxyResult,
+} from 'aws-lambda';
 import createAdminUseCase from '../useCases/createAdmin';
-
 import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
 
 interface IParsedfromEventBody {
@@ -17,8 +18,7 @@ interface IPayloadCreateAdminValidation {
 }
 
 export const handler = async (
-    // Aqui passa pelo lambda auth, então mudar
-    event: APIGatewayProxyEvent
+    event: APIGatewayProxyEventV2WithRequestContext<any>
 ): Promise<APIGatewayProxyResult> => {
     const response: APIGatewayProxyResult = {
         isBase64Encoded: false,
@@ -29,9 +29,9 @@ export const handler = async (
         },
     };
 
-    const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
-
     try {
+        const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
+
         const createAdminValidation = new CreateAdminValidation(parsedBody);
 
         const createAdminPayloadValidation: IPayloadCreateAdminValidation =
@@ -43,21 +43,28 @@ export const handler = async (
             message: 'Successfully create Admin account',
         });
     } catch (error) {
-        if (error.message === '400') {
-            response.statusCode = 400;
-
-            response.body = JSON.stringify({
-                mainMessage: 'Failed to create Admin account',
-                errorMessage: 'Incorrect body',
-            });
-        } else {
-            response.statusCode = 500;
-
-            response.body = JSON.stringify({
-                mainMessage: 'Failed to create Admin account',
-                errorMessage:
-                    'There is an error on our servers, please try again later',
-            });
+        switch (error.message) {
+            case '400':
+                response.statusCode = 400;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to create Admin account',
+                    errorMessage: 'Incorrect body',
+                });
+                break;
+            case '403':
+                response.statusCode = 403;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to create Admin account',
+                    errorMessage: 'Admin dos not have access to this feature',
+                });
+                break;
+            default:
+                response.statusCode = 500;
+                response.body = JSON.stringify({
+                    mainMessage: 'Failed to create Admin account',
+                    errorMessage:
+                        'There is an error on our servers, please try again later',
+                });
         }
     }
 

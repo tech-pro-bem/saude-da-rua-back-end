@@ -2,3 +2,4 @@ node_modules
 .serverless
 credentials.txt
 .env
+.build

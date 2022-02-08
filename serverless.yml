@@ -1,44 +1,87 @@
-service: saude-da-rua
+service: saude-da-rua-main
 frameworkVersion: "2 || 3"
 
 provider:
     name: aws
-    runtime: nodejs12.x
+    runtime: nodejs14.x
     region: sa-east-1
     stage: dev
+    httpApi:
+        cors: true
+        authorizers:
+            jwtAuthenticationLambda:
+                type: request
+                functionName: authenticationProxy
+            jwtAuthorizationLambda:
+                type: request
+                functionName: authorizationProxy
+
     lambdaHashingVersion: 20201221
     environment:
-        imageUploadBucket: ${self:custom.imageUploadBucket}
         region: ${self:provider.region}
-    iamRoleStatements:
-        - Effect: Allow
-          Action:
-              - "s3:PutObject*"
-          Resource: "arn:aws:s3:::*"
+        ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
 
 custom:
-    imageUploadBucket: saude-da-rua-admin-image-upload-test
+    adminsTableName: Admins-Table
 
 functions:
-    # imageUploadSaudeDaRuaProd:
-    #     handler: src/lambdas/imageUpload.handler
-    #     name: s3-image-uploader
-    #     description: A lambda handler that uploads a file to an S3 bucket
-    #     events:
-    #         - httpApi:
-    #               path: /image/upload
-    #               method: POST
-    #     environment:
-    #         FILE_UPLOAD_BUCKET_NAME: ${self:custom.imageUploadBucket}
+    authenticationProxy:
+        name: lambda-authenticate
+        handler: src/lambdas/AuthenticateAdminProxy.handler
+    authorizationProxy:
+        name: lambda-authorize
+        handler: src/lambdas/AuthenticateAndAuthorizationAdminProxy.handler
+    loginAdmin:
+        name: login-admin
+        handler: src/lambdas/LoginAdmin.handler
+        events:
+            - httpApi:
+                  path: /login
+                  method: POST
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+              Resource:
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}/index/email"
+    createAdmin:
+        name: create-admin
+        handler: src/lambdas/CreateAdmin.handler
+        events:
+            - httpApi:
+                  path: /create/admin
+                  method: POST
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:PutItem"
+              Resource:
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}/index/email"
 
 plugins:
     - serverless-plugin-typescript
+    - serverless-dotenv-plugin
     - serverless-iam-roles-per-function
+    - serverless-pseudo-parameters
 
 resources:
     Resources:
-        ImageUploadBucket:
-            Type: AWS::S3::Bucket
+        AdminsTable:
+            Type: AWS::DynamoDB::Table
+            DeletionPolicy: Retain
             Properties:
-                BucketName: ${self:custom.imageUploadBucket}
-                AccessControl: PublicRead
+                TableName: ${self:custom.adminsTableName}
+                AttributeDefinitions:
+                    - AttributeName: email
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: email
+                      KeyType: HASH
+                ProvisionedThroughput:
+                    ReadCapacityUnits: 1
+                    WriteCapacityUnits: 1
