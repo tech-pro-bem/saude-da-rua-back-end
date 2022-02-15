@@ -19,12 +19,12 @@ class DeleteAdminDynamoRepository implements IDeleteAdminRepository {
         this.dynamoClientDB = new DynamoDB.DocumentClient();
     }
 
-    public async FindByEmailAsync(email: string): Promise<boolean> {
+    public async findByEmail(email: string): Promise<boolean> {
         const queryAdminParams: QueryInput = {
             TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
             ExpressionAttributeNames: {
-                '#email': 'pk',
+                '#email': 'email',
             },
             ExpressionAttributeValues: {
                 ':email': email as AttributeValue,
