@@ -19,7 +19,7 @@ class DeleteAdminUseCase {
             throw new Error('400');
         }
 
-        await this.deleteAdminRepository.findByEmail(email);
+        await this.deleteAdminRepository.deleteAdmin(email);
     }
 }
 export default DeleteAdminUseCase;
