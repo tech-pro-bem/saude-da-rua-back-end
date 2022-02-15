@@ -1,13 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
-import { AWSError } from 'aws-sdk';
-import DynamoDB, {
+import { AWSError, DynamoDB } from 'aws-sdk';
+import {
     AttributeValue,
-    DeleteItemInput,
     DocumentClient,
     QueryInput,
     QueryOutput,
+    DeleteItemInput,
 } from 'aws-sdk/clients/dynamodb';
 import Admin from '../../../entities/Admin';
 import IDeleteAdminRepository from '../../interfaces/IDeleteAdminRepository';
@@ -19,13 +19,9 @@ class DeleteAdminDynamoRepository implements IDeleteAdminRepository {
         this.dynamoClientDB = new DynamoDB.DocumentClient();
     }
 
-    deleteAdmin(email: string): Promise<boolean> {
-        throw new Error('Method not implemented.');
-    }
-
-    public async findByEmail(email: string): Promise<boolean> {
+    public async FindByEmailAsync(email: string): Promise<boolean> {
         const queryAdminParams: QueryInput = {
-            TableName: process.env.DYNAMO_USER_TABLE,
+            TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
             ExpressionAttributeNames: {
                 '#email': 'pk',
@@ -46,9 +42,9 @@ class DeleteAdminDynamoRepository implements IDeleteAdminRepository {
     }
 
     // realizo o delete aqui importante ******
-    public async delete(email: string): Promise<boolean> {
+    public async deleteAdmin(email: string): Promise<boolean> {
         const DeleteAdminParams: DynamoDB.Delete = {
-            TableName: process.env.DYNAMODB_ADMIN_TABLE,
+            TableName: process.env.ADMINS_TABLE_NAME,
             Key: {
                 email: email as AttributeValue,
             },

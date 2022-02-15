@@ -10,15 +10,16 @@ class DeleteAdminUseCase {
 
     async execute(deleteAdminRequestData: IDeleteAdminRequestDTO) {
         const { email } = deleteAdminRequestData;
+        console.log('antes de findByEmail:');
 
         const adminFound: boolean =
-            await this.deleteAdminRepository.findByEmail(email);
-
+            await this.deleteAdminRepository.FindByEmailAsync(email);
+        console.log('depois do findByEmail');
         if (adminFound === false) {
             throw new Error('400');
         }
 
-        await this.deleteAdminRepository.deleteAdmin(email);
+        await this.deleteAdminRepository.FindByEmailAsync(email);
     }
 }
 export default DeleteAdminUseCase;

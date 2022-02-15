@@ -2,9 +2,9 @@
 import Admin from '../../entities/Admin';
 
 interface IDeleteAdminRepository {
-    findByEmail(email: string): Promise<boolean>;
+    FindByEmailAsync(email: string): Promise<boolean>;
 
-    deleteAdmin(email: string): Promise<boolean>;
+    deleteAdmin(admin: string): Promise<boolean>;
 }
 
 export default IDeleteAdminRepository;

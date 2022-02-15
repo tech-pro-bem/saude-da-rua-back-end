@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "https://rmy6gd8vfd.execute-api.sa-east-1.amazonaws.com/delete/admin",
+            "request": "json",
+            "url": "https://rmy6gd8vfd.execute-api.sa-east-1.amazonaws.com/delete/admin"
+        }
+    ]
+}
