@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
     APIGatewayProxyEventV2WithRequestContext,
     APIGatewayProxyResult,
@@ -28,18 +27,14 @@ export const handler = async (
     };
 
     try {
-        console.log('open first perform 001');
         const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
-        console.log('close first perform 001');
-        console.log('open second perform 002');
+
         const deleteAdminValidation = new DeleteAdminValidation(parsedBody);
-        console.log('close second perform 002');
-        console.log('open third perform 003');
+
         const deleteAdminPayloadValidation: IPayloadCreateAdminValidation =
             await deleteAdminValidation.validateInput();
-        console.log('close third perform 003');
+
         await deleteAdminUseCase.execute(deleteAdminPayloadValidation);
-        console.log('exit perform usecase');
 
         response.body = JSON.stringify({
             message: 'Sucessfuly delete Admin account',
@@ -49,7 +44,7 @@ export const handler = async (
             case '400':
                 response.statusCode = 400;
                 response.body = JSON.stringify({
-                    mainMessage: 'Faile to delete admin',
+                    mainMessage: 'Failed to delete admin',
                     errorMessage: 'Incorrect body',
                 });
                 break;
