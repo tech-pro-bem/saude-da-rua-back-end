@@ -1,34 +1,22 @@
-import Joi from 'joi';
 import { ValidationError } from '../../helpers/errors';
+import AdminValidationBase from './AdminValidationBase';
 
-interface IEventBody {
+type BodyBeforeValidate = {
     [name: string]: any;
-}
+};
 
-export class LoginAdminValidation {
-    private body: IEventBody;
+export class LoginAdminValidation extends AdminValidationBase {
+    private body: BodyBeforeValidate;
 
-    constructor(body: IEventBody) {
+    constructor(body: BodyBeforeValidate) {
+        super();
         this.body = body;
     }
 
     public async validateInput() {
-        const joiSchema = Joi.object().keys({
-            email: Joi.string()
-                .pattern(/^\w+([.\-_]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-                .email({
-                    tlds: {
-                        allow: ['com', 'br', 'net'],
-                    },
-                })
-                .lowercase()
-                .required(),
-
-            password: Joi.string().min(7).required(),
-        });
-
         try {
-            const validatedPayload = await joiSchema.validateAsync(this.body);
+            const validatedPayload =
+                await super.adminValidationBase.validateAsync(this.body);
 
             return validatedPayload;
         } catch (error) {

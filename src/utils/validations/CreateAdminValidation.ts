@@ -1,42 +1,40 @@
-import Joi from 'joi';
+import Joi, { StringSchema, ObjectSchema, Schema } from 'joi';
 import { ValidationError } from '../../helpers/errors';
+import AdminValidationBase from './AdminValidationBase';
 
-export class CreateAdminValidation {
-    private body: { [name: string]: any };
+type BodyBeforeValidate = {
+    [name: string]: any;
+};
 
-    constructor(body: { [name: string]: any }) {
+export class CreateAdminValidation extends AdminValidationBase {
+    private body: BodyBeforeValidate;
+
+    private createAdminValidation: ObjectSchema<any>;
+
+    private id: Schema = Joi.forbidden();
+
+    private createdAt: Schema = Joi.forbidden();
+
+    private updatedAt: Schema = Joi.forbidden();
+
+    private name: StringSchema = Joi.string().required();
+
+    constructor(body: BodyBeforeValidate) {
+        super();
+        this.createAdminValidation = super.adminValidationBase.keys({
+            id: this.id,
+            createdAt: this.createdAt,
+            upddatedAt: this.updatedAt,
+            name: this.name,
+        });
         this.body = body;
     }
 
     public async validateInput() {
-        const validationSchema = Joi.object().keys({
-            id: Joi.forbidden(),
-
-            createdAt: Joi.forbidden(),
-
-            updatedAt: Joi.forbidden(),
-
-            email: Joi.string()
-                .pattern(/^\w+([.\-_]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-                .email({
-                    tlds: {
-                        allow: ['com', 'br', 'net'],
-                    },
-                })
-                .lowercase()
-                .required(),
-
-            name: Joi.string()
-                .pattern(/^[A-Z]{1}[a-zà-ú`]+\s[A-Z]{1}[a-zà-ú`]+$/)
-                .required(),
-
-            password: Joi.string().min(7).required(),
-        });
-
         try {
-            const validatedPayload = await validationSchema.validateAsync(
-                this.body
-            );
+            const validatedPayload =
+                await this.createAdminValidation.validateAsync(this.body);
+
             return validatedPayload;
         } catch (error) {
             const getDetailsError: string = error.details[0].message;
