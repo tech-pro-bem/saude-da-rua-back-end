@@ -1,5 +1,5 @@
 import Admin from '../../entities/Admin';
-import ICreateAdminRepository from '../../repositories/interfaces/ICreateAdminRepository';
+import { ICreateAdminRepository } from '../../repositories/interfaces';
 import ICreateAdminRequestDTO from './CreateAdminRequestDTO';
 import { ConflictError } from '../../helpers/errors';
 

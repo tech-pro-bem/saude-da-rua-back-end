@@ -8,9 +8,9 @@ import {
     PutItemInputAttributeMap,
 } from 'aws-sdk/clients/dynamodb';
 import Admin from '../../../entities/Admin';
-import ICreateAdminRepository from '../../interfaces/ICreateAdminRepository';
+import { ICreateAdminRepository } from '../../interfaces';
 
-class CreateAdminDynamoRepository implements ICreateAdminRepository {
+export class CreateAdminDynamoRepository implements ICreateAdminRepository {
     private dynamoClientDB: DocumentClient;
 
     constructor() {
@@ -50,5 +50,3 @@ class CreateAdminDynamoRepository implements ICreateAdminRepository {
         return true;
     }
 }
-
-export default CreateAdminDynamoRepository;

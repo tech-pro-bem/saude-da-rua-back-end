@@ -3,7 +3,7 @@ import {
     APIGatewayProxyResult,
 } from 'aws-lambda';
 import createAdminUseCase from '../useCases/createAdmin';
-import CreateAdminValidation from '../utils/validations/CreateAdminValidation';
+import { CreateAdminValidation } from '../utils/validations';
 
 interface IParsedfromEventBody {
     [name: string]: any;

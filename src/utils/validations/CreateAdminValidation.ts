@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { ValidationError } from '../../helpers/errors';
 
-class CreateAdminValidation {
+export class CreateAdminValidation {
     private body: { [name: string]: any };
 
     constructor(body: { [name: string]: any }) {
@@ -49,5 +49,3 @@ class CreateAdminValidation {
         }
     }
 }
-
-export default CreateAdminValidation;

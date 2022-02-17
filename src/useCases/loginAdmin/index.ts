@@ -1,4 +1,4 @@
-import LoginAdminDynamoRepository from '../../repositories/implementations/DynamoDB/LoginAdminDynamoRepository';
+import { LoginAdminDynamoRepository } from '../../repositories/implementations/DynamoDB';
 import LoginAdminUseCase from './LoginAdminUseCase';
 
 const loginAdminDynamoRepository = new LoginAdminDynamoRepository();

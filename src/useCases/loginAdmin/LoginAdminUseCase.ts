@@ -1,8 +1,8 @@
 import { compareSync } from 'bcryptjs';
 import Admin from '../../entities/Admin';
-import ILoginAdminRepository from '../../repositories/interfaces/ILoginAdminRepository';
+import { ILoginAdminRepository } from '../../repositories/interfaces';
 import ILoginAdminRequestDTO from './LoginAdminRequestDTO';
-import CreateJwt from '../../utils/auth/CreateJWT';
+import { CreateJwt } from '../../utils/auth';
 import { NotFoundError } from '../../helpers/errors';
 
 class LoginAdminUseCase {

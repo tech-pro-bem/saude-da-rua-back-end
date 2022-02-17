@@ -1,4 +1,4 @@
-import CreateAdminDynamoRepository from '../../repositories/implementations/DynamoDB/CreateAdminDynamoRepository';
+import { CreateAdminDynamoRepository } from '../../repositories/implementations/DynamoDB';
 import CreateAdminUseCase from './CreateAdminUseCase';
 
 const createAdminDynamoRepository = new CreateAdminDynamoRepository();

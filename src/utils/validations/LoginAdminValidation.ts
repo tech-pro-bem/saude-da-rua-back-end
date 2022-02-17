@@ -5,7 +5,7 @@ interface IEventBody {
     [name: string]: any;
 }
 
-class LoginAdminValidation {
+export class LoginAdminValidation {
     private body: IEventBody;
 
     constructor(body: IEventBody) {
@@ -42,5 +42,3 @@ class LoginAdminValidation {
         }
     }
 }
-
-export default LoginAdminValidation;

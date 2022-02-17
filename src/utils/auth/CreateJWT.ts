@@ -6,7 +6,7 @@ interface IPayloadJwt {
     name: string;
 }
 
-class CreateJwt {
+export class CreateJwt {
     private algorithmType: Algorithm = 'HS512';
 
     private lifeCycle: string = process.env.JWT_LIFE_CYCLE;
@@ -40,5 +40,3 @@ class CreateJwt {
         return token;
     }
 }
-
-export default CreateJwt;

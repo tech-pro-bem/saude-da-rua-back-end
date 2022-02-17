@@ -6,9 +6,9 @@ import {
     QueryOutput,
 } from 'aws-sdk/clients/dynamodb';
 import Admin from '../../../entities/Admin';
-import ILoginAdminRepository from '../../interfaces/ILoginAdminRepository';
+import { ILoginAdminRepository } from '../../interfaces';
 
-class LoginAdminDynamoRepository implements ILoginAdminRepository {
+export class LoginAdminDynamoRepository implements ILoginAdminRepository {
     private dynamoClientDB: DocumentClient;
 
     constructor() {
@@ -34,5 +34,3 @@ class LoginAdminDynamoRepository implements ILoginAdminRepository {
         return getAdminInfo.Items[0];
     }
 }
-
-export default LoginAdminDynamoRepository;

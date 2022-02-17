@@ -9,7 +9,7 @@ interface IPayload {
     sub: string;
 }
 
-class VerifyJWT {
+export class VerifyJWT {
     private secretKey: string = process.env.JWT_SECRET;
 
     private token: string;
@@ -26,5 +26,3 @@ class VerifyJWT {
         return payload;
     };
 }
-
-export default VerifyJWT;
