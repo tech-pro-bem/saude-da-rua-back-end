@@ -2,5 +2,5 @@
 import Admin from '../../entities/Admin';
 
 export interface ILoginAdminRepository {
-    findByEmail(email: string): Promise<Admin>;
+    getAdminInfoByEmail(email: string): Promise<Admin>;
 }

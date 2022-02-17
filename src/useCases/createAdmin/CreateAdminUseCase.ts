@@ -14,7 +14,7 @@ class CreateAdminUseCase {
         const { email, name, password } = createAdminRequestData;
 
         const adminAlreadyExists: boolean =
-            await this.createAdminRepository.findByEmail(email);
+            await this.createAdminRepository.checkIfAdminExistsByEmail(email);
 
         if (adminAlreadyExists === true) {
             throw new ConflictError(

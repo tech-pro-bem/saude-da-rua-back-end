@@ -17,7 +17,7 @@ export class CreateAdminDynamoRepository implements ICreateAdminRepository {
         this.dynamoClientDB = new DynamoDB.DocumentClient();
     }
 
-    public async findByEmail(email: string): Promise<boolean> {
+    public async checkIfAdminExistsByEmail(email: string): Promise<boolean> {
         const queryAdminParams: QueryInput = {
             TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',

@@ -15,7 +15,7 @@ export class LoginAdminDynamoRepository implements ILoginAdminRepository {
         this.dynamoClientDB = new DynamoDB.DocumentClient();
     }
 
-    public async findByEmail(email: string): Promise<Admin | AWSError> {
+    public async getAdminInfoByEmail(email: string): Promise<Admin | AWSError> {
         const queryAdminParams: QueryInput = {
             TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
