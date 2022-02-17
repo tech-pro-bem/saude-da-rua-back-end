@@ -17,9 +17,8 @@ class LoginAdminUseCase {
     ): Promise<string> {
         const { email, password } = loginAdminRequestData;
 
-        const getAdminData: Admin = await this.loginAdminRepository.findByEmail(
-            email
-        );
+        const getAdminData: Admin =
+            await this.loginAdminRepository.getAdminInfoByEmail(email);
 
         if (getAdminData === undefined) {
             throw new NotFoundError('Incorrect Email/Password');
