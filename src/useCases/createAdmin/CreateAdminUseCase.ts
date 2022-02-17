@@ -1,6 +1,7 @@
 import Admin from '../../entities/Admin';
 import ICreateAdminRepository from '../../repositories/interfaces/ICreateAdminRepository';
 import ICreateAdminRequestDTO from './CreateAdminRequestDTO';
+import { ConflictError } from '../../helpers/errors';
 
 class CreateAdminUseCase {
     private createAdminRepository: ICreateAdminRepository;
@@ -16,7 +17,9 @@ class CreateAdminUseCase {
             await this.createAdminRepository.findByEmail(email);
 
         if (adminAlreadyExists === true) {
-            throw new Error('400');
+            throw new ConflictError(
+                'There is an admin account with that email'
+            );
         }
 
         const newAdmin = new Admin(email, name, password);

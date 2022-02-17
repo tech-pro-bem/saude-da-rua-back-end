@@ -43,29 +43,12 @@ export const handler = async (
             message: 'Successfully create Admin account',
         });
     } catch (error) {
-        switch (error.message) {
-            case '400':
-                response.statusCode = 400;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to create Admin account',
-                    errorMessage: 'Incorrect body',
-                });
-                break;
-            case '403':
-                response.statusCode = 403;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to create Admin account',
-                    errorMessage: 'Admin dos not have access to this feature',
-                });
-                break;
-            default:
-                response.statusCode = 500;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to create Admin account',
-                    errorMessage:
-                        'There is an error on our servers, please try again later',
-                });
-        }
+        response.statusCode = error.code;
+        response.body = JSON.stringify({
+            errorClassName: error.name,
+            generalErrorMessage: error.generalErrorMessage,
+            mainErrorMessage: error.mainErrorMessage,
+        });
     }
 
     return response;

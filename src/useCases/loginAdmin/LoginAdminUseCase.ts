@@ -3,6 +3,7 @@ import Admin from '../../entities/Admin';
 import ILoginAdminRepository from '../../repositories/interfaces/ILoginAdminRepository';
 import ILoginAdminRequestDTO from './LoginAdminRequestDTO';
 import CreateJwt from '../../utils/auth/CreateJWT';
+import { NotFoundError } from '../../helpers/errors';
 
 class LoginAdminUseCase {
     private loginAdminRepository: ILoginAdminRepository;
@@ -21,28 +22,29 @@ class LoginAdminUseCase {
         );
 
         if (getAdminData === undefined) {
-            throw new Error('404');
+            throw new NotFoundError('Incorrect Email/Password');
         }
+
         const comparePassword: boolean = compareSync(
             password,
             getAdminData.password
         );
 
-        if (comparePassword === true) {
-            const createJWT = new CreateJwt(
-                {
-                    id: getAdminData.id,
-                    name: getAdminData.name,
-                },
-                getAdminData.permissionLevel
-            );
-
-            const getToken: string = createJWT.buildToken();
-
-            return getToken;
+        if (comparePassword !== true) {
+            throw new NotFoundError('Incorrect Email/Password');
         }
 
-        throw new Error('400');
+        const createJWT = new CreateJwt(
+            {
+                id: getAdminData.id,
+                name: getAdminData.name,
+            },
+            getAdminData.permissionLevel
+        );
+
+        const getToken: string = createJWT.buildToken();
+
+        return getToken;
     }
 }
 

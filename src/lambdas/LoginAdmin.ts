@@ -42,29 +42,12 @@ export const handler = async (
             token,
         });
     } catch (error) {
-        switch (error.message) {
-            case '400':
-                response.statusCode = 400;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to create Admin account',
-                    errorMessage: 'Incorrect body',
-                });
-                break;
-            case '404':
-                response.statusCode = 404;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to Log in',
-                    errorMessage: 'Email not founded',
-                });
-                break;
-            default:
-                response.statusCode = 500;
-                response.body = JSON.stringify({
-                    mainMessage: 'Failed to create Admin account',
-                    errorMessage:
-                        'There is an error on our servers, please try again later',
-                });
-        }
+        response.statusCode = error.code;
+        response.body = JSON.stringify({
+            errorClassName: error.name,
+            generalErrorMessage: error.generalErrorMessage,
+            mainErrorMessage: error.mainErrorMessage,
+        });
     }
 
     return response;

@@ -45,8 +45,14 @@ export const handler = async (
         const authorizeAdminMiddleware = new AuthorizeAdminMiddleware(subject);
 
         authorizeAdminMiddleware.authorize();
-    } catch (err) {
-        callback('Unauthorized');
+    } catch (error) {
+        if (error.name === 'AuthorizationError') {
+            response.policyDocument.Statement[0].Effect = 'Deny';
+
+            callback(null, response);
+        } else {
+            callback('Unauthorized');
+        }
     }
 
     return response;

@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { ValidationError } from '../../helpers/errors';
 
 interface IEventBody {
     [name: string]: any;
@@ -31,7 +32,13 @@ class LoginAdminValidation {
 
             return validatedPayload;
         } catch (error) {
-            throw new Error('400');
+            const getDetailsError: string = error.details[0].message;
+            const transformInFriendlyError = getDetailsError.replace(
+                /"/g,
+                '***'
+            );
+
+            throw new ValidationError(transformInFriendlyError);
         }
     }
 }
