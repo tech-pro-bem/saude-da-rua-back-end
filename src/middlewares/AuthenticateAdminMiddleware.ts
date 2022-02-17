@@ -3,7 +3,8 @@ import {
     APIGatewayAuthorizerResult,
     PolicyDocument,
 } from 'aws-lambda';
-import VerifyJWT from '../utils/auth/VerifyJWT';
+import { VerifyJWT } from '../utils/auth';
+import { AuthenticationError } from '../helpers/errors';
 
 class AuthenticateAdminMiddleware {
     private event: APIGatewayRequestAuthorizerEventV2;
@@ -32,7 +33,7 @@ class AuthenticateAdminMiddleware {
 
     static getToken = (event: APIGatewayRequestAuthorizerEventV2): string => {
         if (!event.type || event.type !== 'REQUEST') {
-            throw new Error(
+            throw new AuthenticationError(
                 `Expected 'event.type' parameter exists and to have a value equal to 'REQUEST'`
             );
         }
@@ -40,7 +41,7 @@ class AuthenticateAdminMiddleware {
         const getTokenFromHeaders: string = event.headers.authorization;
 
         if (!getTokenFromHeaders) {
-            throw new Error(
+            throw new AuthenticationError(
                 'Expected "event.headers.authorizationToken" parameter to be set'
             );
         }
@@ -48,7 +49,7 @@ class AuthenticateAdminMiddleware {
         const checkIfTokenMatches = getTokenFromHeaders.match(/^Bearer (.*)$/);
 
         if (!checkIfTokenMatches || checkIfTokenMatches.length < 2) {
-            throw new Error(
+            throw new AuthenticationError(
                 `Invalid Authorization token - ${getTokenFromHeaders} does not match "Bearer .*"`
             );
         }
@@ -74,7 +75,7 @@ class AuthenticateAdminMiddleware {
                 },
             };
         } catch (error) {
-            throw new Error('Expired or invalid token');
+            throw new AuthenticationError('Expired or invalid token');
         }
     };
 }
