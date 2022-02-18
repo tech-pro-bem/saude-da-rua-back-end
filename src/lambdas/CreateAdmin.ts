@@ -29,9 +29,9 @@ export const handler = async (
         },
     };
 
-    try {
-        const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
+    const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
+    try {
         const createAdminValidation = new CreateAdminValidation(parsedBody);
 
         const createAdminPayloadValidation: IPayloadCreateAdminValidation =
