@@ -17,7 +17,9 @@ export class CreateAdminValidation extends AdminValidationBase {
 
     private updatedAt: Schema = Joi.forbidden();
 
-    private name: StringSchema = Joi.string().required();
+    private name: StringSchema = Joi.string()
+        .pattern(/^[A-Z]{1}[a-zà-ú`]+\s[A-Z]{1}[a-zà-ú`]+$/)
+        .required();
 
     constructor(body: BodyBeforeValidate) {
         super();
