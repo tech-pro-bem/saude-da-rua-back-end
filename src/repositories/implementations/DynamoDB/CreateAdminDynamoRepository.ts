@@ -19,7 +19,7 @@ export class CreateAdminDynamoRepository
 
     constructor() {
         super();
-        switch (process.env.IS_PROD) {
+        switch (process.env.IS_PRODUCTION) {
             case 'true':
                 this.dynamoClientDB = super.getProdClient;
                 break;

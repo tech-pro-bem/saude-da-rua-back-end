@@ -3,6 +3,7 @@ node_modules
 credentials.txt
 .env
 .build
+.dynamodb
 src/entities/Volunteers.ts
 src/lambdas/PaginationGetVolunteers.ts
 src/repositories/implementations/DynamoDB/PaginationGetVolunteersDynamoRepository.ts
