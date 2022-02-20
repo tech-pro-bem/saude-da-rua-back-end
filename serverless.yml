@@ -8,13 +8,13 @@ provider:
     stage: dev
     httpApi:
         cors: true
-        # authorizers:
-        #     jwtAuthenticationLambda:
-        #         type: request
-        #         functionName: authenticationProxy
-        #     jwtAuthorizationLambda:
-        #         type: request
-        #         functionName: authorizationProxy
+        authorizers:
+            jwtAuthenticationLambda:
+                type: request
+                functionName: authenticationProxy
+            jwtAuthorizationLambda:
+                type: request
+                functionName: authorizationProxy
 
     lambdaHashingVersion: 20201221
     environment:
@@ -34,12 +34,12 @@ custom:
             dir: tests/in-memory/migrations
 
 functions:
-    # authenticationProxy:
-    #     name: lambda-authenticate
-    #     handler: src/lambdas/AuthenticateAdminProxy.handler
-    # authorizationProxy:
-    #     name: lambda-authorize
-    #     handler: src/lambdas/AuthenticateAndAuthorizationAdminProxy.handler
+    authenticationProxy:
+        name: lambda-authenticate
+        handler: src/lambdas/AuthenticateAdminProxy.handler
+    authorizationProxy:
+        name: lambda-authorize
+        handler: src/lambdas/AuthenticateAndAuthorizationAdminProxy.handler
     loginAdmin:
         name: login-admin
         handler: src/lambdas/LoginAdmin.handler
@@ -61,8 +61,8 @@ functions:
             - httpApi:
                   path: /create/admin
                   method: POST
-                  #   authorizer:
-                  #       name: jwtAuthorizationLambda
+                    authorizer:
+                        name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:

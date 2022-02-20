@@ -9,26 +9,17 @@ import {
 } from 'aws-sdk/clients/dynamodb';
 import Admin from '../../../entities/Admin';
 import { ICreateAdminRepository } from '../../interfaces';
-import { DynamoDocumentClient } from './DynamoDocumentClient';
+import { DynamoDocumentClientCredentials } from '../../../helpers/database/DynamoDocumentClient';
 
 export class CreateAdminDynamoRepository
-    extends DynamoDocumentClient
+    extends DynamoDocumentClientCredentials
     implements ICreateAdminRepository
 {
     private dynamoClientDB: DocumentClient;
 
     constructor() {
         super();
-        switch (process.env.IS_PRODUCTION) {
-            case 'true':
-                this.dynamoClientDB = super.getProdClient;
-                break;
-            case 'false':
-                this.dynamoClientDB = super.getDevClient;
-                break;
-            default:
-                this.dynamoClientDB = super.getJestClient;
-        }
+        this.dynamoClientDB = super.getDynamoClient();
     }
 
     public async checkIfAdminExistsByEmail(email: string): Promise<boolean> {

@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.52.0",
     "@shelf/jest-dynamodb": "^2.2.3",
     "@types/aws-lambda": "^8.10.89",
     "@types/aws-sdk": "^2.7.0",
@@ -33,7 +34,7 @@
     "prettier": "^2.5.1",
     "serverless": "^2.70.0",
     "serverless-dotenv-plugin": "^3.12.2",
-    "serverless-dynamodb-local": "0.2.30",
+    "serverless-dynamodb-local": "0.2.35",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-offline": "^8.5.0",
     "serverless-plugin-typescript": "^2.1.0",
