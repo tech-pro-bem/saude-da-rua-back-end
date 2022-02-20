@@ -1,7 +1,9 @@
-import 'dotenv/config';
+import { config } from 'dotenv';
 import { APIGatewayProxyResult } from 'aws-lambda';
 import { handler } from '../../src/lambdas/CreateAdmin';
 import { EventGeneratorFromGatewayV2, isApiGatewayResponse } from '../helpers';
+
+config({ path: '.env.test' });
 
 describe('integration tests: create admin', () => {
     test('it should take a body and return an API Gateway response', async () => {

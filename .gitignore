@@ -2,6 +2,7 @@ node_modules
 .serverless
 credentials.txt
 .env
+.env.test
 .build
 .dynamodb
 src/entities/Volunteers.ts
