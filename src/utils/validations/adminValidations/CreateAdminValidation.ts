@@ -1,5 +1,5 @@
 import Joi, { StringSchema, ObjectSchema, Schema } from 'joi';
-import { ValidationError } from '../../helpers/errors';
+import { ValidationError } from '../../../helpers/errors';
 import AdminValidationBase from './AdminValidationBase';
 
 type BodyBeforeValidate = {

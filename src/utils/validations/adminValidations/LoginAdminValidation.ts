@@ -1,4 +1,4 @@
-import { ValidationError } from '../../helpers/errors';
+import { ValidationError } from '../../../helpers/errors';
 import AdminValidationBase from './AdminValidationBase';
 
 type BodyBeforeValidate = {
