@@ -1,4 +1,4 @@
-import { AWSError, DynamoDB } from 'aws-sdk';
+import { AWSError } from 'aws-sdk';
 import {
     DocumentClient,
     QueryInput,
@@ -7,12 +7,17 @@ import {
 } from 'aws-sdk/clients/dynamodb';
 import Admin from '../../../entities/Admin';
 import { ILoginAdminRepository } from '../../interfaces';
+import { DynamoDocumentClientCredentials } from '../../../helpers/database/DynamoDocumentClient';
 
-export class LoginAdminDynamoRepository implements ILoginAdminRepository {
+export class LoginAdminDynamoRepository
+    extends DynamoDocumentClientCredentials
+    implements ILoginAdminRepository
+{
     private dynamoClientDB: DocumentClient;
 
     constructor() {
-        this.dynamoClientDB = new DynamoDB.DocumentClient();
+        super();
+        this.dynamoClientDB = super.getDynamoClient();
     }
 
     public async getAdminInfoByEmail(email: string): Promise<Admin | AWSError> {
