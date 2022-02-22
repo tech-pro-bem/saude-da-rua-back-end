@@ -6,7 +6,7 @@ import Joi, {
     ArraySchema,
 } from 'joi';
 import { ValidationError } from '../../../helpers/errors';
-import * as Volunteer from '../../../entities/Volunteers';
+import * as Volunteer from '../../../entities/Volunteer';
 
 type BodyBeforeValidate = {
     [name: string]: any;
@@ -21,15 +21,6 @@ export class CreateVolunteerValidation {
 
     private updatedAt: Schema = Joi.forbidden();
 
-    private fullName: StringSchema = Joi.string()
-        .min(3)
-        .max(60)
-        .pattern(/^[A-Z]{1}[a-zà-ú`]+(\s[A-Z]{1}[a-zà-ú`]+)+$/)
-        .trim()
-        .required();
-
-    private birthdate: DateSchema = Joi.date().greater('1-1-1900').less('now');
-
     private email: StringSchema = Joi.string()
         .email({
             tlds: {
@@ -41,6 +32,15 @@ export class CreateVolunteerValidation {
         .max(50)
         .trim()
         .required();
+
+    private fullName: StringSchema = Joi.string()
+        .min(3)
+        .max(60)
+        .pattern(/^[A-Z]{1}[a-zà-ú`]+(\s[A-Z]{1}[a-zà-ú`]+)+$/)
+        .trim()
+        .required();
+
+    private birthdate: DateSchema = Joi.date().greater('1-1-1900').less('now');
 
     private cellphoneNumberWithDDD: StringSchema = Joi.string()
         .pattern(/^\([1-9]{2}\) 9[1-9][0-9]{3}-[0-9]{4}$/, '(xx) 9xxxx-xxxx')
@@ -80,33 +80,35 @@ export class CreateVolunteerValidation {
         .valid(...Object.values(Volunteer.howDidKnowOfSDR))
         .required();
 
-    private createVolunteerValidation: ObjectSchema<any>;
-
     constructor(body: BodyBeforeValidate) {
         this.body = body;
-        this.createVolunteerValidation.keys({
-            id: this.id,
-            createdAt: this.createdAt,
-            updatedAt: this.updatedAt,
-            fullName: this.fullName,
-            birthdate: this.birthdate,
-            email: this.email,
-            cellphoneNumberWithDDD: this.cellphoneNumberWithDDD,
-            occupation: this.occupation,
-            university: this.university,
-            semester: this.semester,
-            speciality: this.speciality,
-            listFreeDaysOfWeek: this.listFreeDaysOfWeek,
-            timeOfExperience: this.timeOfExperience,
-            howMuchParticipate: this.howMuchParticipate,
-            howDidKnowOfSDR: this.howDidKnowOfSDR,
-        });
     }
 
     public async validateInput() {
         try {
+            const createVolunteerValidation: ObjectSchema = Joi.object().keys({
+                id: this.id,
+                createdAt: this.createdAt,
+                updatedAt: this.updatedAt,
+                email: this.email,
+                fullName: this.fullName,
+                birthdate: this.birthdate,
+                cellphoneNumberWithDDD: this.cellphoneNumberWithDDD,
+                occupation: this.occupation,
+                university: this.university,
+                semester: this.semester,
+                speciality: this.speciality,
+                listFreeDaysOfWeek: this.listFreeDaysOfWeek,
+                timeOfExperience: this.timeOfExperience,
+                howMuchParticipate: this.howMuchParticipate,
+                howDidKnowOfSDR: this.howDidKnowOfSDR,
+            });
+
             const validatedPayload =
-                await this.createVolunteerValidation.validateAsync(this.body);
+                await createVolunteerValidation.validateAsync(this.body, {
+                    abortEarly: false,
+                    convert: false,
+                });
 
             return validatedPayload;
         } catch (error) {
