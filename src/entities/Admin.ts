@@ -7,7 +7,7 @@ class Admin {
 
     public readonly createdAt?: Number;
 
-    public readonly updatedAt?: Number;
+    public updatedAt?: Number;
 
     public email?: string;
 
@@ -17,10 +17,17 @@ class Admin {
 
     public readonly permissionLevel? = md5(process.env.TOKEN_ONE);
 
-    constructor(email: string, name: string, password: string) {
+    constructor(
+        email: string,
+        name: string,
+        password: string,
+        updatedAt?: number
+    ) {
         this.id = uuidv4();
         this.createdAt = Date.now();
-        this.updatedAt = Date.now();
+
+        if (!updatedAt) this.updatedAt = Date.now();
+
         this.email = email;
         this.name = name;
         this.password = hashSync(password);
