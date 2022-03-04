@@ -15,7 +15,6 @@ provider:
         #     jwtAuthorizationLambda:
         #         type: request
         #         functionName: authorizationProxy
-
     lambdaHashingVersion: 20201221
     environment:
         region: ${self:provider.region}
@@ -86,8 +85,8 @@ functions:
                   - "dynamodb:Query"
                   - "dynamodb:PutItem"
               Resource:
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${${self:custom.volunteersTableName}}"
-                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${${self:custom.volunteersTableName}}/index/email"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
 
 plugins:
     - serverless-plugin-typescript
