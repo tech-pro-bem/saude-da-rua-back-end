@@ -1,2 +1,2 @@
 export * from './APIGatewayResponseValidator';
-export * from './EventGenerator';
+export * from './EventGeneratorFromGatewayV2';
