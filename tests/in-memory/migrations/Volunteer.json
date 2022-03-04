@@ -1,0 +1,21 @@
+{
+    "Table": {
+        "TableName": "Volunteers-Table",
+        "KeySchema": [
+            {
+                "AttributeName": "email",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "email",
+                "AttributeType": "S"
+            }
+        ],
+        "provisionedThoughput": {
+            "ReadCapacityUnits": 1,
+            "WriteCapacityUnits": 1
+        }
+    }
+}
