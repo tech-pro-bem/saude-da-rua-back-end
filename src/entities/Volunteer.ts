@@ -47,7 +47,7 @@ enum howDidKnowOfSDR {
     ANOTHER = 'OUTRO',
 }
 
-type VolunteerProps = {
+type TVolunteerProps = {
     updatedAt?: number;
     email: string;
     fullName: string;
@@ -96,7 +96,7 @@ class Volunteer {
 
     public howDidKnowOfSDR?: howDidKnowOfSDR;
 
-    constructor(props: VolunteerProps) {
+    constructor(props: TVolunteerProps) {
         this.id = uuidv4();
         this.createdAt = Date.now();
 
@@ -109,7 +109,7 @@ class Volunteer {
 }
 
 export {
-    VolunteerProps,
+    TVolunteerProps,
     Volunteer,
     occupation,
     semester,
