@@ -5,9 +5,3 @@ credentials.txt
 .env.test
 .build
 .dynamodb
-src/entities/Volunteers.ts
-src/lambdas/PaginationGetVolunteers.ts
-src/repositories/implementations/DynamoDB/PaginationGetVolunteersDynamoRepository.ts
-src/repositories/implementations/DynamoDB/teste.ts
-src/repositories/interfaces/IPaginationGetVolunteersRepository.ts        
-src/useCases/paginationGetVolunteers/
