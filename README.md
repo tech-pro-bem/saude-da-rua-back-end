@@ -8,11 +8,16 @@
 
 ### Linguagem e Tecnologias:
 
--   AWS Lambda (Node)
--   Amazon S3;
+-   Node;
 -   TypeScript;
 -   Serverless Framework;
--   DynamoDB;
+-   AWS CloudFormation;
+-   AWS Identity and Access Management (IAM);
+-   Amazon API Gateway;
+-   AWS Lambda;
+-   Amazon DynamoDB;
+-   Amazon S3;
+-   Amazon CloudWatch Logs.
 
 ### Gerenciador de pacotes:
 
