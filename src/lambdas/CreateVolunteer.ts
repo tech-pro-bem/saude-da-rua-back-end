@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { CreateVolunteerValidation } from '../utils/validations/volunteerValidations';
-import { VolunteerProps } from '../entities/Volunteer';
+import { TVolunteerProps } from '../entities/Volunteer';
 import createVolunteerUseCase from '../useCases/createVolunteer';
 
 interface IParsedfromEventBody {
@@ -19,13 +19,16 @@ export const handler = async (
         body: '',
     };
     const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
+
     try {
         const createVolunteerValidation = new CreateVolunteerValidation(
             parsedBody
         );
-        const createVolunteerPayloadValidation: VolunteerProps =
+
+        const createVolunteerPayloadValidated: TVolunteerProps =
             await createVolunteerValidation.validateInput();
-        await createVolunteerUseCase.execute(createVolunteerPayloadValidation);
+
+        await createVolunteerUseCase.execute(createVolunteerPayloadValidated);
 
         response.body = JSON.stringify({
             message: 'Successfully create volunteer',
