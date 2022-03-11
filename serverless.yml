@@ -79,8 +79,6 @@ functions:
             - httpApi:
                   path: /create/volunteer
                   method: POST
-                  authorizer:
-                      name: jwtAuthenticationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -97,6 +95,8 @@ functions:
             - httpApi:
                   path: /get/volunteers
                   method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
