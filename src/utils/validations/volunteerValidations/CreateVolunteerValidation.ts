@@ -112,13 +112,34 @@ export class CreateVolunteerValidation {
 
             return validatedPayload;
         } catch (error) {
-            const getDetailsError: string = error.details[0].message;
-            const transformInFriendlyError = getDetailsError.replace(
-                /"/g,
-                '***'
-            );
+            type TErrorDetails = {
+                message: string;
+                path: Array<string>;
+                type: string;
+                context: unknown;
+            };
 
-            throw new ValidationError(transformInFriendlyError);
+            let allErrorMessages = '';
+            let firstInterect = 0;
+
+            const errorDetails: Array<TErrorDetails> = error.details;
+
+            errorDetails.forEach((details) => {
+                const pretfifyErrors = details.message.replace(/"/g, '***');
+
+                if (firstInterect === 0) {
+                    allErrorMessages = `${pretfifyErrors}`;
+                    firstInterect += 1;
+                } else if (firstInterect === errorDetails.length) {
+                    return true;
+                } else {
+                    allErrorMessages = `${allErrorMessages} && ${pretfifyErrors}`;
+                }
+
+                return true;
+            });
+
+            throw new ValidationError(allErrorMessages);
         }
     }
 }
