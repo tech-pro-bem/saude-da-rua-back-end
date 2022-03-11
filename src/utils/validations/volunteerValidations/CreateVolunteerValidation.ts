@@ -120,23 +120,19 @@ export class CreateVolunteerValidation {
             };
 
             let allErrorMessages = '';
-            let firstInterect = 0;
+            let firstInteract = false;
 
             const errorDetails: Array<TErrorDetails> = error.details;
 
             errorDetails.forEach((details) => {
                 const pretfifyErrors = details.message.replace(/"/g, '***');
 
-                if (firstInterect === 0) {
+                if (firstInteract === true) {
                     allErrorMessages = `${pretfifyErrors}`;
-                    firstInterect += 1;
-                } else if (firstInterect === errorDetails.length) {
-                    return true;
+                    firstInteract = false;
                 } else {
                     allErrorMessages = `${allErrorMessages} && ${pretfifyErrors}`;
                 }
-
-                return true;
             });
 
             throw new ValidationError(allErrorMessages);
