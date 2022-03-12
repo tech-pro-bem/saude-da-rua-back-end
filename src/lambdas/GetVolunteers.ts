@@ -9,7 +9,7 @@ type TParsedFromEventQueryString = {
     [name: string]: string;
 };
 
-type TqueryStringParameters = {
+type TQueryStringParameters = {
     offset: string | null;
     limit: number;
 };
@@ -34,7 +34,7 @@ export const handler = async (
             parsedQueryString
         );
 
-        const getVolunteersPayloadValidated: TqueryStringParameters =
+        const getVolunteersPayloadValidated: TQueryStringParameters =
             await getVolunteersValidation.validateInput();
 
         const volunteersListAndLastValueted =
