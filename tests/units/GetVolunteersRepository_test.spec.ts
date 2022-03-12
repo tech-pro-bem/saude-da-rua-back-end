@@ -59,7 +59,7 @@ describe('unit test: get volunteers', () => {
 
     test('get 1 volunteers from the first', async () => {
         const response = await getVolunteersDynamoRepository.getVolunteers(
-            null,
+            undefined,
             1
         );
 
@@ -80,7 +80,7 @@ describe('unit test: get volunteers', () => {
 
     test('get 2 volunteers from the first', async () => {
         const response = await getVolunteersDynamoRepository.getVolunteers(
-            null,
+            undefined,
             3
         );
 
