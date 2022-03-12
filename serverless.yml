@@ -105,6 +105,23 @@ functions:
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
 
+    getOneVolunteer:
+        name: get-one-volunteer
+        handler: src/lambdas/GetOneVolunteer.handler
+        events:
+            - httpApi:
+                  path: /get/one_volunteer
+                  method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+              Resource:
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
+
 plugins:
     - serverless-plugin-typescript
     - serverless-dotenv-plugin
