@@ -107,7 +107,7 @@ export class CreateVolunteerValidation {
             const validatedPayload =
                 await createVolunteerValidation.validateAsync(this.body, {
                     abortEarly: false,
-                    convert: false,
+                    convert: true,
                 });
 
             return validatedPayload;
@@ -120,7 +120,7 @@ export class CreateVolunteerValidation {
             };
 
             let allErrorMessages = '';
-            let firstInteract = false;
+            let firstInteract = true;
 
             const errorDetails: Array<TErrorDetails> = error.details;
 
