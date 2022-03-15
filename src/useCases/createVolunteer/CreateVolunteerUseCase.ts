@@ -11,7 +11,7 @@ class CreateVolunteerUseCase {
 
     private publishTopicToSendEmail: IPublishTopicToSendEmail;
 
-    private sendEmailto: string;
+    private publishTopicWithEmail: string;
 
     constructor(
         createVolunteerRepository: ICreateVolunteerRepository,
@@ -37,7 +37,7 @@ class CreateVolunteerUseCase {
             howDidKnowOfSDR,
         } = createVolunteerRequestData;
 
-        this.sendEmailto = email;
+        this.publishTopicWithEmail = email;
 
         const VolunteerAlreadyExists: boolean =
             await this.createVolunteerRepository.checkIfVolunteerExistsByEmail(
@@ -69,7 +69,9 @@ class CreateVolunteerUseCase {
     }
 
     async publishTopicSendEmail(): Promise<void> {
-        await this.publishTopicToSendEmail.publishTopic(this.sendEmailto);
+        await this.publishTopicToSendEmail.publishTopic(
+            this.publishTopicWithEmail
+        );
     }
 }
 
