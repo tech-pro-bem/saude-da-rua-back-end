@@ -42,5 +42,7 @@ export const handler = async (
         });
     }
 
+    await createVolunteerUseCase.publishTopicSendEmail();
+
     return response;
 };

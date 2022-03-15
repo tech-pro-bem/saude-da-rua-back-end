@@ -20,10 +20,13 @@ provider:
         region: ${self:provider.region}
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
         VOLUNTEERS_TABLE_NAME: ${self:custom.volunteersTableName}
+        SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
+        ACCOUNT_ID: ${aws:accountId}
 
 custom:
     adminsTableName: Admins-Table
     volunteersTableName: Volunteers-Table
+    sendEmailTopicName: MYTOPICTEST
     dynamodb:
         stages:
             - dev
@@ -84,10 +87,11 @@ functions:
               Action:
                   - "dynamodb:Query"
                   - "dynamodb:PutItem"
+                  - "sns:Publish"
               Resource:
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
-
+                  - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.sendEmailTopicName}"
     getVolunteers:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
@@ -104,7 +108,6 @@ functions:
               Resource:
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
-
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
@@ -121,6 +124,18 @@ functions:
               Resource:
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.volunteersTableName}/index/email"
+    sendEmailToVolunteer:
+        name: send-email-to-volunteer
+        handler: src/lambdas/SendEmailToVolunteer.handler
+        events:
+            - sns:
+                  topicName: ${self:custom.sendEmailTopicName}
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "sns:*"
+              Resource:
+                  - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.sendEmailTopicName}"
 
 plugins:
     - serverless-plugin-typescript
