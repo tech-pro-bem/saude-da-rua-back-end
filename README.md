@@ -17,7 +17,8 @@
 -   AWS Lambda;
 -   Amazon DynamoDB;
 -   Amazon S3;
--   Amazon CloudWatch Logs.
+-   Amazon CloudWatch Logs;
+-   Amazon SNS.
 
 ### Gerenciador de pacotes:
 
