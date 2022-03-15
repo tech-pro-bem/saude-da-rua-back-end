@@ -36,7 +36,8 @@
 ### Dependências de produção:
 
 -   jsonwebtoken;
--   joi
+-   joi;
+-   nodemailer.
 
 ### Futuras implementações:
 
