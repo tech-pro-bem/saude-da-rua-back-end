@@ -49,7 +49,7 @@ export class CreateVolunteerDynamoRepository
     public async saveVolunteer(volunteer: Volunteer): Promise<boolean> {
         const newVolunteerParamsToPut: PutItemInput = {
             TableName: process.env.VOLUNTEERS_TABLE_NAME,
-            Item: volunteer as PutItemInputAttributeMap,
+            Item: volunteer as unknown as PutItemInputAttributeMap,
         };
 
         await this.dynamoClientDB.put(newVolunteerParamsToPut).promise();
