@@ -8,12 +8,19 @@ import Joi, {
 import { ValidationError } from '../../../helpers/errors';
 import * as Volunteer from '../../../entities/Volunteer';
 
-type BodyBeforeValidate = {
+type TBodyBeforeValidate = {
     [name: string]: any;
 };
 
+type TErrorDetails = {
+    message: string;
+    path: Array<string>;
+    type: string;
+    context: unknown;
+};
+
 export class CreateVolunteerValidation {
-    private body: BodyBeforeValidate;
+    private body: TBodyBeforeValidate;
 
     private id: Schema = Joi.forbidden();
 
@@ -80,7 +87,7 @@ export class CreateVolunteerValidation {
         .valid(...Object.values(Volunteer.howDidKnowOfSDR))
         .required();
 
-    constructor(body: BodyBeforeValidate) {
+    constructor(body: TBodyBeforeValidate) {
         this.body = body;
     }
 
@@ -112,13 +119,6 @@ export class CreateVolunteerValidation {
 
             return validatedPayload;
         } catch (error) {
-            type TErrorDetails = {
-                message: string;
-                path: Array<string>;
-                type: string;
-                context: unknown;
-            };
-
             let allErrorMessages = '';
             let firstInteract = true;
 
