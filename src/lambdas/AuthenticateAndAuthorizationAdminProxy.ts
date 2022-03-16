@@ -15,7 +15,7 @@ export const handler = async (
     event: APIGatewayRequestAuthorizerEventV2,
     _context: Context,
     callback: Callback
-) => {
+): Promise<APIGatewayAuthorizerResult> => {
     let response: APIGatewayAuthorizerResult = {
         principalId: 'Undefined',
         policyDocument: {
