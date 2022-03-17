@@ -1,5 +1,5 @@
 import Email from '../../entities/Email';
-import { ISendEmailToVolunteer } from '../../services/Nodemailer';
+import { ISendEmailToVolunteer } from '../../services/ISendEmailToVolunteer';
 
 class SendEmailToVolunteerUseCase {
     private sendEmailToVolunteer: ISendEmailToVolunteer;

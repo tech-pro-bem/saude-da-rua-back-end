@@ -1,10 +1,7 @@
 import { config } from 'dotenv';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { GetVolunteersDynamoRepository } from '../../src/repositories/implementations/DynamoDB';
 import {
-    GetVolunteersDynamoRepository,
-    CreateVolunteerDynamoRepository,
-} from '../../src/repositories/implementations/DynamoDB';
-import {
-    Volunteer,
     TVolunteerProps,
     occupation,
     freeDaysOfWeek,
@@ -16,11 +13,17 @@ config({ path: '.env.test' });
 
 describe('unit test: get volunteers', () => {
     let getVolunteersDynamoRepository: GetVolunteersDynamoRepository;
-    let createVolunteerDynamoRepository: CreateVolunteerDynamoRepository;
 
     beforeAll(async () => {
         getVolunteersDynamoRepository = new GetVolunteersDynamoRepository();
-        createVolunteerDynamoRepository = new CreateVolunteerDynamoRepository();
+
+        const jestConfig = {
+            region: 'local-env',
+            endpoint: 'http://localhost:8000',
+            sslEnabled: false,
+        };
+
+        const ddb = new DocumentClient(jestConfig);
 
         const data: TVolunteerProps = {
             email: 'loremipsum@gmail.com',
@@ -48,13 +51,19 @@ describe('unit test: get volunteers', () => {
             howDidKnowOfSDR: howDidKnowOfSDR.ANOTHER,
         };
 
-        const newVolunteer = new Volunteer(data);
+        await ddb
+            .put({
+                TableName: process.env.VOLUNTEERS_TABLE_NAME,
+                Item: data,
+            })
+            .promise();
 
-        const newVolunteer2 = new Volunteer(data2);
-
-        await createVolunteerDynamoRepository.saveVolunteer(newVolunteer);
-
-        await createVolunteerDynamoRepository.saveVolunteer(newVolunteer2);
+        await ddb
+            .put({
+                TableName: process.env.VOLUNTEERS_TABLE_NAME,
+                Item: data2,
+            })
+            .promise();
     });
 
     test('get 1 volunteers from the first', async () => {
