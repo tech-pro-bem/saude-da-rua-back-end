@@ -15,8 +15,10 @@ export class SendEmailToVolunteerNodemailer implements ISendEmailToVolunteer {
 
     public async sendEmail(email: Email): Promise<void> {
         const mailOptions: Options = {
-            name: 'Tech Pro Bem',
-            from: this.gmail,
+            from: {
+                name: 'Tech Pro Bem',
+                address: this.gmail,
+            },
             to: email.to,
             subject: email.subject,
             html: email.htmlMessage,
