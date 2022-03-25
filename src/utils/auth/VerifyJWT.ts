@@ -1,21 +1,23 @@
 import { verify } from 'jsonwebtoken';
 
 interface IPayload {
-    admin: {
-        id: string;
-        name: string;
-    };
-
-    sub: string;
+    email: string;
+    sub?: string;
 }
 
 export class VerifyJWT {
-    private secretKey: string = process.env.JWT_SECRET;
+    private secretKey: string;
 
     private token: string;
 
-    constructor(token: string) {
+    constructor(token: string, jwtType?: string) {
         this.token = token;
+
+        if (jwtType === 'ADMIN') {
+            this.secretKey = process.env.ADMIN_JWT_SECRET_KEY;
+        } else {
+            this.secretKey = process.env.VOLUNTEER_JWT_SECRET_KEY;
+        }
     }
 
     public payloadFromCheckedToken = (): IPayload => {
