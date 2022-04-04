@@ -30,6 +30,8 @@ export const handler = async (
 
         await createVolunteerUseCase.execute(createVolunteerPayloadValidated);
 
+        await createVolunteerUseCase.publishTopicSendEmail();
+
         response.body = JSON.stringify({
             message: 'Successfully create volunteer',
         });
@@ -41,8 +43,6 @@ export const handler = async (
             mainErrorMessage: error.mainErrorMessage,
         });
     }
-
-    await createVolunteerUseCase.publishTopicSendEmail();
 
     return response;
 };

@@ -9,7 +9,7 @@ class Email {
 
     public readonly subject: string;
 
-    public readonly html: string;
+    public readonly htmlMessage: string;
 
     constructor(props: TEmailPorps) {
         Object.assign(this, props);

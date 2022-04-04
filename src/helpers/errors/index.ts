@@ -32,7 +32,7 @@ class AuthenticationError extends DefaultError {
         super({
             code: 401,
             name: 'AuthenticationError',
-            generalErrorMessage: 'Failed to Authenticate Admin account',
+            generalErrorMessage: 'Failed to Authenticate',
             mainErrorMessage,
         });
     }

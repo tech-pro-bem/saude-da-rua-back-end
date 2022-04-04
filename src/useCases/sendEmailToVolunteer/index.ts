@@ -1,4 +1,4 @@
-import { SendEmailToVolunteerNodemailer } from '../../services/Nodemailer';
+import { SendEmailToVolunteerNodemailer } from '../../services/Nodemailer/SendEmailToVolunteerNodemailer';
 import SendEmailToVolunteerUseCase from './SendEmailToVolunteerUseCase';
 
 const sendEmailToVolunteerNodemailer = new SendEmailToVolunteerNodemailer();

@@ -6,6 +6,13 @@ type BodyBeforeValidate = {
     [name: string]: any;
 };
 
+type TErrorDetails = {
+    message: string;
+    path: Array<string>;
+    type: string;
+    context: unknown;
+};
+
 export class CreateAdminValidation extends AdminValidationBase {
     private body: BodyBeforeValidate;
 
@@ -39,13 +46,23 @@ export class CreateAdminValidation extends AdminValidationBase {
 
             return validatedPayload;
         } catch (error) {
-            const getDetailsError: string = error.details[0].message;
-            const transformInFriendlyError = getDetailsError.replace(
-                /"/g,
-                '***'
-            );
+            let allErrorMessages = '';
+            let firstInteract = true;
 
-            throw new ValidationError(transformInFriendlyError);
+            const errorDetails: Array<TErrorDetails> = error.details;
+
+            errorDetails.forEach((details) => {
+                const pretfifyErrors = details.message.replace(/"/g, '***');
+
+                if (firstInteract === true) {
+                    allErrorMessages = `${pretfifyErrors}`;
+                    firstInteract = false;
+                } else {
+                    allErrorMessages = `${allErrorMessages} && ${pretfifyErrors}`;
+                }
+            });
+
+            throw new ValidationError(allErrorMessages);
         }
     }
 }

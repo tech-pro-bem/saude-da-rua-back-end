@@ -96,6 +96,8 @@ class Volunteer {
 
     public howDidKnowOfSDR?: howDidKnowOfSDR;
 
+    public verifiedEmail? = false;
+
     constructor(props: TVolunteerProps) {
         this.id = uuidv4();
         this.createdAt = Date.now();

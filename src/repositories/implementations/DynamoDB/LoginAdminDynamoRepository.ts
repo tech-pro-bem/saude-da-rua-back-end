@@ -30,6 +30,7 @@ export class LoginAdminDynamoRepository
             ExpressionAttributeValues: {
                 ':email': email as AttributeValue,
             },
+            ProjectionExpression: 'email, permissionLevel, password',
         };
 
         const getAdminInfo: QueryOutput | AWSError = await this.dynamoClientDB

@@ -33,13 +33,14 @@ class LoginAdminUseCase {
             throw new NotFoundError('Incorrect Email/Password');
         }
 
-        const createJWT = new CreateJwt(
-            {
+        const createJWT = new CreateJwt({
+            payload: {
                 id: getAdminData.id,
-                name: getAdminData.name,
+                email: getAdminData.email,
             },
-            getAdminData.permissionLevel
-        );
+            options: getAdminData.permissionLevel,
+            jwtType: 'ADMIN',
+        });
 
         const getToken: string = createJWT.buildToken();
 

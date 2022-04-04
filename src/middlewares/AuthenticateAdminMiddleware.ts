@@ -59,19 +59,18 @@ class AuthenticateAdminMiddleware {
 
     public authenticate = (): APIGatewayAuthorizerResult => {
         try {
-            const verifyJWT = new VerifyJWT(this.validToken);
-            const { admin, sub } = verifyJWT.payloadFromCheckedToken();
+            const verifyJWT = new VerifyJWT(this.validToken, 'ADMIN');
+            const { email, sub } = verifyJWT.payloadFromCheckedToken();
 
             return {
-                principalId: admin.id,
+                principalId: email,
                 policyDocument: AuthenticateAdminMiddleware.getPolicyDocument(
                     'Allow',
                     this.event.routeArn
                 ),
                 context: {
                     subject: sub,
-                    adminId: admin.id,
-                    adminName: admin.name,
+                    adminEmail: email,
                 },
             };
         } catch (error) {
