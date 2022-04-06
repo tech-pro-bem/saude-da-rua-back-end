@@ -5,7 +5,6 @@ export type ListFilesParams = {
   to: number
   type: FileType
 }
-
 export interface IListFileRepository {
   listFiles(params: ListFilesParams): Promise<File[]>;
 }

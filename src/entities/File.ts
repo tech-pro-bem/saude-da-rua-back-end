@@ -4,13 +4,10 @@ export enum FileType {
     IMAGE = 'image',
     PDF = 'pdf',
 }
-
-
 export class File {
     public readonly id: string;
     public createdAt: Number;
     public url: string;
-
 
     constructor(
         url: string,
