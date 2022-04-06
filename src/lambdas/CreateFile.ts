@@ -1,7 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { FileType } from '../entities/File';
-// // import { CreateVolunteerValidation } from '../utils/validations/volunteerValidations';
-// import { TVolunteerProps } from '../entities/Volunteer';
 import CreateFileUseCase from '../useCases/createFile';
 
 interface IParsedfromEventBody {
@@ -23,12 +21,7 @@ export const handler = async (
 
     try {
         const fileType = event.pathParameters?.fileType || "";
-        // const createVolunteerValidation = new CreateVolunteerValidation(
-        //     parsedBody
-        // );
 
-        // const createVolunteerPayloadValidated: TVolunteerProps =
-        //     await createVolunteerValidation.validateInput();
         const data = parsedBody?.image?.data || parsedBody?.file?.data;
         const mime = parsedBody?.image?.mime || parsedBody?.file?.mime;
         await  CreateFileUseCase.execute({
