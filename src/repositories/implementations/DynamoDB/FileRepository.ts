@@ -51,7 +51,7 @@ export class FileDynamoRepository
 
         const deleteFile: QueryOutput | AWSError =
             await this.dynamoClientDB.query(deleteFileParams).promise();
-
+        console.log("deleteFile", deleteFile);
         await Promise.all(deleteFile.Items.map(async (item) => {
             const deleteFileParams = {
                 TableName: process.env.FILE_TABLE_NAME,

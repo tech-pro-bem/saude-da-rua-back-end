@@ -17,21 +17,20 @@ export class UploadFileUseCase {
     }
 
     const buffer = Buffer.from(params.base64File, 'base64');
+    const key = `${params.fileType}#${uuidv4()}`;
+    const url = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/${key}`;
+    const file = new File(key, url);
 
-    const key = `${uuidv4()}.${params.fileType}`;
     await s3
       .putObject({
-      Body: buffer,
-      Key: key,
-      ContentType: params.fileMimeType,
-      Bucket: process.env.FILE_BUCKET_NAME,
-      ACL: 'public-read',
+        Body: buffer,
+        Key: key,
+        ContentType: params.fileMimeType,
+        Bucket: process.env.FILE_BUCKET_NAME,
+        ACL: 'public-read',
       })
       .promise();
-
-    const url = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/${key}`;
       
-    const file = new File(url, params.fileType);
     await this.createFileRepository.createFile(file);
     
     return file;

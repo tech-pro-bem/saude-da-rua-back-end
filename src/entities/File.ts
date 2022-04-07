@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export enum FileType {
     IMAGE = 'image',
     PDF = 'pdf',
@@ -10,10 +8,10 @@ export class File {
     public url: string;
 
     constructor(
+        id: string,
         url: string,
-        type: FileType,
     ) {
-        this.id = `${type}#${uuidv4()}`;
+        this.id = id;
         this.createdAt = Date.now();
         this.url = url;
     }

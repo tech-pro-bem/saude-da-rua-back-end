@@ -9,7 +9,7 @@ export class DeleFileUseCase {
 
   public async execute(params: DeleteFileDTO.Params): Promise<void> {
     await s3.deleteObject({
-        Bucket: process.env.imageUploadBucket,
+        Bucket: process.env.FILE_BUCKET_NAME,
         Key: params.fileId,
     }).promise()
     await this.deleteFileRepo.deleteFile(params.fileId);

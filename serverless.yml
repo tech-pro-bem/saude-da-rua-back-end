@@ -103,13 +103,35 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
 
+    deleteFile:
+        name: delete-file
+        handler: src/lambdas/DeleteFile.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}/{fileId}
+                  method: DELETE
+                  #   authorizer:
+                  #     name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:DeleteItem"
+                  - "s3:*"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
+                  - "arn:aws:s3:::*"
+
     createFile:
         name: create-file
         handler: src/lambdas/CreateFile.handler
         events:
             - httpApi:
-                  path: /create/file/{fileType}
+                  path: /file/{fileType}
                   method: POST
+                  #   authorizer:
+                  #     name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
