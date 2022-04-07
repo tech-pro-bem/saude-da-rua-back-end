@@ -5,3 +5,6 @@ export * from './IGetVolunteersRepository';
 export * from './IGetOneVolunteerRepository';
 export * from './IPublishTopicToSendEmail';
 export * from './IVerifyVolunteerEmailRepository';
+export * from './IListFileRepository';
+export * from './ICreateFileRepository';
+export * from './IDeleteFileRepository';
