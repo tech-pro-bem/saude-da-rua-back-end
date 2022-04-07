@@ -3,16 +3,20 @@ export enum FileType {
     PDF = 'pdf',
 }
 export class File {
-    public readonly id: string;
+    public readonly fileId: string;
     public createdAt: Number;
+    public readonly fileType: FileType;
     public url: string;
 
     constructor(
-        id: string,
+        fileId: string,
+        fileType: FileType,
         url: string,
+        createdAt?: Number,
     ) {
-        this.id = id;
-        this.createdAt = Date.now();
+        this.fileId = fileId;
+        this.fileType = fileType;
+        this.createdAt = createdAt || Date.now();
         this.url = url;
     }
 }

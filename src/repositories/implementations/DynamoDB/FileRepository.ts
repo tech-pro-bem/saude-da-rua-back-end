@@ -27,7 +27,8 @@ export class FileDynamoRepository
         const newFileParamsToPut: PutItemInput = {
             TableName: process.env.FILE_TABLE_NAME,
             Item: {
-                "id": file.id,
+                "fileId": file.fileId,
+                "fileType": file.fileType,
                 "createdAt": file.createdAt,
                 "url": file.url,
                 
@@ -39,25 +40,24 @@ export class FileDynamoRepository
     public async deleteFile(fileId: string): Promise<void> {
         const deleteFileParams: QueryInput = {
             TableName: process.env.FILE_TABLE_NAME,
-            KeyConditionExpression: '#id = :id',
+            KeyConditionExpression: '#fileId = :fileId',
             ExpressionAttributeNames: {
-                '#id': 'id',
+                '#fileId': 'fileId',
             },
             ExpressionAttributeValues: {
-                ':id': fileId as AttributeValue,
+                ':fileId': fileId as AttributeValue,
             },
             
         };
 
         const deleteFile: QueryOutput | AWSError =
             await this.dynamoClientDB.query(deleteFileParams).promise();
-        console.log("deleteFile", deleteFile);
         await Promise.all(deleteFile.Items.map(async (item) => {
             const deleteFileParams = {
                 TableName: process.env.FILE_TABLE_NAME,
                 Key: {
-                    id: item.id,
-                    createdAt: item.createdAt,
+                    fileId: item.fileId,
+                    FileType: item.fileType,
                 }
             };
 
@@ -69,17 +69,14 @@ export class FileDynamoRepository
     public async listFiles(params: ListFilesParams): Promise<File[]> {
         const listFilesParams: QueryInput = {
             TableName: process.env.FILE_TABLE_NAME,
-            KeyConditionExpression: '#type = :type',
-            // ExpressionAttributeNames: {
-            //     '#type': 'type',
-            // },
-            // ExpressionAttributeValues: {
-            //     ':type': params.type as AttributeValue,
-            // },
-            // Limit: params.to - params.from,
-            // ExclusiveStartKey: {
-            //     id: params.from.toString(),
-            // },
+            KeyConditionExpression: '#fileType = :fileType',
+            ExpressionAttributeNames: {
+                '#fileType': 'fileType',
+            },
+            ExpressionAttributeValues: {
+                ':fileType': params.type as AttributeValue,
+            },
+            
         };
 
         const listFiles: QueryOutput | AWSError =
@@ -88,7 +85,13 @@ export class FileDynamoRepository
         if (listFiles.Count === 0) {
             return [];
         }
-
-        return []
+        return listFiles.Items.map((item) => {
+            return new File(
+                item.fileId as string,
+                item.fileType as FileType,
+                item.url as string,
+                item.createdAt as number
+            );
+        })
     }
 }

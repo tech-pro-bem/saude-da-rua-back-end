@@ -35,7 +35,7 @@ custom:
     adminsTableName: Admins-Table
     volunteersTableName: Volunteers-Table
     sendEmailTopicName: Send-Email
-    filesTableName: Files-Table
+    filesTableName: File-Table
     filesBucketName: fileuploadbucket-123
     dynamodb:
         stages:
@@ -108,10 +108,10 @@ functions:
         handler: src/lambdas/DeleteFile.handler
         events:
             - httpApi:
-                  path: /file/{fileType}/{fileId}
+                  path: /file/{fileId}
                   method: DELETE
-                  #   authorizer:
-                  #     name: jwtAuthorizationLambda
+                  authorizer:
+                      name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -130,8 +130,8 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
-                  #   authorizer:
-                  #     name: jwtAuthorizationLambda
+                  authorizer:
+                      name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -142,6 +142,23 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
                   - "arn:aws:s3:::*"
+
+    listFiles:
+        name: list-files
+        handler: src/lambdas/ListFiles.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}
+                  method: GET
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
 
     getVolunteers:
         name: get-volunteers
@@ -248,14 +265,14 @@ resources:
             Properties:
                 TableName: ${self:custom.filesTableName}
                 AttributeDefinitions:
-                    - AttributeName: id
+                    - AttributeName: fileType
                       AttributeType: S
-                    - AttributeName: createdAt
-                      AttributeType: N
+                    - AttributeName: fileId
+                      AttributeType: S
                 KeySchema:
-                    - AttributeName: id
+                    - AttributeName: fileType
                       KeyType: HASH
-                    - AttributeName: createdAt
+                    - AttributeName: fileId
                       KeyType: RANGE
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
