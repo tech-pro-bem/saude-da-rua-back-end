@@ -1,4 +1,4 @@
 /* eslint-disable no-unused-vars */
-export interface IPublishTopicToSendEmail {
+export interface IPublishTopicToSendEmailRepository {
     publishTopic(email: string): Promise<void>;
 }
