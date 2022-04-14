@@ -20,8 +20,8 @@ provider:
         region: ${self:provider.region}
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
         VOLUNTEERS_TABLE_NAME: ${self:custom.volunteersTableName}
-        FILE_TABLE_NAME: ${self:custom.filesTableName}
-        FILE_BUCKET_NAME: ${self:custom.filesBucketName}
+        IMAGES_URLS_TABLE_NAME: ${self:custom.imagesUrlsTableName}
+        PDFS_URLS_TABLE_NAME: ${self:custom.pdfsUrlsTableName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
     iamRoleStatements:
@@ -35,7 +35,8 @@ custom:
     adminsTableName: Admins-Table
     volunteersTableName: Volunteers-Table
     sendEmailTopicName: Send-Email
-    filesTableName: File-Table
+    imagesUrlsTableName: Images-Url-Table
+    pdfsUrlsTableName: PDFs-Url-Table
     filesBucketName: fileuploadbucket-123
     dynamodb:
         stages:
@@ -102,64 +103,6 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
-
-    deleteFile:
-        name: delete-file
-        handler: src/lambdas/DeleteFile.handler
-        events:
-            - httpApi:
-                  path: /file/{fileId}
-                  method: DELETE
-                  authorizer:
-                      name: jwtAuthorizationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:DeleteItem"
-                  - "s3:*"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
-                  - "arn:aws:s3:::*"
-
-    createFile:
-        name: create-file
-        handler: src/lambdas/CreateFile.handler
-        events:
-            - httpApi:
-                  path: /file/{fileType}
-                  method: POST
-                  authorizer:
-                      name: jwtAuthorizationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:PutItem"
-                  - "s3:*"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
-                  - "arn:aws:s3:::*"
-
-    listFiles:
-        name: list-files
-        handler: src/lambdas/ListFiles.handler
-        events:
-            - httpApi:
-                  path: /file/{fileType}
-                  method: GET
-                  authorizer:
-                      name: jwtAuthorizationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
-
     getVolunteers:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
@@ -219,6 +162,66 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
+    createFile:
+        name: create-file
+        handler: src/lambdas/CreateFile.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}
+                  method: POST
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              # Limitar mais o arn para todos os arquivos
+              Action:
+                  - "dynamodb:PutItem"
+                  - "s3:PutObject"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.imagesUrlsTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.imagesUrlsTableName}/index/imageId"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}/index/pdfId"
+                  - "arn:aws:s3:::*"
+    deleteFile:
+        name: delete-file
+        handler: src/lambdas/DeleteFile.handler
+        events:
+            # vai ter que vir outro path parameter para o tipo do arquivo?
+            - httpApi:
+                  path: /file/{fileId}
+                  method: DELETE
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:DeleteItem"
+                  - "s3:DeleteObject"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.imagesUrlsTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.imagesUrlsTableName}/index/imageId"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}/index/pdfId"
+                  - "arn:aws:s3:::*"
+    # Aproveitar essa lambda para listar tanto para admins quanto para pessoas comuns
+    # Dividar listar arquivos para todos os arquivos é melhor
+    listFiles:
+        name: list-files
+        handler: src/lambdas/ListFiles.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}
+                  method: GET
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
 
 plugins:
     - serverless-plugin-typescript
@@ -260,20 +263,33 @@ resources:
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1
-        FilesTable:
+        ImagesUrlTable:
             Type: AWS::DynamoDB::Table
             Properties:
-                TableName: ${self:custom.filesTableName}
+                TableName: ${self:custom.imagesUrlsTableName}
                 AttributeDefinitions:
-                    - AttributeName: fileType
+                    - AttributeName: imageId
                       AttributeType: S
-                    - AttributeName: fileId
+                    - AttributeName: url
                       AttributeType: S
                 KeySchema:
-                    - AttributeName: fileType
+                    - AttributeName: imageId
                       KeyType: HASH
-                    - AttributeName: fileId
-                      KeyType: RANGE
+                ProvisionedThroughput:
+                    ReadCapacityUnits: 1
+                    WriteCapacityUnits: 1
+        PdfsUrlTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.pdfsUrlsTableName}
+                AttributeDefinitions:
+                    - AttributeName: pdfId
+                      AttributeType: S
+                    - AttributeName: url
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: pdfId
+                      KeyType: HASH
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1

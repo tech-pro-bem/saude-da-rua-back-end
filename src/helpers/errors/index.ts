@@ -93,6 +93,17 @@ class UnknownError extends DefaultError {
     }
 }
 
+class InternalServerError extends DefaultError {
+    constructor() {
+        super({
+            code: 500,
+            name: 'InternalServerError',
+            generalErrorMessage: 'Internal Server Error',
+            mainErrorMessage: 'There is an error in our infrastructure',
+        });
+    }
+}
+
 export {
     DefaultError,
     AuthenticationError,
@@ -101,4 +112,5 @@ export {
     ConflictError,
     ValidationError,
     UnknownError,
+    InternalServerError,
 };
