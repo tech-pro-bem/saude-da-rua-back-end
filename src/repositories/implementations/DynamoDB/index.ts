@@ -4,3 +4,4 @@ export * from './CreateVolunteerDynamoRepository';
 export * from './GetVolunteersDynamoRepository';
 export * from './GetOneVolunteerDynamoRepository';
 export * from './VerifyVolunteerEmailDynamoRepository';
+export * from './FileRepository';

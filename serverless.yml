@@ -20,13 +20,23 @@ provider:
         region: ${self:provider.region}
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
         VOLUNTEERS_TABLE_NAME: ${self:custom.volunteersTableName}
+        FILE_TABLE_NAME: ${self:custom.filesTableName}
+        FILE_BUCKET_NAME: ${self:custom.filesBucketName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - s3:*
+              - dynamodb:*
+          Resource: "*"
 
 custom:
     adminsTableName: Admins-Table
     volunteersTableName: Volunteers-Table
     sendEmailTopicName: Send-Email
+    filesTableName: File-Table
+    filesBucketName: fileuploadbucket-123
     dynamodb:
         stages:
             - dev
@@ -92,6 +102,64 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
+
+    deleteFile:
+        name: delete-file
+        handler: src/lambdas/DeleteFile.handler
+        events:
+            - httpApi:
+                  path: /file/{fileId}
+                  method: DELETE
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:DeleteItem"
+                  - "s3:*"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
+                  - "arn:aws:s3:::*"
+
+    createFile:
+        name: create-file
+        handler: src/lambdas/CreateFile.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}
+                  method: POST
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:PutItem"
+                  - "s3:*"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
+                  - "arn:aws:s3:::*"
+
+    listFiles:
+        name: list-files
+        handler: src/lambdas/ListFiles.handler
+        events:
+            - httpApi:
+                  path: /file/{fileType}
+                  method: GET
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+              Resource:
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
+                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
+
     getVolunteers:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
@@ -161,9 +229,13 @@ plugins:
 
 resources:
     Resources:
+        ImageUploadBucket:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: ${self:custom.filesBucketName}
+                AccessControl: PublicRead
         AdminsTable:
             Type: AWS::DynamoDB::Table
-            DeletionPolicy: Retain
             Properties:
                 TableName: ${self:custom.adminsTableName}
                 AttributeDefinitions:
@@ -177,7 +249,6 @@ resources:
                     WriteCapacityUnits: 1
         VolunteersTable:
             Type: AWS::DynamoDB::Table
-            DeletionPolicy: Retain
             Properties:
                 TableName: ${self:custom.volunteersTableName}
                 AttributeDefinitions:
@@ -186,6 +257,23 @@ resources:
                 KeySchema:
                     - AttributeName: email
                       KeyType: HASH
+                ProvisionedThroughput:
+                    ReadCapacityUnits: 1
+                    WriteCapacityUnits: 1
+        FilesTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.filesTableName}
+                AttributeDefinitions:
+                    - AttributeName: fileType
+                      AttributeType: S
+                    - AttributeName: fileId
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: fileType
+                      KeyType: HASH
+                    - AttributeName: fileId
+                      KeyType: RANGE
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1
