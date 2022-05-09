@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { FileType } from '../../entities/File';
+import { File } from '../../entities/File';
 
 export interface ISaveFileUrlRepository {
-    saveUrl(fileId: string, fileType: FileType): Promise<void>;
+    saveFileData(file: File): Promise<string | Error>;
 }

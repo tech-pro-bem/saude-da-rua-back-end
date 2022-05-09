@@ -1,11 +1,14 @@
 import {
     DocumentClient,
     PutItemInput,
+    PutItemOutput,
     PutItemInputAttributeMap,
 } from 'aws-sdk/clients/dynamodb';
 import { ISaveFileUrlRepository } from '../../interfaces';
 import { DynamoDocumentClientCredentials } from '../../../helpers/database/DynamoDocumentClient';
-import { FileType } from '../../../entities/File';
+import { File } from '../../../entities/File';
+import { AWSError } from 'aws-sdk';
+import { InternalServerError } from '../../../helpers/errors';
 
 export class SaveFileUrlDynamoRepository
     extends DynamoDocumentClientCredentials
@@ -13,29 +16,26 @@ export class SaveFileUrlDynamoRepository
 {
     private dynamoClientDB: DocumentClient;
 
-    private urlBase = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/`;
+    private filesTableName = process.env.FILES_TABLE_NAME;
 
     constructor() {
         super();
         this.dynamoClientDB = super.getDynamoClient();
     }
 
-    public async saveUrl(fileId: string, fileType: FileType): Promise<void> {
-        let tableName: string;
-
-        this.urlBase += fileId;
-
-        if (fileType === FileType.IMAGE) {
-            tableName = process.env.IMAGES_URLS_TABLE_NAME;
-        } else {
-            tableName = process.env.PDFS_URLS_TABLE_NAME;
-        }
-
+    public async saveFileData(file: File): Promise<string | InternalServerError> {
         const saveFilesUrlParams: PutItemInput = {
-            TableName: tableName,
-            Item: this.urlBase as unknown as PutItemInputAttributeMap,
+            TableName: this.filesTableName,
+            Item: file as unknown as PutItemInputAttributeMap,
         };
 
-        await this.dynamoClientDB.put(saveFilesUrlParams).promise();
+        const outputFromDynamo: PutItemOutput | AWSError = 
+             await this.dynamoClientDB.put(saveFilesUrlParams).promise();
+
+        if(outputFromDynamo instanceof Error) {
+            throw new InternalServerError('There was an error trying to save the information to our database');
+        }
+
+        return file.fileUrl;
     }
 }

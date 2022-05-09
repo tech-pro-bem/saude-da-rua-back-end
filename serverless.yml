@@ -20,8 +20,8 @@ provider:
         region: ${self:provider.region}
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
         VOLUNTEERS_TABLE_NAME: ${self:custom.volunteersTableName}
-        IMAGES_URLS_TABLE_NAME: ${self:custom.imagesUrlsTableName}
-        PDFS_URLS_TABLE_NAME: ${self:custom.pdfsUrlsTableName}
+        FILES_TABLE_NAME: ${self:custom.filesTableName}
+        FILES_BUCKET_NAME: ${self:custom.filesBucketName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
     iamRoleStatements:
@@ -34,10 +34,9 @@ provider:
 custom:
     adminsTableName: Admins-Table
     volunteersTableName: Volunteers-Table
+    filesTableName: Files-Table
+    filesBucketName: Files-Bucket
     sendEmailTopicName: Send-Email
-    imagesUrlsTableName: Images-Url-Table
-    pdfsUrlsTableName: PDFs-Url-Table
-    filesBucketName: fileuploadbucket-123
     dynamodb:
         stages:
             - dev
@@ -169,6 +168,7 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
+                  # Autorização restrita somente ao master?
                   authorizer:
                       name: jwtAuthorizationLambda
         iamRoleStatements:
@@ -263,33 +263,20 @@ resources:
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1
-        ImagesUrlTable:
+        FilesTable:
             Type: AWS::DynamoDB::Table
             Properties:
-                TableName: ${self:custom.imagesUrlsTableName}
+                TableName: ${self:custom.filesTableName}
                 AttributeDefinitions:
-                    - AttributeName: imageId
+                    - AttributeName: fileType
                       AttributeType: S
-                    - AttributeName: url
+                    - AttributeName: fileId
                       AttributeType: S
                 KeySchema:
-                    - AttributeName: imageId
+                    - AttributeName: fileType
                       KeyType: HASH
-                ProvisionedThroughput:
-                    ReadCapacityUnits: 1
-                    WriteCapacityUnits: 1
-        PdfsUrlTable:
-            Type: AWS::DynamoDB::Table
-            Properties:
-                TableName: ${self:custom.pdfsUrlsTableName}
-                AttributeDefinitions:
-                    - AttributeName: pdfId
-                      AttributeType: S
-                    - AttributeName: url
-                      AttributeType: S
-                KeySchema:
-                    - AttributeName: pdfId
-                      KeyType: HASH
+                    - AttributeName: fileId
+                      KeyType: RANGE
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1

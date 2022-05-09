@@ -3,21 +3,34 @@ import { v4 as uuidv4 } from 'uuid';
 
 export enum FileType {
     IMAGE = 'image',
+
     PDF = 'pdf',
 }
-export class File {
-    public readonly createdAt: Number;
 
+export enum AllowedMimes {
+    IMAGE_JPEG = 'image/jpeg',
+
+    IMAGE_JPG = 'image/jpg',
+
+    IMAGE_PNG = 'image/png',
+
+    APP_PDF = 'application/pdf',
+}
+
+export class File {
     public readonly fileId: string;
 
     public readonly fileType: FileType;
 
-    public url: string;
+    public readonly createdAt: Number;
 
-    constructor(fileType: FileType, url: string) {
+    public fileUrl: string;
+
+    constructor(fileType: FileType, fileUrl: string) {
         this.fileId = uuidv4();
-        this.fileType = fileType;
         this.createdAt = Date.now();
-        this.url = url;
+
+        this.fileType = fileType;
+        this.fileUrl = fileUrl;
     }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { File } from '../../entities/File';
+import { FileType } from '../../entities/File';
 
 export interface IUploadFileRepository {
-    uploadFile(file: File, data: Buffer): Promise<void | Error>;
+    uploadFile(fileId: string, fileType: FileType, data: Buffer): Promise<string | Error>;
 }

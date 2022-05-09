@@ -94,12 +94,12 @@ class UnknownError extends DefaultError {
 }
 
 class InternalServerError extends DefaultError {
-    constructor() {
+    constructor(mainErrorMessage: string) {
         super({
             code: 500,
             name: 'InternalServerError',
             generalErrorMessage: 'Internal Server Error',
-            mainErrorMessage: 'There is an error in our infrastructure',
+            mainErrorMessage,
         });
     }
 }
