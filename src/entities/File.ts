@@ -26,11 +26,10 @@ export class File {
 
     public fileUrl: string;
 
-    constructor(fileType: FileType, fileUrl: string) {
+    constructor(fileType: FileType) {
         this.fileId = uuidv4();
         this.createdAt = Date.now();
 
         this.fileType = fileType;
-        this.fileUrl = fileUrl;
     }
 }

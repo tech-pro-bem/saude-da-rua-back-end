@@ -23,7 +23,7 @@ export class SaveFileUrlDynamoRepository
         this.dynamoClientDB = super.getDynamoClient();
     }
 
-    public async saveFileData(file: File): Promise<string | InternalServerError> {
+    public async saveFileData(file: File): Promise<boolean | InternalServerError> {
         const saveFilesUrlParams: PutItemInput = {
             TableName: this.filesTableName,
             Item: file as unknown as PutItemInputAttributeMap,
@@ -36,6 +36,6 @@ export class SaveFileUrlDynamoRepository
             throw new InternalServerError('There was an error trying to save the information to our database');
         }
 
-        return file.fileUrl;
+        return true;
     }
 }

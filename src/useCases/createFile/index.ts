@@ -1,8 +1,14 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
-import { UploadFileUseCase } from './CreateFileUseCase';
+import { UploadFileToS3Repository } from '../../repositories/implementations/S3';
+import { SaveFileUrlDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import UploadFileUseCase from './CreateFileUseCase';
 
-const createFileDynamoRepository = new FileDynamoRepository();
+const uploadFileToS3Repository = new UploadFileToS3Repository();
 
-const createFileUseCase = new UploadFileUseCase(createFileDynamoRepository);
+const saveFileUrlDynamoRepository = new SaveFileUrlDynamoRepository();
 
-export default createFileUseCase;
+const uploadFileUseCase = new UploadFileUseCase(
+    uploadFileToS3Repository,
+    saveFileUrlDynamoRepository
+);
+
+export default uploadFileUseCase;
