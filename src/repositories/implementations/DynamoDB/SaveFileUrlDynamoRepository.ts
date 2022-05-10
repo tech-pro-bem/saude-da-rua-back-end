@@ -4,7 +4,7 @@ import {
     PutItemOutput,
     PutItemInputAttributeMap,
 } from 'aws-sdk/clients/dynamodb';
-import { ISaveFileUrlRepository } from '../../interfaces';
+import { ISaveFileInfoRepository } from '../../interfaces';
 import { DynamoDocumentClientCredentials } from '../../../helpers/database/DynamoDocumentClient';
 import { File } from '../../../entities/File';
 import { AWSError } from 'aws-sdk';
@@ -12,7 +12,7 @@ import { InternalServerError } from '../../../helpers/errors';
 
 export class SaveFileUrlDynamoRepository
     extends DynamoDocumentClientCredentials
-    implements ISaveFileUrlRepository
+    implements ISaveFileInfoRepository
 {
     private dynamoClientDB: DocumentClient;
 

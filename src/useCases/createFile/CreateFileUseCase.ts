@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { S3 } from 'aws-sdk';
 import { File } from '../../entities/File';
-import { IUploadFileRepository, ISaveFileUrlRepository } from '../../repositories/interfaces';
+import { IUploadFileRepository, ISaveFileInfoRepository } from '../../repositories/interfaces';
 import { CreateFileDTO } from './CreateFileDTO';
 import { InternalServerError } from '../../helpers/errors';
 // import { ValidationError } from '../../helpers/errors';
@@ -9,11 +9,11 @@ import { InternalServerError } from '../../helpers/errors';
 class UploadFileUseCase {
     private uploadFileRepository: IUploadFileRepository;
 
-    private saveFileUrlRepository: ISaveFileUrlRepository;
+    private saveFileUrlRepository: ISaveFileInfoRepository;
 
     constructor(
         createFileRepository: IUploadFileRepository,
-        saveFileUrlRepository: ISaveFileUrlRepository
+        saveFileUrlRepository: ISaveFileInfoRepository
         ) {
             this.uploadFileRepository = createFileRepository;
             this.saveFileUrlRepository = saveFileUrlRepository;
