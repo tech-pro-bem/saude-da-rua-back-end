@@ -9,4 +9,4 @@ export * from './IListFileRepository';
 export * from './ICreateFileRepository';
 export * from './IDeleteFileRepository';
 export * from './IUploadFileRepository';
-export * from './ISaveFileUrlRepository';
+export * from './ISaveFileInfoRepository';
