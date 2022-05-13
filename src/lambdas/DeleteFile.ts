@@ -22,10 +22,10 @@ export const handler = async (
         body: '',
     };
 
-    const parsedBody: TParsedFromEventQueryString = event.queryStringParameters;
+    const parsedQueryString: TParsedFromEventQueryString = event.queryStringParameters;
 
     try {
-        const deleteFileValidation = new DeleteFileValidation(parsedBody);
+        const deleteFileValidation = new DeleteFileValidation(parsedQueryString);
 
         const deleteFilePayloadValidated: IPayloadDeleteFileValidation =
             await deleteFileValidation.validateInput();
