@@ -32,6 +32,10 @@ export const handler = async (
 
         await deleteFileUseCase.execute(deleteFilePayloadValidated);
 
+        response.body = JSON.stringify({
+            mainMessage: 'File deleted successfully'
+        })
+
     } catch (error) {
         response.statusCode = error.code;
         response.body = JSON.stringify({
