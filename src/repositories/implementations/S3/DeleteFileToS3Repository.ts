@@ -12,7 +12,7 @@ export class DeleteFileToS3Repository implements IDeleteFileRepository {
         this.s3Connection = new S3();
     }
 
-    public async deleteFile(fileId: string): Promise<void> {
+    public async deleteFile(fileId: string): Promise<void | Error> {
         const deleteFileParams: DeleteObjectRequest = {
             Bucket: this.tableName,
             Key: fileId

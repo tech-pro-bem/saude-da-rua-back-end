@@ -1,5 +1,14 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import DeleFileUseCase from '../useCases/deleteFile';
+import { DeleteFileValidation } from '../utils/validations/fileValidations';
+import deleteFileUseCase from '../useCases/deleteFile';
+
+type TParsedFromEventQueryString = {
+    [name: string]: any;
+}
+
+type IPayloadDeleteFileValidation = {
+    fileId: string;
+}
 
 export const handler = async (
     event: APIGatewayProxyEvent
@@ -13,15 +22,23 @@ export const handler = async (
         body: '',
     };
 
+    const parsedBody: TParsedFromEventQueryString = event.queryStringParameters;
+
     try {
-        const fileId = event.pathParameters?.fileId || "";
-        await  DeleFileUseCase.execute({
-            fileId: fileId,
-        });
+        const deleteFileValidation = new DeleteFileValidation(parsedBody);
+
+        const deleteFilePayloadValidated: IPayloadDeleteFileValidation =
+            await deleteFileValidation.validateInput();
+
+        await deleteFileUseCase.execute(deleteFilePayloadValidated);
 
     } catch (error) {
         response.statusCode = error.code;
-        response.body = JSON.stringify({});
+        response.body = JSON.stringify({
+            errorClassName: error.name,
+            generalErrorMessage: error.generalErrorMessage,
+            mainErrorMessage: error.mainErrorMessage,
+        });
     }
 
     return response;

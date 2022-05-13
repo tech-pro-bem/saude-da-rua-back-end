@@ -1,17 +1,23 @@
-import { IDeleteFileRepository } from '../../repositories/interfaces';
+import { IDeleteFileInfoDatabaseRepository, IDeleteFileRepository } from "../../repositories/interfaces";
 import { DeleteFileDTO } from './DeleteFileDTO';
-import { S3 } from 'aws-sdk';
 
-const s3 = new S3();
+class DeleFileUseCase {
+    private deteleFileRepository: IDeleteFileRepository;
 
-export class DeleFileUseCase {
-  constructor(private deleteFileRepo: IDeleteFileRepository) {}
+    private deleteFileInfoRepository: IDeleteFileInfoDatabaseRepository;
 
-  public async execute(params: DeleteFileDTO.Params): Promise<void> {
-    await s3.deleteObject({
-        Bucket: process.env.FILE_BUCKET_NAME,
-        Key: params.fileId,
-    }).promise()
-    await this.deleteFileRepo.deleteFile(params.fileId);
-  }
+    constructor(deleteFileRepo: IDeleteFileRepository, deleteFileInfoRepository: IDeleteFileInfoDatabaseRepository) {
+        this.deteleFileRepository = deleteFileRepo;
+        this.deleteFileInfoRepository = deleteFileInfoRepository;
+    }
+
+    public async execute(params: DeleteFileDTO.Params): Promise<void> {
+        const { fileId } = params;
+
+        await this.deteleFileRepository.deleteFile(fileId);
+
+        await this.deleteFileInfoRepository.deleteFileInfo(fileId);
+    }
 }
+
+export default DeleFileUseCase;

@@ -1,3 +1,3 @@
 export interface IDeleteFileRepository {
-    deleteFile(fileId: string): Promise<void>;
+    deleteFile(fileId: string): Promise<void | Error>;
 }

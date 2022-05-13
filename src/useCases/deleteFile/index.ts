@@ -1,8 +1,11 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
-import { DeleFileUseCase } from './DeleteFileUseCase';
+import { DeleteFileToS3Repository } from '../../repositories/implementations/S3'; 
+import { DeleteFileInfoDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import DeleFileUseCase from './DeleteFileUseCase';
 
-const deleteFileDynamoRepository = new FileDynamoRepository();
+const deleteFileRepository = new DeleteFileToS3Repository();
 
-const deleteFileUseCase = new DeleFileUseCase(deleteFileDynamoRepository);
+const deleteFileDynamoRepository = new DeleteFileInfoDynamoRepository();
+
+const deleteFileUseCase = new DeleFileUseCase(deleteFileRepository, deleteFileDynamoRepository);
 
 export default deleteFileUseCase;
