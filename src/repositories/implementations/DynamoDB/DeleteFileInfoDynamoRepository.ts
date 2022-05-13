@@ -6,12 +6,12 @@ import {
     DeleteItemOutput,
 } from 'aws-sdk/clients/dynamodb';
 import { DynamoDocumentClientCredentials } from "../../../helpers/database/DynamoDocumentClient";
-import { IDeleteFileInfoDynamoRepository } from "../../interfaces/IDeleteFileInfoDynamoRepository";
+import { IDeleteFileInfoDatabaseRepository } from "../../interfaces/IDeleteFileInfoDatabaseRepository";
 import { InternalServerError } from '../../../helpers/errors'
 
 export class DeleteFileInfoDynamoRepository 
     extends DynamoDocumentClientCredentials 
-    implements IDeleteFileInfoDynamoRepository
+    implements IDeleteFileInfoDatabaseRepository
     {
         private dynamoClientDB: DocumentClient;
 
