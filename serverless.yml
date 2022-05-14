@@ -168,9 +168,8 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
-                  # Autorização restrita somente ao master?
                   authorizer:
-                      name: jwtAuthorizationLambda
+                      name: jwtAuthenticationLambda
         iamRoleStatements:
             - Effect: "Allow"
               # Limitar mais o arn para todos os arquivos
@@ -187,12 +186,11 @@ functions:
         name: delete-file
         handler: src/lambdas/DeleteFile.handler
         events:
-            # vai ter que vir outro path parameter para o tipo do arquivo?
             - httpApi:
                   path: /file/{fileId}
                   method: DELETE
                   authorizer:
-                      name: jwtAuthorizationLambda
+                      name: jwtAuthenticationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -204,17 +202,15 @@ functions:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.pdfsUrlsTableName}/index/pdfId"
                   - "arn:aws:s3:::*"
-    # Aproveitar essa lambda para listar tanto para admins quanto para pessoas comuns
-    # Dividar listar arquivos para todos os arquivos é melhor
-    listFiles:
-        name: list-files
+    listFilesAdmin:
+        name: list-files-admin
         handler: src/lambdas/ListFiles.handler
         events:
             - httpApi:
                   path: /file/{fileType}
                   method: GET
                   authorizer:
-                      name: jwtAuthorizationLambda
+                      name: jwtAuthenticationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
