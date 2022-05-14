@@ -6,3 +6,4 @@ export * from './GetOneVolunteerDynamoRepository';
 export * from './VerifyVolunteerEmailDynamoRepository';
 export * from './SaveFileInfoDynamoRepository';
 export * from './DeleteFileInfoDynamoRepository';
+export * from './ListFilesInfoDynamoRepository';

@@ -18,18 +18,33 @@ export enum AllowedMimes {
 }
 
 export class File {
-    public readonly fileId: string;
+    public createdAt: Number;
 
-    public readonly fileType: FileType;
+    public fileType: FileType;
 
-    public readonly createdAt: Number;
+    public fileId: string;
 
-    public fileUrl: string;
+    public url: string;
 
-    constructor(fileType: FileType) {
-        this.fileId = uuidv4();
-        this.createdAt = Date.now();
+    constructor(
+        fileType: FileType,
+        url: string,
+        fileId?: string, 
+        createdAt?: Number
+        ) {
+        if(!createdAt) {
+            this.createdAt = Date.now();
+        } else {
+            this.createdAt = createdAt;
+        }
+        
+        if(!fileId) {
+            this.fileId = uuidv4();
+        } else {
+            this.fileId = fileId;
+        }
 
         this.fileType = fileType;
+        this.url = url;
     }
 }
