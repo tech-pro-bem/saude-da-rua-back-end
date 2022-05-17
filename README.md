@@ -75,7 +75,7 @@
 
 ### Mensagens Internas
 
-<p>Rotas utilizadas pela aplicação web para executar metodos de POST e GET no banco de dados. Onde o retorno de cada uma das funções estara contido em uma sessão para renderização de páginas web.</p>
+<p>Rotas utilizadas pela aplicação web para executar metodos de POST e GET no banco de dados. Onde o retorno de cada uma das funções estará contido em uma sessão para renderização de páginas web.</p>
 
 | Verbo | Rota | Funcionalidade|
 |-------|------|---------------|
