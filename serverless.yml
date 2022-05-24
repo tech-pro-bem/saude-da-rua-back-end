@@ -85,6 +85,21 @@ functions:
               Resource:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}/index/email"
+    deleteAdmin:              
+        name: delete-admin
+        handler: src/lambdas/DeleteAdmin.handler
+        events:
+            - httpApi:
+                 path: /delete/admin
+                 method: DELETE                
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:DeleteItem"
+              Resource:
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}"
+                  - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.adminsTableName}/index/email"
     createVolunteer:
         name: create-volunteer
         handler: src/lambdas/CreateVolunteer.handler
