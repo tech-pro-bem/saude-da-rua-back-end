@@ -92,7 +92,7 @@
 
 ### Futuras implementações:
 
--   Upload de Imagens;
--   Upload de PDF;
+-   Filtros de consulta no painel de administrador;
 -   Consultas complexas;
 -   Documentação de API com Swagger UI com deploy no Github Pages
+
