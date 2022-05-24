@@ -166,7 +166,7 @@ functions:
         handler: src/lambdas/CreateFile.handler
         events:
             - httpApi:
-                  path: /file/{fileType}
+                  path: /create/file/{fileType}
                   method: POST
                   authorizer:
                       name: jwtAuthenticationLambda
@@ -187,7 +187,7 @@ functions:
         handler: src/lambdas/DeleteFile.handler
         events:
             - httpApi:
-                  path: /file/{fileId}
+                  path: /delete/file/{fileId}
                   method: DELETE
                   authorizer:
                       name: jwtAuthenticationLambda
