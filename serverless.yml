@@ -192,6 +192,22 @@ functions:
               Resource:
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
                   - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
+    putUpdateVolunteer: 
+        name: update-volunteer
+        handler: src/lambdas/UpdateVolunteer.handler
+        events: 
+            - httpApi:
+                path: /update/volunteer/{email}
+                method: PUT
+                authorizer:
+                    name: jwtAuthenticationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:UpdateItem"
+              Resource:
+                - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
+                - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/lambdas/SendEmailToVolunteer.handler
