@@ -1,7 +1,7 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { ListFilesInfoDynamoRepository } from '../../repositories/implementations/DynamoDB';
 import { ListFilesUseCase } from './ListFilesUseCase';
 
-const listFilesDynamoRepository = new FileDynamoRepository();
+const listFilesDynamoRepository = new ListFilesInfoDynamoRepository();
 
 const listFilesUseCase = new ListFilesUseCase(listFilesDynamoRepository);
 

@@ -93,6 +93,17 @@ class UnknownError extends DefaultError {
     }
 }
 
+class InternalServerError extends DefaultError {
+    constructor(mainErrorMessage: string) {
+        super({
+            code: 500,
+            name: 'InternalServerError',
+            generalErrorMessage: 'Internal Server Error',
+            mainErrorMessage,
+        });
+    }
+}
+
 export {
     DefaultError,
     AuthenticationError,
@@ -101,4 +112,5 @@ export {
     ConflictError,
     ValidationError,
     UnknownError,
+    InternalServerError,
 };

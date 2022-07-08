@@ -1,14 +1,20 @@
-import { IListFileRepository, ListFilesParams } from '../../repositories/interfaces';
 import { File } from '../../entities/File';
+import TListFilesDTO from './ListFilesDTO';
+import { IListFilesInfoRepository } from '../../repositories/interfaces';
 
 export class ListFilesUseCase {
-  constructor(private listFileRepo: IListFileRepository) {}
+    private listFileInfoRepository: IListFilesInfoRepository; 
 
-  public async execute(params: ListFilesParams): Promise<File[]> {
-    return await this.listFileRepo.listFiles({
-      type: params.type,
-      to: params.to,
-      from: params.from
-    });
-  }
+    constructor(listFileInfoRepository: IListFilesInfoRepository) {
+        this.listFileInfoRepository = listFileInfoRepository;
+    }   
+
+    async execute(listFilesRequestData: TListFilesDTO): Promise<Array<File> | Error>{
+        const { fileType } = listFilesRequestData;
+
+        const listFilesInfo: Promise<Array<File> | Error>  = 
+            this.listFileInfoRepository.listFiles(fileType);
+
+        return listFilesInfo;
+    }
 }

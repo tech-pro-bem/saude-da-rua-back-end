@@ -17,14 +17,17 @@ export const handler = async (
         },
         body: '',
     };
+
     const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
     try {
-        const fileType = event.pathParameters?.fileType || "";
+        const fileType = event.pathParameters?.fileType || '';
 
         const data = parsedBody?.image?.data || parsedBody?.file?.data;
+
         const mime = parsedBody?.image?.mime || parsedBody?.file?.mime;
-        await  CreateFileUseCase.execute({
+
+        const urlFile = await CreateFileUseCase.execute({
             base64File: data,
             fileType: fileType as FileType,
             fileMimeType: mime,
@@ -32,6 +35,7 @@ export const handler = async (
 
         response.body = JSON.stringify({
             message: 'Successfully create a new file',
+            urlFile
         });
     } catch (error) {
         response.statusCode = error.code;

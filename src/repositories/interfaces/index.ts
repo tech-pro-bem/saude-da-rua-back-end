@@ -3,8 +3,11 @@ export * from './ILoginAdminRepository';
 export * from './ICreateVolunteerRepository';
 export * from './IGetVolunteersRepository';
 export * from './IGetOneVolunteerRepository';
-export * from './IPublishTopicToSendEmail';
+export * from './IPublishTopicToSendEmailRepository';
 export * from './IVerifyVolunteerEmailRepository';
-export * from './IListFileRepository';
 export * from './ICreateFileRepository';
 export * from './IDeleteFileRepository';
+export * from './IDeleteFileInfoDatabaseRepository'
+export * from './IUploadFileRepository';
+export * from './ISaveFileInfoRepository';
+export * from './IListFilesInfoRepository';

@@ -1,23 +1,50 @@
+/* eslint-disable no-unused-vars */
+import { v4 as uuidv4 } from 'uuid';
+
 export enum FileType {
     IMAGE = 'image',
+
     PDF = 'pdf',
 }
+
+export enum AllowedMimes {
+    IMAGE_JPEG = 'image/jpeg',
+
+    IMAGE_JPG = 'image/jpg',
+
+    IMAGE_PNG = 'image/png',
+
+    APP_PDF = 'application/pdf',
+}
+
 export class File {
-    public readonly fileId: string;
     public createdAt: Number;
-    public readonly fileType: FileType;
+
+    public fileType: FileType;
+
+    public fileId: string;
+
     public url: string;
 
     constructor(
-        fileId: string,
         fileType: FileType,
         url: string,
-        createdAt?: Number,
-    ) {
-        this.fileId = fileId;
+        fileId?: string, 
+        createdAt?: Number
+        ) {
+        if(!createdAt) {
+            this.createdAt = Date.now();
+        } else {
+            this.createdAt = createdAt;
+        }
+        
+        if(!fileId) {
+            this.fileId = uuidv4();
+        } else {
+            this.fileId = fileId;
+        }
+
         this.fileType = fileType;
-        this.createdAt = createdAt || Date.now();
         this.url = url;
     }
 }
-

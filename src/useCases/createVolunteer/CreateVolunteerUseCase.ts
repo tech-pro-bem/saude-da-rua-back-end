@@ -1,7 +1,7 @@
 import { Volunteer } from '../../entities/Volunteer';
 import {
     ICreateVolunteerRepository,
-    IPublishTopicToSendEmail,
+    IPublishTopicToSendEmailRepository,
 } from '../../repositories/interfaces';
 import ICreateVolunteerRequestDTO from './CreateVolunteerRequestDTO';
 import { ConflictError } from '../../helpers/errors';
@@ -9,13 +9,13 @@ import { ConflictError } from '../../helpers/errors';
 class CreateVolunteerUseCase {
     private createVolunteerRepository: ICreateVolunteerRepository;
 
-    private publishTopicToSendEmail: IPublishTopicToSendEmail;
+    private publishTopicToSendEmail: IPublishTopicToSendEmailRepository;
 
     private publishTopicWithEmail: string;
 
     constructor(
         createVolunteerRepository: ICreateVolunteerRepository,
-        publishTopicToSendEmail: IPublishTopicToSendEmail
+        publishTopicToSendEmail: IPublishTopicToSendEmailRepository
     ) {
         this.createVolunteerRepository = createVolunteerRepository;
         this.publishTopicToSendEmail = publishTopicToSendEmail;

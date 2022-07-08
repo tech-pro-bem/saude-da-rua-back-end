@@ -1,6 +1,15 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { FileType } from '../entities/File';
-import ListFilesUseCase from '../useCases/listFile';
+import { ListFileValidation } from '../utils/validations/fileValidations';
+import listFilesUseCase from '../useCases/listFile';
+
+type TParsedFromEventQueryString = {
+    [name: string]: string;
+};
+
+type TQueryStringParameters = {
+    fileType: FileType
+}
 
 export const handler = async (
     event: APIGatewayProxyEvent
@@ -14,18 +23,26 @@ export const handler = async (
         body: '',
     };
 
-    try {
-        const fileType = event.pathParameters?.fileType || "";
-        const files = await  ListFilesUseCase.execute({
-            from: Number(event.queryStringParameters?.from || 0),
-            to: Number(event.queryStringParameters?.to || 0),
-            type: fileType as FileType,
-        });
+    const parsedQueryString: TParsedFromEventQueryString = event.queryStringParameters;
 
-        response.body = JSON.stringify(files);
+    try {
+        const listFileValidation = new ListFileValidation(parsedQueryString);
+
+        const listFilePayloadValidated: TQueryStringParameters =
+            await listFileValidation.validateInput();
+
+        const files = await listFilesUseCase.execute(listFilePayloadValidated);
+
+        response.body = JSON.stringify({
+            files
+        });
     } catch (error) {
         response.statusCode = error.code;
-        response.body = JSON.stringify({});
+        response.body = JSON.stringify({
+            errorClassName: error.name,
+            generalErrorMessage: error.generalErrorMessage,
+            mainErrorMessage: error.mainErrorMessage,
+        });
     }
 
     return response;

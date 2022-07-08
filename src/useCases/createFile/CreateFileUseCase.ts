@@ -1,38 +1,50 @@
-import { File } from '../../entities/File';
-import { ICreateFileRepository } from '../../repositories/interfaces';
 import { v4 as uuidv4 } from 'uuid';
-import { CreateFileDTO } from './CreateFileDTO';
-import { ValidationError } from '../../helpers/errors';
 import { S3 } from 'aws-sdk';
+import { File } from '../../entities/File';
+import { IUploadFileRepository, ISaveFileInfoRepository } from '../../repositories/interfaces';
+import { CreateFileDTO } from './CreateFileDTO';
+import { InternalServerError } from '../../helpers/errors';
+// import { ValidationError } from '../../helpers/errors';
 
-const s3 = new S3();
-const allowedMimes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+class UploadFileUseCase {
+    private uploadFileRepository: IUploadFileRepository;
 
-export class UploadFileUseCase {
-  constructor(private createFileRepository: ICreateFileRepository) {}
+    private saveFileUrlRepository: ISaveFileInfoRepository;
 
-  public async execute(params: CreateFileDTO.Params): Promise<File> {
-    if (!allowedMimes.includes(params.fileMimeType)) {
-      throw new ValidationError('Invalid mime type');
+    constructor(
+        createFileRepository: IUploadFileRepository,
+        saveFileUrlRepository: ISaveFileInfoRepository
+        ) {
+            this.uploadFileRepository = createFileRepository;
+            this.saveFileUrlRepository = saveFileUrlRepository;
     }
 
-    const buffer = Buffer.from(params.base64File, 'base64');
-    const key = uuidv4();
-    const url = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/${key}`;
-    const file = new File(key, params.fileType, url);
+    async execute(params: CreateFileDTO.Params): Promise<string> {
+        // Validação
+        //if (!allowedMimes.includes(params.fileMimeType)) {
+        //    throw new ValidationError('Invalid mime type');
+        //}
+        let newFile = new File(params.fileType);
+        const bufferFile = Buffer.from(params.base64File, 'base64');
+        
+        const fileS3Url = await this.uploadFileRepository.uploadFile(
+            newFile.fileId, newFile.fileType, bufferFile
+        );
 
-    await s3
-      .putObject({
-        Body: buffer,
-        Key: key,
-        ContentType: params.fileMimeType,
-        Bucket: process.env.FILE_BUCKET_NAME,
-        ACL: 'public-read',
-      })
-      .promise();
-      
-    await this.createFileRepository.createFile(file);
-    
-    return file;
-  }
+        if(fileS3Url instanceof Error) {
+            throw new InternalServerError('There is an Error in our file bank providers');
+        }
+
+        newFile.fileUrl = fileS3Url;
+
+        const saveFileInfoIntoDB = await this.saveFileUrlRepository.saveFileData(newFile);
+
+        if(saveFileInfoIntoDB instanceof Error) {
+            throw new InternalServerError('There is an Error in our database providers');
+        }
+
+        return fileS3Url;
+    }
 }
+
+export default UploadFileUseCase;

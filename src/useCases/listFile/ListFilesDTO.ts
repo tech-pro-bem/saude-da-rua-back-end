@@ -1,4 +1,7 @@
-import { ListFilesParams } from '../../repositories/interfaces';
-export namespace ListFilesDTO {
-    export type Params = ListFilesParams
+import { FileType } from "../../entities/File"
+
+type TListFilesDTO = {
+    fileType: FileType
 }
+
+export default TListFilesDTO;
