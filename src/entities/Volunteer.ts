@@ -64,21 +64,21 @@ type TVolunteerProps = {
 };
 
 class Volunteer {
-    public readonly id?: string;
+    public readonly id: string;
 
-    public readonly createdAt?: number;
+    public readonly createdAt: number;
 
     public updatedAt?: number;
 
-    public email?: string;
+    public email: string;
 
-    public fullName?: string;
+    public fullName: string;
 
-    public birthdate?: string;
+    public birthdate: string;
 
-    public cellphoneNumberWithDDD?: string;
+    public cellphoneNumberWithDDD: string;
 
-    public occupation?: occupation;
+    public occupation: occupation;
 
     public university?: string;
 
@@ -86,17 +86,17 @@ class Volunteer {
 
     public speciality?: string;
 
-    public listFreeDaysOfWeek?: Array<freeDaysOfWeek>;
+    public listFreeDaysOfWeek: Array<freeDaysOfWeek>;
 
-    public numberOfFreeDaysOfWeek?: number;
+    public numberOfFreeDaysOfWeek: number;
 
-    public timeOfExperience?: string;
+    public timeOfExperience: string;
 
-    public howMuchParticipate?: howMuchParticipate;
+    public howMuchParticipate: howMuchParticipate;
 
-    public howDidKnowOfSDR?: howDidKnowOfSDR;
+    public howDidKnowOfSDR: howDidKnowOfSDR;
 
-    public verifiedEmail? = false;
+    public verifiedEmail = false;
 
     constructor(props: TVolunteerProps) {
         this.id = uuidv4();

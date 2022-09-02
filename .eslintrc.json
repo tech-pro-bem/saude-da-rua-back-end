@@ -16,8 +16,7 @@
             "error",
             {
                 "singleQuote": true,
-                "parser": "typescript",
-                "endOfLine": "lf"
+                "parser": "typescript"
             }
         ],
         "no-shadow": "off",

@@ -8,13 +8,13 @@ provider:
     stage: dev
     httpApi:
         cors: true
-        authorizers:
-            jwtAuthenticationLambda:
-                type: request
-                functionName: authenticationProxy
-            jwtAuthorizationLambda:
-                type: request
-                functionName: authorizationProxy
+    #       authorizers:
+    #           jwtAuthenticationLambda:
+    #               type: request
+    #               functionName: authenticationProxy
+    #           jwtAuthorizationLambda:
+    #               type: request
+    #               functionName: authorizationProxy
     environment:
         region: ${self:provider.region}
         ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
@@ -24,13 +24,13 @@ provider:
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
     iam:
-     role:
-        statements:
-          - Effect: Allow
-            Action:
-              - s3:*
-              - dynamodb:*
-            Resource: "*"
+        role:
+            statements:
+                - Effect: Allow
+                  Action:
+                      - s3:*
+                      - dynamodb:*
+                  Resource: "*"
 
 custom:
     adminsTableName: Admins-Table
@@ -47,6 +47,8 @@ custom:
             migrate: true
         migration:
             dir: tests/in-memory/migrations
+    serverless-offline:
+        host: 127.0.0.1
 
 functions:
     authenticationProxy:
@@ -76,9 +78,9 @@ functions:
             - httpApi:
                   path: /create/admin
                   method: POST
-                  authorizer:
-                      name: jwtAuthorizationLambda
-                      type: request
+        #                  authorizer:
+        #                     name: jwtAuthorizationLambda
+        #                      type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -112,9 +114,9 @@ functions:
             - httpApi:
                   path: /file/{fileId}
                   method: DELETE
-                  authorizer:
-                      name: jwtAuthorizationLambda
-                      type: request
+        #                  authorizer:
+        #                      name: jwtAuthorizationLambda
+        #                      type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -133,9 +135,9 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
-                  authorizer:
-                      name: jwtAuthorizationLambda
-                      type: request
+        #                 authorizer:
+        #                     name: jwtAuthorizationLambda
+        #                     type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -154,9 +156,9 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: GET
-                  authorizer:
-                      name: jwtAuthorizationLambda
-                      type: request
+        #             authorizer:
+        #                 name: jwtAuthorizationLambda
+        #                type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -172,9 +174,9 @@ functions:
             - httpApi:
                   path: /get/volunteers
                   method: GET
-                  authorizer:
-                      name: jwtAuthenticationLambda
-                      type: request
+        #          authorizer:
+        #                name: jwtAuthenticationLambda
+        #               type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -189,9 +191,9 @@ functions:
             - httpApi:
                   path: /get/one_volunteer
                   method: GET
-                  authorizer:
-                      name: jwtAuthenticationLambda
-                      type: request
+        #          authorizer:
+        #              name: jwtAuthenticationLambda
+        #              type: request
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -284,4 +286,3 @@ resources:
                 ProvisionedThroughput:
                     ReadCapacityUnits: 1
                     WriteCapacityUnits: 1
-
