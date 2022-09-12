@@ -107,14 +107,14 @@ type TVolunteerProps = {
 
 class Volunteer {
     constructor(props: TVolunteerProps) {
-        this.id = props.id || uuidv4();
-        this.createdAt = props.createdAt || Date.now();
-        this.updatedAt = props.updatedAt || Date.now();
-
-        this.numberOfFreeDaysOfWeek = props.listFreeDaysOfWeek.length;
-        this.verifiedEmail = props.verifiedEmail || false;
-
-        Object.assign(this, props);
+        Object.assign(this, {
+            ...props,
+            id: props.id || uuidv4(),
+            createdAt: props.createdAt || Date.now(),
+            updatedAt: props.updatedAt,
+            numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
+            verifiedEmail: props.verifiedEmail || false,
+        });
     }
 
     public readonly id: string;
