@@ -35,6 +35,6 @@ export class GetOneVolunteerDynamoRepository
         const getVolunteerInfo: QueryOutput | AWSError =
             await this.dynamoClientDB.query(queryVolunteerParams).promise();
 
-        return getVolunteerInfo.Items[0];
+        return getVolunteerInfo.Items[0] as unknown as Volunteer;
     }
 }

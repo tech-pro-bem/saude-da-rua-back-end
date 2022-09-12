@@ -5,20 +5,21 @@ import {
     howMuchParticipate,
     howDidKnowOfSDR,
 } from '../../entities/Volunteer';
+import { constEnumType } from '../../utils/ConstEnumType';
 
 type ICreateVolunteerRequestDTO = {
     email: string;
     fullName: string;
     birthdate: string;
     cellphoneNumberWithDDD: string;
-    occupation: occupation;
+    occupation: constEnumType<typeof occupation>;
     university?: string;
-    semester?: semester;
+    semester?: constEnumType<typeof semester>;
     speciality?: string;
-    listFreeDaysOfWeek: Array<freeDaysOfWeek>;
+    listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience: string;
-    howMuchParticipate: howMuchParticipate;
-    howDidKnowOfSDR: howDidKnowOfSDR;
+    howMuchParticipate: constEnumType<typeof howMuchParticipate>;
+    howDidKnowOfSDR: constEnumType<typeof howDidKnowOfSDR>;
 };
 
 export default ICreateVolunteerRequestDTO;

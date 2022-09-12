@@ -5,6 +5,7 @@
   "repository": "https://github.com/Gabriel-Albuquerque-repo/saude-da-rua.git",
   "scripts": {
     "deploy": "serverless deploy --verbose",
+    "dev": "sls offline",
     "test": "jest"
   },
   "devDependencies": {

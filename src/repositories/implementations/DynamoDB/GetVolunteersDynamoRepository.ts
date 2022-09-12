@@ -47,7 +47,7 @@ export class GetVolunteersDynamoRepository
 
         const { Items, LastEvaluatedKey } = partOfVolunteers;
 
-        const volunteersList = Items as Volunteer[];
+        const volunteersList = Items as unknown as Volunteer[];
 
         const lastEvaluatedParsed = LastEvaluatedKey as TlastEvaluatedParsed;
 

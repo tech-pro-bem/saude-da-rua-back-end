@@ -10,6 +10,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Occupation {
+  MEDICO
+  ENFERMEIRO
+  FARMACEUTICO
+  ESTUDANTE
+}
+
+enum Semester {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHTH
+  NINTH
+  TENTH
+  MORE
+}
+
+enum FreeDaysOfWeek {
+  DOMINGO
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+}
+
+enum HowMuchParticipate {
+  NOT_PARTICIPATED
+  ONE_PARTICIPATION
+  BETWEEN_TWO_AND_FIVE_PARTICIPATION
+  MORE_THAN_FIVE_PARTICIPATION
+}
+
+enum HowDidKnowOfSDR {
+  SITE
+  INSTAGRAM
+  POSTS
+  EDUCATIONAL_INSTITUTIONS
+  OTHER
+}
+
 model Volunteer {
   id String @id
 
@@ -17,12 +63,12 @@ model Volunteer {
   fullName               String
   birthdate              String
   cellphoneNumberWithDDD String
-  occupation             String
-  semester               String? // enum
-  listFreeDaysOfWeek     String[] // enum
+  occupation             Occupation
+  semester               Semester? // enum
+  listFreeDaysOfWeek     FreeDaysOfWeek[] // enum
   numberOfFreeDaysOfWeek Int
-  howMuchParticipate     String // enum
-  howDidKnowOfSDR        String //enum
+  howMuchParticipate     HowMuchParticipate // enum
+  howDidKnowOfSDR        HowDidKnowOfSDR //enum
   verifiedEmail          Boolean
   timeOfExperience       String
   speciality             String?
