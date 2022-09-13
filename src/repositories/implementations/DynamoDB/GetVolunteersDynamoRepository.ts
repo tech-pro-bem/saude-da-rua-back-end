@@ -6,12 +6,16 @@ import {
 } from 'aws-sdk/clients/dynamodb';
 import { AWSError } from 'aws-sdk';
 import { Volunteer } from '../../../entities/Volunteer';
-import { IGetVolunteersRepository } from '../../interfaces';
+import {
+    IGetVolunteersRepository,
+    RequestGetVolunteers,
+    ResponseGetVolunteers,
+} from '../../interfaces';
 import { DynamoDocumentClientCredentials } from '../../../helpers/database/DynamoDocumentClient';
 
-type TlastEvaluatedParsed = {
-    email: string;
-};
+interface TlastEvaluatedParsed {
+    id: string;
+}
 
 export class GetVolunteersDynamoRepository
     extends DynamoDocumentClientCredentials
@@ -24,12 +28,13 @@ export class GetVolunteersDynamoRepository
         this.dynamoClientDB = super.getDynamoClient();
     }
 
-    public async getVolunteers(
-        offset: string | null,
-        limit: number
-    ): Promise<[TlastEvaluatedParsed, Volunteer[]]> {
+    public async getVolunteers({
+        offset,
+        limit,
+        lastVolunteerId,
+    }: RequestGetVolunteers): Promise<ResponseGetVolunteers> {
         const offsetParsed = {
-            email: offset,
+            email: lastVolunteerId,
         } as Key;
 
         const exclusiveStartKey = offset !== undefined ? offsetParsed : null;
@@ -51,6 +56,11 @@ export class GetVolunteersDynamoRepository
 
         const lastEvaluatedParsed = LastEvaluatedKey as TlastEvaluatedParsed;
 
-        return [lastEvaluatedParsed, volunteersList];
+        const content: ResponseGetVolunteers = {
+            id: lastEvaluatedParsed,
+            volunteers: volunteersList,
+        };
+
+        return content;
     }
 }

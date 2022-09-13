@@ -1,13 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { Volunteer } from '../../entities/Volunteer';
 
-type TLastEvaluatedKey = {
-    email: string;
+export type RequestGetVolunteers = {
+    offset: number | null;
+    limit: number;
+    lastVolunteerId: string | null;
+};
+
+export type ResponseGetVolunteers = {
+    id: string | null;
+    volunteers: Volunteer[];
 };
 
 export interface IGetVolunteersRepository {
-    getVolunteers(
-        offset: string | null,
-        limit: number
-    ): Promise<[TLastEvaluatedKey | null, Volunteer[]]>;
+    getVolunteers({
+        offset,
+        limit,
+        lastVolunteerId,
+    }: RequestGetVolunteers): Promise<ResponseGetVolunteers>;
 }
