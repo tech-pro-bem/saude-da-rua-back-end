@@ -15,6 +15,12 @@ export class LoginAdminPrismaRepository
     }
 
     async getAdminInfoByEmail(email: string): Promise<Admin> {
-        const queryAdminParams = await this.prisma.ad
+        const queryAdminParams = await this.prisma.admin.findFirst({
+            where: {
+                email,
+            },
+        });
+
+        return queryAdminParams;
     }
 }
