@@ -28,7 +28,7 @@ class Admin {
 
     public passwordHash: string;
 
-    public readonly permissionLevel? = md5(process.env.TOKEN_ONE);
+    public readonly permissionLevel = md5(process.env.TOKEN_ONE);
 
     constructor(props: TAdminProps) {
         Object.assign(this, {
