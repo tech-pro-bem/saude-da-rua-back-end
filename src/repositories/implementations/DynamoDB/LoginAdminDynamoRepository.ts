@@ -20,7 +20,7 @@ export class LoginAdminDynamoRepository
         this.dynamoClientDB = super.getDynamoClient();
     }
 
-    async getAdminInfoByEmail(email: string): Promise<Admin | AWSError> {
+    public async getAdminInfoByEmail(email: string): Promise<Admin | AWSError> {
         const queryAdminParams: QueryInput = {
             TableName: process.env.ADMINS_TABLE_NAME,
             KeyConditionExpression: '#email = :email',
