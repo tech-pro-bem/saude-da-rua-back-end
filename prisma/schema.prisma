@@ -92,3 +92,19 @@ model Admin {
 
   @@map("admins")
 }
+
+enum FileType {
+  IMAGE
+  PDF
+}
+
+model File {
+  id String @id
+
+  fileType FileType
+  url      String
+
+  createdAt Int
+
+  @@map("files")
+}

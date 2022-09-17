@@ -15,11 +15,11 @@ export const handler = async (
     };
 
     try {
-        const fileType = event.pathParameters?.fileType || "";
-        const files = await  ListFilesUseCase.execute({
+        const fileType = event.pathParameters?.fileType || '';
+        const files = await ListFilesUseCase.execute({
             from: Number(event.queryStringParameters?.from || 0),
             to: Number(event.queryStringParameters?.to || 0),
-            type: fileType as FileType,
+            type: fileType as constEnumType<typeof FileType>,
         });
 
         response.body = JSON.stringify(files);

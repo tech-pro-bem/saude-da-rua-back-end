@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import md5 from 'md5';
 
-type TVolunteerProps = {
+type TAdminProps = {
     id?: string;
 
     name: string;
@@ -30,7 +30,7 @@ class Admin {
 
     public readonly permissionLevel? = md5(process.env.TOKEN_ONE);
 
-    constructor(props: TVolunteerProps) {
+    constructor(props: TAdminProps) {
         Object.assign(this, {
             ...props,
             id: props.id || uuidv4(),

@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { FileType } from '../entities/File';
 import CreateFileUseCase from '../useCases/createFile';
+import { constEnumType } from '../utils/ConstEnumType';
 
 interface IParsedfromEventBody {
     [name: string]: any;
@@ -20,13 +21,13 @@ export const handler = async (
     const parsedBody: IParsedfromEventBody = JSON.parse(event.body);
 
     try {
-        const fileType = event.pathParameters?.fileType || "";
+        const fileType = event.pathParameters?.fileType || '';
 
         const data = parsedBody?.image?.data || parsedBody?.file?.data;
         const mime = parsedBody?.image?.mime || parsedBody?.file?.mime;
-        await  CreateFileUseCase.execute({
+        await CreateFileUseCase.execute({
             base64File: data,
-            fileType: fileType as FileType,
+            fileType: fileType as constEnumType<typeof FileType>,
             fileMimeType: mime,
         });
 
