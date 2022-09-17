@@ -36,9 +36,13 @@ export class GetVolunteersPrismaRepository
 
         const lastVolunteerInSearch = listOfVolunteers[limit - 1];
 
+        const volunteers = listOfVolunteers.map(
+            (volunteer) => new Volunteer(volunteer)
+        );
+
         return {
             id: lastVolunteerInSearch.id,
-            volunteers: listOfVolunteers,
+            volunteers,
         };
     }
 }

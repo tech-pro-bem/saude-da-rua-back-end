@@ -26,6 +26,7 @@ export class VerifyVolunteerEmailPrismaRepository
             },
             data: {
                 ...updateVolunteerInput,
+                verifiedEmail: true,
             },
         });
     }
