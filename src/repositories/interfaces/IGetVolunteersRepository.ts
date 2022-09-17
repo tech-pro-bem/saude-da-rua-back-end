@@ -14,7 +14,6 @@ export type ResponseGetVolunteers = {
 
 export interface IGetVolunteersRepository {
     getVolunteers({
-        offset,
         limit,
         lastVolunteerId,
     }: RequestGetVolunteers): Promise<ResponseGetVolunteers>;

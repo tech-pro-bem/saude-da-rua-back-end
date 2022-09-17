@@ -19,30 +19,26 @@ export class GetVolunteersPrismaRepository
     }
 
     async getVolunteers({
-        offset,
         limit,
         lastVolunteerId,
     }: RequestGetVolunteers): Promise<ResponseGetVolunteers> {
-        const partOfVolunteers = (await this.prisma.volunteer.findMany({
+        const listOfVolunteers = (await this.prisma.volunteer.findMany({
             take: limit,
-            skip: offset,
             cursor: {
                 id: lastVolunteerId,
             },
             where: {
                 email: {
-                    contains: '.com',
+                    contains: '@',
                 },
             },
         })) as Volunteer[];
 
-        const lastVolunterInResults = partOfVolunteers[offset - 1];
+        const lastVolunteerInSearch = listOfVolunteers[limit - 1];
 
-        const content: ResponseGetVolunteers = {
-            id: lastVolunterInResults.id,
-            volunteers: partOfVolunteers,
+        return {
+            id: lastVolunteerInSearch.id,
+            volunteers: listOfVolunteers,
         };
-
-        return content;
     }
 }
