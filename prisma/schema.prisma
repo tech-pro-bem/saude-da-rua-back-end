@@ -79,3 +79,16 @@ model Volunteer {
 
   @@map("volunteers")
 }
+
+model Admin {
+  id String @id
+
+  email        String
+  name         String
+  passwordHash String
+
+  createdAt Int
+  updatedAt Int
+
+  @@map("admins")
+}
