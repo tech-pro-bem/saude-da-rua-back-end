@@ -111,7 +111,7 @@ class Volunteer {
             ...props,
             id: props.id || uuidv4(),
             createdAt: props.createdAt || Date.now(),
-            updatedAt: props.updatedAt,
+            updatedAt: props.updatedAt || Date.now(),
             numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
             verifiedEmail: props.verifiedEmail || false,
         });

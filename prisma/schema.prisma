@@ -79,3 +79,33 @@ model Volunteer {
 
   @@map("volunteers")
 }
+
+model Admin {
+  id String @id
+
+  email           String
+  name            String
+  permissionLevel String
+  passwordHash    String
+
+  createdAt Int
+  updatedAt Int
+
+  @@map("admins")
+}
+
+enum FileType {
+  IMAGE
+  PDF
+}
+
+model File {
+  id String @id
+
+  fileType FileType
+  url      String
+
+  createdAt Int
+
+  @@map("files")
+}

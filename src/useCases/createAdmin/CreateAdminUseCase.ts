@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs';
 import Admin from '../../entities/Admin';
 import { ICreateAdminRepository } from '../../repositories/interfaces';
 import ICreateAdminRequestDTO from './CreateAdminRequestDTO';
@@ -22,7 +23,9 @@ class CreateAdminUseCase {
             );
         }
 
-        const newAdmin = new Admin(email, name, password);
+        const passwordHash = await hash(password, 10);
+
+        const newAdmin = new Admin({ email, name, passwordHash });
 
         await this.createAdminRepository.saveAdmin(newAdmin);
     }

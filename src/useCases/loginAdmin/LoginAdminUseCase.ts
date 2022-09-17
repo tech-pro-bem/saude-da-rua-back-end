@@ -26,7 +26,7 @@ class LoginAdminUseCase {
 
         const comparePassword: boolean = compareSync(
             password,
-            getAdminData.password
+            getAdminData.passwordHash
         );
 
         if (comparePassword !== true) {
