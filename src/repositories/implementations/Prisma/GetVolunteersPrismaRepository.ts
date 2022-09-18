@@ -22,7 +22,7 @@ export class GetVolunteersPrismaRepository
         limit,
         lastVolunteerId,
     }: RequestGetVolunteers): Promise<ResponseGetVolunteers> {
-        const listOfVolunteers = (await this.prisma.volunteer.findMany({
+        const listOfVolunteers = await this.prisma.volunteer.findMany({
             take: limit,
             cursor: {
                 id: lastVolunteerId,
@@ -32,7 +32,7 @@ export class GetVolunteersPrismaRepository
                     contains: '@',
                 },
             },
-        })) as Volunteer[];
+        });
 
         const lastVolunteerInSearch = listOfVolunteers[limit - 1];
 

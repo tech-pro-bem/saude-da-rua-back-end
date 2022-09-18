@@ -13,12 +13,14 @@ export class LoginAdminPrismaRepository
         this.prisma = super.getPrismaClient();
     }
 
-    async getAdminInfoByEmail(email: string): Promise<AdminDTO> {
+    async getAdminInfoByEmail(email: string): Promise<AdminDTO | null> {
         const adminUser = await this.prisma.admin.findFirst({
             where: {
                 email,
             },
         });
+
+        if (!adminUser) return null;
 
         return {
             email: adminUser.email,
