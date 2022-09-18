@@ -1,8 +1,8 @@
-import { CreateAdminDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { CreateAdminPrismaRepository } from '../../repositories/implementations/Prisma/CreateAdminPrismaRepository';
 import CreateAdminUseCase from './CreateAdminUseCase';
 
-const createAdminDynamoRepository = new CreateAdminDynamoRepository();
+const createAdminPrismaRepository = new CreateAdminPrismaRepository();
 
-const createAdminUseCase = new CreateAdminUseCase(createAdminDynamoRepository);
+const createAdminUseCase = new CreateAdminUseCase(createAdminPrismaRepository);
 
 export default createAdminUseCase;
