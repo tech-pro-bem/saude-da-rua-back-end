@@ -24,9 +24,7 @@ export class GetVolunteersPrismaRepository
     }: RequestGetVolunteers): Promise<ResponseGetVolunteers> {
         const listOfVolunteers = await this.prisma.volunteer.findMany({
             take: limit,
-            cursor: {
-                id: lastVolunteerId,
-            },
+            cursor: lastVolunteerId ? { id: lastVolunteerId } : undefined,
             where: {
                 email: {
                     contains: '@',
@@ -34,15 +32,14 @@ export class GetVolunteersPrismaRepository
             },
         });
 
-        const lastVolunteerInSearch = listOfVolunteers[limit - 1];
-
         const volunteers = listOfVolunteers.map(
             (volunteer) => new Volunteer(volunteer)
         );
 
         return {
-            id: lastVolunteerInSearch.id,
-            volunteers,
+            volunteers: volunteers.filter(
+                (volunteer) => volunteer.id !== lastVolunteerId
+            ),
         };
     }
 }

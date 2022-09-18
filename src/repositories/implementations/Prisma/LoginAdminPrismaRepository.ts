@@ -23,8 +23,9 @@ export class LoginAdminPrismaRepository
         if (!adminUser) return null;
 
         return {
+            id: adminUser.id,
             email: adminUser.email,
-            password: adminUser.password,
+            passwordHash: adminUser.passwordHash,
             permissionLevel: adminUser.permissionLevel,
         };
     }

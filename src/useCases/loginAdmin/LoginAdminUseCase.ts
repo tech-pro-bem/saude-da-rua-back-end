@@ -1,6 +1,6 @@
 import { compareSync } from 'bcryptjs';
 import Admin from '../../entities/Admin';
-import { ILoginAdminRepository } from '../../repositories/interfaces';
+import { AdminDTO, ILoginAdminRepository } from '../../repositories/interfaces';
 import ILoginAdminRequestDTO from './LoginAdminRequestDTO';
 import { CreateJwt } from '../../utils/auth';
 import { NotFoundError } from '../../helpers/errors';
@@ -17,10 +17,10 @@ class LoginAdminUseCase {
     ): Promise<string> {
         const { email, password } = loginAdminRequestData;
 
-        const getAdminData: Admin =
+        const getAdminData: AdminDTO | null =
             await this.loginAdminRepository.getAdminInfoByEmail(email);
 
-        if (getAdminData === undefined) {
+        if (getAdminData === null) {
             throw new NotFoundError('Incorrect Email/Password');
         }
 

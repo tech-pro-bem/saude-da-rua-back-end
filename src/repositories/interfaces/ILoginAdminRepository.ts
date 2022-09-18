@@ -1,6 +1,7 @@
 export type AdminDTO = {
+    id: string;
     email: string;
-    password: string;
+    passwordHash: string;
     permissionLevel: string;
 };
 

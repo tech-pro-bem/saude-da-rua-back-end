@@ -1,8 +1,8 @@
-import { LoginAdminDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { LoginAdminPrismaRepository } from '../../repositories/implementations/Prisma/LoginAdminPrismaRepository';
 import LoginAdminUseCase from './LoginAdminUseCase';
 
-const loginAdminDynamoRepository = new LoginAdminDynamoRepository();
+const loginAdminPrismaRepository = new LoginAdminPrismaRepository();
 
-const loginAdminUseCase = new LoginAdminUseCase(loginAdminDynamoRepository);
+const loginAdminUseCase = new LoginAdminUseCase(loginAdminPrismaRepository);
 
 export default loginAdminUseCase;

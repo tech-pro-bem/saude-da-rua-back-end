@@ -1,5 +1,5 @@
 type TGetVolunteersRequestDTO = {
-    offset: string | null;
+    lastVolunteerId: string | null;
     limit: number;
 };
 

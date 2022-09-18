@@ -23,7 +23,7 @@ export class UploadFileUseCase {
 
         const buffer = Buffer.from(params.base64File, 'base64');
         const id = uuidv4();
-        const url = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/${key}`;
+        const url = `https://${process.env.FILE_BUCKET_NAME}.s3-${process.env.region}.amazonaws.com/${id}`;
         const file = new File({ id, fileType: params.fileType, url });
 
         await s3

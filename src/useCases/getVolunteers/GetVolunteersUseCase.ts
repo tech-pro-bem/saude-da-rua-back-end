@@ -9,10 +9,13 @@ class GetVolunteersUseCase {
     }
 
     async execute(getVolunteersRequestData: TGetVolunteersRequestDTO) {
-        const { offset, limit } = getVolunteersRequestData;
+        const { lastVolunteerId, limit } = getVolunteersRequestData;
 
         const volunteersListAndLastValueted =
-            await this.getVolunteersRepository.getVolunteers(offset, limit);
+            await this.getVolunteersRepository.getVolunteers({
+                lastVolunteerId,
+                limit,
+            });
 
         return volunteersListAndLastValueted;
     }
