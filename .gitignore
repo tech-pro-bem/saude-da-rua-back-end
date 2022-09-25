@@ -7,3 +7,4 @@ credentials.txt
 .dynamodb
 .idea
 .esbuild
+.vscode

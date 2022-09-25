@@ -46,6 +46,8 @@ custom:
             migrate: true
         migration:
             dir: tests/in-memory/migrations
+    esbuild:
+        sourceMap: true
 
 functions:
     authenticationProxy:

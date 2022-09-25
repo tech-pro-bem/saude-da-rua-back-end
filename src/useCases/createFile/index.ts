@@ -1,8 +1,8 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { FilePrismaRepository } from '../../repositories/implementations/Prisma/FilePrismaRepository';
 import { UploadFileUseCase } from './CreateFileUseCase';
 
-const createFileDynamoRepository = new FileDynamoRepository();
+const filePrismaRepository = new FilePrismaRepository();
 
-const createFileUseCase = new UploadFileUseCase(createFileDynamoRepository);
+const createFileUseCase = new UploadFileUseCase(filePrismaRepository);
 
 export default createFileUseCase;

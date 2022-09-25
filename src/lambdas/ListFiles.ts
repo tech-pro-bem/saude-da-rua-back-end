@@ -18,8 +18,8 @@ export const handler = async (
     try {
         const fileType = event.pathParameters?.fileType || '';
         const files = await ListFilesUseCase.execute({
-            from: Number(event.queryStringParameters?.from || 0),
-            to: Number(event.queryStringParameters?.to || 0),
+            lastFileId: event.queryStringParameters?.lastFileId,
+            limit: Number(event.queryStringParameters?.limit || 1),
             type: fileType as constEnumType<typeof FileType>,
         });
 

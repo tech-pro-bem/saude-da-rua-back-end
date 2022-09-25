@@ -14,11 +14,10 @@ export const handler = async (
     };
 
     try {
-        const fileId = event.pathParameters?.fileId || "";
-        await  DeleFileUseCase.execute({
-            fileId: fileId,
+        const fileId = event.pathParameters?.fileId || '';
+        await DeleFileUseCase.execute({
+            fileId,
         });
-
     } catch (error) {
         response.statusCode = error.code;
         response.body = JSON.stringify({});

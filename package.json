@@ -6,7 +6,8 @@
   "scripts": {
     "deploy": "serverless deploy --verbose",
     "dev": "sls offline",
-    "test": "jest"
+    "test": "jest",
+    "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline"
   },
   "prisma": {
     "seed": "ts-node src/helpers/seed/AdminPrismaSeed.ts"

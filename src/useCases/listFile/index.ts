@@ -1,8 +1,8 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { FilePrismaRepository } from '../../repositories/implementations/Prisma/FilePrismaRepository';
 import { ListFilesUseCase } from './ListFilesUseCase';
 
-const listFilesDynamoRepository = new FileDynamoRepository();
+const filePrismaRepository = new FilePrismaRepository();
 
-const listFilesUseCase = new ListFilesUseCase(listFilesDynamoRepository);
+const listFilesUseCase = new ListFilesUseCase(filePrismaRepository);
 
 export default listFilesUseCase;

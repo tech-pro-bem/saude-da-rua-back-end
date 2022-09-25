@@ -21,7 +21,7 @@ export class File {
 
     public url: string;
 
-    public createdAt: Number;
+    public createdAt: number;
 
     constructor(props: TFileProps) {
         Object.assign(this, {

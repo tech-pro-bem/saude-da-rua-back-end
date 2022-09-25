@@ -1,8 +1,8 @@
-import { FileDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { FilePrismaRepository } from '../../repositories/implementations/Prisma/FilePrismaRepository';
 import { DeleFileUseCase } from './DeleteFileUseCase';
 
-const deleteFileDynamoRepository = new FileDynamoRepository();
+const filePrismaRepository = new FilePrismaRepository();
 
-const deleteFileUseCase = new DeleFileUseCase(deleteFileDynamoRepository);
+const deleteFileUseCase = new DeleFileUseCase(filePrismaRepository);
 
 export default deleteFileUseCase;
