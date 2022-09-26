@@ -1,11 +1,11 @@
-import { VerifyVolunteerEmailDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { VerifyVolunteerEmailPrismaRepository } from '../../repositories/implementations/Prisma/VerifyVolunteerEmailPrismaRepository';
 import VerifyVolunteerEmailUseCase from './VerifyVolunteerEmailUseCase';
 
-const verifyVolunteerEmailDynamoRepository =
-    new VerifyVolunteerEmailDynamoRepository();
+const verifyVolunteerEmailPrismaRepository =
+    new VerifyVolunteerEmailPrismaRepository();
 
 const verifyVolunteerEmailUseCase = new VerifyVolunteerEmailUseCase(
-    verifyVolunteerEmailDynamoRepository
+    verifyVolunteerEmailPrismaRepository
 );
 
 export default verifyVolunteerEmailUseCase;
