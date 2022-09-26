@@ -10,9 +10,9 @@ type TAdminProps = {
 
     passwordHash: string;
 
-    createdAt?: Number;
+    createdAt?: number;
 
-    updatedAt?: Number;
+    updatedAt?: number;
 };
 
 class Admin {

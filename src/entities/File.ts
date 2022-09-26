@@ -10,8 +10,8 @@ interface TFileProps {
 
     fileType: constEnumType<typeof FileType>;
     url: string;
-    createdAt?: Number;
-    updatedAt?: Number;
+    createdAt?: number;
+    updatedAt?: number;
 }
 
 export class File {
