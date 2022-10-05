@@ -1,15 +1,25 @@
 {
-    "compilerOptions": {
-      "target": "es2017",
-      "module": "commonjs",
-      "lib": ["es2020", "dom"],
-      "allowJs": true,                        
-      "esModuleInterop": true,                             
-      "forceConsistentCasingInFileNames": true,            
-      "skipLibCheck": true,
-      "removeComments": true,
-    },
-    "exclude": ["node_modules", ".build", ".serverless", "tests"],
-    "include": ["src"]
-  }
-  
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+  },
+  "exclude": [
+    "node_modules",
+    ".build",
+    ".serverless",
+    "tests"
+  ],
+  "include": [
+    "src"
+  ]
+}

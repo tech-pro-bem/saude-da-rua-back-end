@@ -6,7 +6,8 @@
     },
     "extends": [
         "airbnb-base",
-        "prettier"
+        "prettier",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -19,17 +20,18 @@
     ],
     "rules": {
         "prettier/prettier": [
-            "error", 
+            "error",
             {
-              "singleQuote": true,
-               "parser": "typescript",
-               "endOfLine": "crlf"
+                "singleQuote": true,
+                "parser": "typescript"
             }
-          ],
-          "no-shadow": "off",
-          "import/extensions": "off",
-          "import/no-extraneous-dependencies": "off",
-          "import/prefer-default-export": "off",
-          "import/no-unresolved": "off"
+        ],
+        "no-shadow": "off",
+        "import/extensions": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/prefer-default-export": "off",
+        "import/no-unresolved": "off",
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-namespace": "off"
     }
 }

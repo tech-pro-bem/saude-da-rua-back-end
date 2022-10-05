@@ -10,7 +10,7 @@ type TParsedFromEventQueryString = {
 };
 
 type TQueryStringParameters = {
-    offset: string | null;
+    lastVolunteerId: string | null;
     limit: number;
 };
 

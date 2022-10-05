@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { FileType } from '../entities/File';
 import ListFilesUseCase from '../useCases/listFile';
+import { constEnumType } from '../utils/ConstEnumType';
 
 export const handler = async (
     event: APIGatewayProxyEvent
@@ -15,11 +16,11 @@ export const handler = async (
     };
 
     try {
-        const fileType = event.pathParameters?.fileType || "";
-        const files = await  ListFilesUseCase.execute({
-            from: Number(event.queryStringParameters?.from || 0),
-            to: Number(event.queryStringParameters?.to || 0),
-            type: fileType as FileType,
+        const fileType = event.pathParameters?.fileType || '';
+        const files = await ListFilesUseCase.execute({
+            lastFileId: event.queryStringParameters?.lastFileId,
+            limit: Number(event.queryStringParameters?.limit || 1),
+            type: fileType as constEnumType<typeof FileType>,
         });
 
         response.body = JSON.stringify(files);

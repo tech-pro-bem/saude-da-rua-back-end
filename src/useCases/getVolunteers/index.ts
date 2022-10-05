@@ -1,10 +1,10 @@
-import { GetVolunteersDynamoRepository } from '../../repositories/implementations/DynamoDB';
+import { GetVolunteersPrismaRepository } from '../../repositories/implementations/Prisma/GetVolunteersPrismaRepository';
 import GetVolunteersUseCase from './GetVolunteersUseCase';
 
-const getVolunteersDynamoRepository = new GetVolunteersDynamoRepository();
+const getVolunteersPrismaRepository = new GetVolunteersPrismaRepository();
 
 const getVolunteersUseCase = new GetVolunteersUseCase(
-    getVolunteersDynamoRepository
+    getVolunteersPrismaRepository
 );
 
 export default getVolunteersUseCase;

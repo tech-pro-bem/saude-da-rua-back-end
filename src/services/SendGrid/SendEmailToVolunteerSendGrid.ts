@@ -20,11 +20,8 @@ export class SendEmailToVolunteerSendGrid implements ISendEmailToVolunteer {
             html: email.htmlMessage,
         };
 
-        await sgMail.send(emailForm).then(
-            () => {},
-            (error) => {
-                throw new Error(error);
-            }
-        );
+        await sgMail.send(emailForm).catch((err) => {
+            throw new Error(err);
+        });
     }
 }

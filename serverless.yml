@@ -46,6 +46,8 @@ custom:
             migrate: true
         migration:
             dir: tests/in-memory/migrations
+    esbuild:
+        sourceMap: true
 
 functions:
     authenticationProxy:
@@ -221,7 +223,7 @@ functions:
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
 
 plugins:
-    - serverless-plugin-typescript
+    - serverless-esbuild
     - serverless-dotenv-plugin
     - serverless-iam-roles-per-function
     - serverless-dynamodb-local

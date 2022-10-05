@@ -3,7 +3,7 @@ import { ValidationError } from '../../../helpers/errors';
 import AdminValidationBase from './AdminValidationBase';
 
 type BodyBeforeValidate = {
-    [name: string]: any;
+    [name: string]: unknown;
 };
 
 type TErrorDetails = {
@@ -16,7 +16,7 @@ type TErrorDetails = {
 export class CreateAdminValidation extends AdminValidationBase {
     private body: BodyBeforeValidate;
 
-    private createAdminValidation: ObjectSchema<any>;
+    private createAdminValidation: ObjectSchema<unknown>;
 
     private id: Schema = Joi.forbidden();
 

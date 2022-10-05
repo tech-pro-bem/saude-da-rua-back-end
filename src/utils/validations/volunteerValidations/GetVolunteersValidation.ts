@@ -8,16 +8,7 @@ type queryStringBeforeValidate = {
 export class GetVolunteersValidation {
     private queryStringParameters: queryStringBeforeValidate;
 
-    private offset: StringSchema = Joi.string()
-        .email({
-            tlds: {
-                allow: ['com', 'br', 'net'],
-            },
-        })
-        .lowercase()
-        .min(15)
-        .max(50)
-        .trim();
+    private lastVolunteerId: StringSchema = Joi.string().uuid();
 
     private limit: NumberSchema = Joi.number()
         .integer()
@@ -33,7 +24,7 @@ export class GetVolunteersValidation {
     public async validateInput() {
         try {
             const getVolunteersValidation: ObjectSchema = Joi.object().keys({
-                offset: this.offset,
+                lastVolunteerId: this.lastVolunteerId,
                 limit: this.limit,
             });
 

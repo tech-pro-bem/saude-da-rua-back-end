@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Occupation {
+  MEDICO
+  ENFERMEIRO
+  FARMACEUTICO
+  ESTUDANTE
+}
+
+enum Semester {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHTH
+  NINTH
+  TENTH
+  MORE
+}
+
+enum FreeDaysOfWeek {
+  DOMINGO
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+}
+
+enum HowMuchParticipate {
+  NOT_PARTICIPATED
+  ONE_PARTICIPATION
+  BETWEEN_TWO_AND_FIVE_PARTICIPATION
+  MORE_THAN_FIVE_PARTICIPATION
+}
+
+enum HowDidKnowOfSDR {
+  SITE
+  INSTAGRAM
+  POSTS
+  EDUCATIONAL_INSTITUTIONS
+  OTHER
+}
+
+model Volunteer {
+  id String @id
+
+  email                  String
+  fullName               String
+  birthdate              String
+  cellphoneNumberWithDDD String
+  occupation             Occupation
+  semester               Semester? // enum
+  listFreeDaysOfWeek     FreeDaysOfWeek[] // enum
+  numberOfFreeDaysOfWeek Int
+  howMuchParticipate     HowMuchParticipate // enum
+  howDidKnowOfSDR        HowDidKnowOfSDR //enum
+  verifiedEmail          Boolean
+  timeOfExperience       String
+  speciality             String?
+
+  university String?
+  createdAt  Int
+  updatedAt  Int?
+
+  @@map("volunteers")
+}
+
+model Admin {
+  id String @id
+
+  email           String
+  name            String
+  permissionLevel String
+  passwordHash    String
+
+  createdAt Int
+  updatedAt Int
+
+  @@map("admins")
+}
+
+enum FileType {
+  IMAGE
+  PDF
+}
+
+model File {
+  id String @id
+
+  fileType FileType
+  url      String
+
+  createdAt Int
+
+  @@map("files")
+}

@@ -1,6 +1,10 @@
-/* eslint-disable no-unused-vars */
-import Admin from '../../entities/Admin';
+export type AdminDTO = {
+    id: string;
+    email: string;
+    passwordHash: string;
+    permissionLevel: string;
+};
 
 export interface ILoginAdminRepository {
-    getAdminInfoByEmail(email: string): Promise<Admin>;
+    getAdminInfoByEmail(email: string): Promise<AdminDTO>;
 }

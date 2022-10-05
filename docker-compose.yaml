@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  database:
+    container_name: SaudeDaRuaPostgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=saudedarua
+      - POSTGRES_DB=saude_da_rua
+    ports:
+      - "5432:5432"
+    volumes:
+      - "saudeDaRuaPostgresVolume:/data/postgres"
+
+volumes:
+  saudeDaRuaPostgresVolume:
