@@ -49,23 +49,26 @@ functions:
         name: login-admin
         handler: src/lambdas/LoginAdmin.handler
         events:
-            - httpApi:
+            - http:
                   path: /login
                   method: POST
     createAdmin:
         name: create-admin
         handler: src/lambdas/CreateAdmin.handler
         events:
-            - httpApi:
+            - http:
                   path: /create/admin
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     createVolunteer:
         name: create-volunteer
         handler: src/lambdas/CreateVolunteer.handler
         events:
-            - httpApi:
+            - http:
                   path: /create/volunteer
                   method: POST
         iamRoleStatements:
@@ -78,11 +81,14 @@ functions:
         name: delete-file
         handler: src/lambdas/DeleteFile.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileId}
                   method: DELETE
                   authorizer:
-                      name: jwtAuthorizationLambda
+                     name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -93,11 +99,14 @@ functions:
         name: create-file
         handler: src/lambdas/CreateFile.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileType}
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -108,29 +117,48 @@ functions:
         name: list-files
         handler: src/lambdas/ListFiles.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileType}
                   method: GET
                   authorizer:
                       name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     getVolunteers:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
         events:
-            - httpApi:
+            - http:
                   path: /get/volunteers
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
         events:
-            - httpApi:
+            - http:
                   path: /get/one_volunteer
                   method: GET
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
+    getAuthenticatedUser:
+        name: get-authenticated-user
+        handler: src/lambdas/GetAuthenticatedAdmin.handler
+        events:
+            - http:
+                  path: /get/admin/me
+                  method: GET
                   authorizer:
-                      name: jwtAuthenticationLambda
+                       name: jwtAuthenticationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/lambdas/SendEmailToVolunteer.handler
@@ -147,7 +175,7 @@ functions:
         name: verify-volunteer-email
         handler: src/lambdas/VerifyVolunteerEmail.handler
         events:
-            - httpApi:
+            - http:
                   path: /verify/volunteer-email
                   method: GET
         iamRoleStatements:
@@ -161,6 +189,7 @@ plugins:
     - serverless-esbuild
     - serverless-dotenv-plugin
     - serverless-iam-roles-per-function
+    - serverless-offline-local-authorizers-plugin
     - serverless-offline
 
 resources:

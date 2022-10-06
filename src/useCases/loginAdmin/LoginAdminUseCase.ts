@@ -1,5 +1,4 @@
 import { compareSync } from 'bcryptjs';
-import Admin from '../../entities/Admin';
 import { AdminDTO, ILoginAdminRepository } from '../../repositories/interfaces';
 import ILoginAdminRequestDTO from './LoginAdminRequestDTO';
 import { CreateJwt } from '../../utils/auth';
