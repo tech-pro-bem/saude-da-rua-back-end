@@ -5,6 +5,7 @@ import {
 } from 'aws-lambda';
 import { VerifyJWT } from '../utils/auth';
 import { AuthenticationError } from '../helpers/errors';
+import { getParameterCaseInsensitive } from '../utils/GetParameterCaseInsensitive';
 
 class AuthenticateAdminMiddleware {
     private event: APIGatewayRequestAuthorizerEventV2;
@@ -38,7 +39,10 @@ class AuthenticateAdminMiddleware {
             );
         }
 
-        const getTokenFromHeaders: string = event.headers.authorization;
+        const getTokenFromHeaders: string = getParameterCaseInsensitive(
+            event.headers,
+            'authorization'
+        );
 
         if (!getTokenFromHeaders) {
             throw new AuthenticationError(
