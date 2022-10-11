@@ -18,9 +18,6 @@ provider:
     lambdaHashingVersion: 20201221
     environment:
         region: ${self:provider.region}
-        ADMINS_TABLE_NAME: ${self:custom.adminsTableName}
-        VOLUNTEERS_TABLE_NAME: ${self:custom.volunteersTableName}
-        FILE_TABLE_NAME: ${self:custom.filesTableName}
         FILE_BUCKET_NAME: ${self:custom.filesBucketName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
@@ -28,26 +25,18 @@ provider:
         - Effect: Allow
           Action:
               - s3:*
-              - dynamodb:*
           Resource: "*"
 
 custom:
-    adminsTableName: Admins-Table
-    volunteersTableName: Volunteers-Table
     sendEmailTopicName: Send-Email
-    filesTableName: File-Table
-    filesBucketName: fileuploadbucket-123
-    dynamodb:
-        stages:
-            - dev
-        start:
-            port: 8000
-            inMemory: true
-            migrate: true
-        migration:
-            dir: tests/in-memory/migrations
-    esbuild:
-        sourceMap: true
+    # I'll keep this in case we use RDS in the future
+
+    #dbMasterUsername: "postgres"
+    #dbMasterPassword: "saudedarua"
+    #dbName: "saudedarua"
+    #dbHost: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Host"
+    #dbPort: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Port"
+    filesBucketName: fileuploadbucket-123-lagum
 
 functions:
     authenticationProxy:
@@ -60,140 +49,116 @@ functions:
         name: login-admin
         handler: src/lambdas/LoginAdmin.handler
         events:
-            - httpApi:
+            - http:
                   path: /login
                   method: POST
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}/index/email"
     createAdmin:
         name: create-admin
         handler: src/lambdas/CreateAdmin.handler
         events:
-            - httpApi:
+            - http:
                   path: /create/admin
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:PutItem"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.adminsTableName}/index/email"
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     createVolunteer:
         name: create-volunteer
         handler: src/lambdas/CreateVolunteer.handler
         events:
-            - httpApi:
+            - http:
                   path: /create/volunteer
                   method: POST
         iamRoleStatements:
             - Effect: "Allow"
               Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:PutItem"
                   - "sns:Publish"
               Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
-
     deleteFile:
         name: delete-file
         handler: src/lambdas/DeleteFile.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileId}
                   method: DELETE
                   authorizer:
-                      name: jwtAuthorizationLambda
+                     name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
         iamRoleStatements:
             - Effect: "Allow"
               Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:DeleteItem"
                   - "s3:*"
               Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
                   - "arn:aws:s3:::*"
-
     createFile:
         name: create-file
         handler: src/lambdas/CreateFile.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileType}
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
         iamRoleStatements:
             - Effect: "Allow"
               Action:
-                  - "dynamodb:Query"
-                  - "dynamodb:PutItem"
                   - "s3:*"
               Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
                   - "arn:aws:s3:::*"
-
     listFiles:
         name: list-files
         handler: src/lambdas/ListFiles.handler
         events:
-            - httpApi:
+            - http:
                   path: /file/{fileType}
                   method: GET
                   authorizer:
                       name: jwtAuthorizationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.filesTableName}/index/email"
-
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     getVolunteers:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
         events:
-            - httpApi:
+            - http:
                   path: /get/volunteers
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Scan"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
         events:
-            - httpApi:
+            - http:
                   path: /get/one_volunteer
                   method: GET
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
+    getAuthenticatedUser:
+        name: get-authenticated-user
+        handler: src/lambdas/GetAuthenticatedAdmin.handler
+        events:
+            - http:
+                  path: /get/admin/me
+                  method: GET
                   authorizer:
-                      name: jwtAuthenticationLambda
-        iamRoleStatements:
-            - Effect: "Allow"
-              Action:
-                  - "dynamodb:Query"
-              Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
+                       name: jwtAuthenticationLambda
+                  localAuthorizer:
+                      name: "mylocalAuthProxyFn"
+                      type: "request"
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/lambdas/SendEmailToVolunteer.handler
@@ -210,23 +175,21 @@ functions:
         name: verify-volunteer-email
         handler: src/lambdas/VerifyVolunteerEmail.handler
         events:
-            - httpApi:
+            - http:
                   path: /verify/volunteer-email
                   method: GET
         iamRoleStatements:
             - Effect: "Allow"
               Action:
-                  - "dynamodb:UpdateItem"
+                  - "sns:Publish"
               Resource:
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}"
-                  - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.volunteersTableName}/index/email"
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
 
 plugins:
     - serverless-esbuild
     - serverless-dotenv-plugin
     - serverless-iam-roles-per-function
-    - serverless-dynamodb-local
+    - serverless-offline-local-authorizers-plugin
     - serverless-offline
 
 resources:
@@ -236,46 +199,22 @@ resources:
             Properties:
                 BucketName: ${self:custom.filesBucketName}
                 AccessControl: PublicRead
-        AdminsTable:
-            Type: AWS::DynamoDB::Table
-            Properties:
-                TableName: ${self:custom.adminsTableName}
-                AttributeDefinitions:
-                    - AttributeName: email
-                      AttributeType: S
-                KeySchema:
-                    - AttributeName: email
-                      KeyType: HASH
-                ProvisionedThroughput:
-                    ReadCapacityUnits: 1
-                    WriteCapacityUnits: 1
-        VolunteersTable:
-            Type: AWS::DynamoDB::Table
-            Properties:
-                TableName: ${self:custom.volunteersTableName}
-                AttributeDefinitions:
-                    - AttributeName: email
-                      AttributeType: S
-                KeySchema:
-                    - AttributeName: email
-                      KeyType: HASH
-                ProvisionedThroughput:
-                    ReadCapacityUnits: 1
-                    WriteCapacityUnits: 1
-        FilesTable:
-            Type: AWS::DynamoDB::Table
-            Properties:
-                TableName: ${self:custom.filesTableName}
-                AttributeDefinitions:
-                    - AttributeName: fileType
-                      AttributeType: S
-                    - AttributeName: fileId
-                      AttributeType: S
-                KeySchema:
-                    - AttributeName: fileType
-                      KeyType: HASH
-                    - AttributeName: fileId
-                      KeyType: RANGE
-                ProvisionedThroughput:
-                    ReadCapacityUnits: 1
-                    WriteCapacityUnits: 1
+    # I'll keep this in case we use RDS in the future
+    #SaudeDaRuaPostgresDatabase:
+    #    Type: AWS::RDS::DBInstance
+    #    Properties:
+    #        MasterUsername: ${self:custom.dbMasterUsername}
+    #        MasterUserPassword: ${self:custom.dbMasterPassword}
+    #        DBInstanceClass: db.t4g.nano
+    #        Engine: postgres
+    #        EngineVersion: "12"
+    #        AllocatedStorage: "1"
+    #        DBName: ${self:custom.dbName}
+package:
+    patterns:
+        - "prisma/schema.prisma"
+        - "node_modules/.prisma"
+        - "!node_modules/.prisma/client/libquery_engine-*"
+        - "node_modules/.prisma/client/libquery_engine-rhel-*"
+        - "!node_modules/prisma/libquery_engine-*"
+        - "!node_modules/@prisma/engines/**"
