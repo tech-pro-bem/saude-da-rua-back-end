@@ -8,4 +8,4 @@ type TGetAuthenticatedAdminResponseDTO = {
    permissionLevel: string;
 };
 
-export default TGetAuthenticatedAdminDTO;
+export { TGetAuthenticatedAdminDTO, TGetAuthenticatedAdminResponseDTO };
