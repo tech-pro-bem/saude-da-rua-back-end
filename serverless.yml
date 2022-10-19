@@ -21,6 +21,7 @@ provider:
         FILE_BUCKET_NAME: ${self:custom.filesBucketName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
+        INSTAGRAM_TOKEN: ${env:INSTAGRAM_TOKEN}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -137,6 +138,14 @@ functions:
                   localAuthorizer:
                       name: "mylocalAuthProxyFn"
                       type: "request"
+    getInstagramToken:
+        name: get-instagram-INSTAGRAM_TOKEN
+        handler: src/lambdas/GetInstagramToken.handler
+        events:
+            - http:
+                  path: /get/instagram-token
+                  method: GET
+
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
