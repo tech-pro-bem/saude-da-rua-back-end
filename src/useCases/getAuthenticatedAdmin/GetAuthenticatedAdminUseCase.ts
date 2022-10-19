@@ -19,10 +19,11 @@ class GetAuthenticatedAdminUseCase {
             throw new NotFoundError('Admin not found');
         }
 
-        const { id, email, permissionLevel } = admin;
+        const { id, email, permissionLevel, name } = admin;
         return {
             email,
             id,
+            name,
             permissionLevel,
         };
     }
