@@ -71,7 +71,7 @@ model Volunteer {
   howMuchParticipate     HowMuchParticipate // enum
   howDidKnowOfSDR        HowDidKnowOfSDR //enum
   verifiedEmail          Boolean
-  timeOfExperience       String
+  timeOfExperience       String?
   speciality             String?
 
   university String?
