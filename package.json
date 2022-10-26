@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "https://github.com/Gabriel-Albuquerque-repo/saude-da-rua.git",
   "scripts": {
-    "deploy": "serverless deploy --verbose",
+    "deploy": "serverless deploy --stage prod --verbose",
     "dev": "sls offline local-authorizers",
     "test": "jest",
     "lint:fix": "eslint --ext .ts src/* --fix",
@@ -42,7 +42,6 @@
     "prettier": "^2.5.1",
     "prisma": "^4.3.1",
     "serverless": "^3.21.0",
-    "serverless-dotenv-plugin": "^4.0.2",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-esbuild": "^1.32.8",
     "serverless-iam-roles-per-function": "^3.2.0",

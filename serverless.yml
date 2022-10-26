@@ -1,5 +1,6 @@
 service: saude-da-rua-main
 frameworkVersion: "2 || 3"
+useDotenv: true
 
 provider:
     name: aws
@@ -21,6 +22,15 @@ provider:
         FILE_BUCKET_NAME: ${self:custom.filesBucketName}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
+        TOKEN_ONE: ${env:TOKEN_ONE}
+        TOKEN_TWO: ${env:TOKEN_TWO}
+        USER_NODEMAILER_GMAIL: ${env:USER_NODEMAILER_GMAIL}
+        PASSWORD_NODEMAILER_GMAIL: ${env:PASSWORD_NODEMAILER_GMAIL}
+        ADMIN_JWT_LIFE_CYCLE: 30d
+        ADMIN_JWT_SECRET_KEY: ${env:ADMIN_JWT_SECRET_KEY}
+        VOLUNTEER_JWT_LIFE_CYCLE: 30d
+        VOLUNTEER_JWT_SECRET_KEY: ${env:VOLUNTEER_JWT_SECRET_KEY}
+        DATABASE_URL: ${env:DATABASE_URL}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -133,7 +143,7 @@ functions:
                   path: /get/volunteers
                   method: GET
                   authorizer:
-                      name: jwtAuthenticationLambda
+                      name: jwtAuthorizationLambda
                   localAuthorizer:
                       name: "mylocalAuthProxyFn"
                       type: "request"
@@ -187,7 +197,6 @@ functions:
 
 plugins:
     - serverless-esbuild
-    - serverless-dotenv-plugin
     - serverless-iam-roles-per-function
     - serverless-offline-local-authorizers-plugin
     - serverless-offline
@@ -211,6 +220,7 @@ resources:
     #        AllocatedStorage: "1"
     #        DBName: ${self:custom.dbName}
 package:
+    individually: true
     patterns:
         - "prisma/schema.prisma"
         - "node_modules/.prisma"

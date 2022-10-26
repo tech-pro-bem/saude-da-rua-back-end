@@ -3,6 +3,7 @@ node_modules
 credentials.txt
 .env
 .env.test
+.env.prod
 .build
 .dynamodb
 .idea
