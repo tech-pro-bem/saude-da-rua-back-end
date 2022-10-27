@@ -25,6 +25,7 @@ export class LoginAdminPrismaRepository
         return {
             id: adminUser.id,
             email: adminUser.email,
+            name: adminUser.name,
             passwordHash: adminUser.passwordHash,
             permissionLevel: adminUser.permissionLevel,
         };
