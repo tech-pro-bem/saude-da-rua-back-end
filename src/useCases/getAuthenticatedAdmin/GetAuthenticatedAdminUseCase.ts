@@ -1,11 +1,16 @@
 import { NotFoundError } from '../../helpers/errors';
 import { ILoginAdminRepository } from '../../repositories/interfaces';
-import { TGetAuthenticatedAdminDTO, TGetAuthenticatedAdminResponseDTO } from './GetAuthenticatedAdminDTOs';
+import {
+    TGetAuthenticatedAdminDTO,
+    TGetAuthenticatedAdminResponseDTO,
+} from './GetAuthenticatedAdminDTOs';
 
 class GetAuthenticatedAdminUseCase {
     constructor(private loginAdminRepository: ILoginAdminRepository) {}
 
-    async execute(getAuthenticatedAdminDTO: TGetAuthenticatedAdminDTO): Promise<TGetAuthenticatedAdminResponseDTO> {
+    async execute(
+        getAuthenticatedAdminDTO: TGetAuthenticatedAdminDTO
+    ): Promise<TGetAuthenticatedAdminResponseDTO> {
         const admin = await this.loginAdminRepository.getAdminInfoByEmail(
             getAuthenticatedAdminDTO.email
         );
@@ -14,10 +19,11 @@ class GetAuthenticatedAdminUseCase {
             throw new NotFoundError('Admin not found');
         }
 
-        const { id, email, permissionLevel } = admin;
+        const { id, email, permissionLevel, name } = admin;
         return {
             email,
             id,
+            name,
             permissionLevel,
         };
     }

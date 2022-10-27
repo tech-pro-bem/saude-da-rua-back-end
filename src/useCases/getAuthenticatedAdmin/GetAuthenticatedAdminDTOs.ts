@@ -3,9 +3,10 @@ type TGetAuthenticatedAdminDTO = {
 };
 
 type TGetAuthenticatedAdminResponseDTO = {
-   email: string;
-   id: string;
-   permissionLevel: string;
+    email: string;
+    id: string;
+    name: string;
+    permissionLevel: string;
 };
 
 export { TGetAuthenticatedAdminDTO, TGetAuthenticatedAdminResponseDTO };

@@ -31,6 +31,7 @@ provider:
         VOLUNTEER_JWT_LIFE_CYCLE: 30d
         VOLUNTEER_JWT_SECRET_KEY: ${env:VOLUNTEER_JWT_SECRET_KEY}
         DATABASE_URL: ${env:DATABASE_URL}
+        INSTAGRAM_TOKEN: ${env:INSTAGRAM_TOKEN}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -147,6 +148,14 @@ functions:
                   localAuthorizer:
                       name: "mylocalAuthProxyFn"
                       type: "request"
+    getInstagramToken:
+        name: get-instagram-INSTAGRAM_TOKEN
+        handler: src/lambdas/GetInstagramToken.handler
+        events:
+            - http:
+                  path: /get/instagram-token
+                  method: GET
+
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
