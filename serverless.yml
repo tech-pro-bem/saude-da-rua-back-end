@@ -60,14 +60,14 @@ functions:
         name: login-admin
         handler: src/lambdas/LoginAdmin.handler
         events:
-            - http:
+            - httpApi:
                   path: /login
                   method: POST
     createAdmin:
         name: create-admin
         handler: src/lambdas/CreateAdmin.handler
         events:
-            - http:
+            - httpApi:
                   path: /create/admin
                   method: POST
                   authorizer:
@@ -79,7 +79,7 @@ functions:
         name: create-volunteer
         handler: src/lambdas/CreateVolunteer.handler
         events:
-            - http:
+            - httpApi:
                   path: /create/volunteer
                   method: POST
         iamRoleStatements:
@@ -92,7 +92,7 @@ functions:
         name: delete-file
         handler: src/lambdas/DeleteFile.handler
         events:
-            - http:
+            - httpApi:
                   path: /file/{fileId}
                   method: DELETE
                   authorizer:
@@ -110,7 +110,7 @@ functions:
         name: create-file
         handler: src/lambdas/CreateFile.handler
         events:
-            - http:
+            - httpApi:
                   path: /file/{fileType}
                   method: POST
                   authorizer:
@@ -128,7 +128,7 @@ functions:
         name: list-files
         handler: src/lambdas/ListFiles.handler
         events:
-            - http:
+            - httpApi:
                   path: /file/{fileType}
                   method: GET
                   authorizer:
@@ -140,7 +140,7 @@ functions:
         name: get-volunteers
         handler: src/lambdas/GetVolunteers.handler
         events:
-            - http:
+            - httpApi:
                   path: /get/volunteers
                   method: GET
                   authorizer:
@@ -160,7 +160,7 @@ functions:
         name: get-one-volunteer
         handler: src/lambdas/GetOneVolunteer.handler
         events:
-            - http:
+            - httpApi:
                   path: /get/one_volunteer
                   method: GET
                   localAuthorizer:
@@ -170,7 +170,7 @@ functions:
         name: get-authenticated-user
         handler: src/lambdas/GetAuthenticatedAdmin.handler
         events:
-            - http:
+            - httpApi:
                   path: /get/admin/me
                   method: GET
                   authorizer:
@@ -194,7 +194,7 @@ functions:
         name: verify-volunteer-email
         handler: src/lambdas/VerifyVolunteerEmail.handler
         events:
-            - http:
+            - httpApi:
                   path: /verify/volunteer-email
                   method: GET
         iamRoleStatements:
