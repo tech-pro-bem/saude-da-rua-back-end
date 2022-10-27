@@ -13,13 +13,15 @@ export const handler = async (
         body: '',
     };
 
-    const { adminEmail } = event.requestContext.authorizer;
+    const { adminEmail } = event.requestContext.authorizer as { adminEmail: string };
 
     try {
-        const admin = await GetAuthenticatedAdminUseCase.execute(adminEmail);
+        const admin = await GetAuthenticatedAdminUseCase.execute({ email: adminEmail});
 
         response.body = JSON.stringify(admin);
     } catch (error) {
+        console.log(error);
+
         response.statusCode = error.code;
         response.body = JSON.stringify({
             errorClassName: error.name,
