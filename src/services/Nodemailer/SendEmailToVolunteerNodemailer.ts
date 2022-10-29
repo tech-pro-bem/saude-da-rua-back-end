@@ -1,12 +1,12 @@
-import { createTransport, Transporter } from 'nodemailer';
-import { SentMessageInfo, Options } from 'nodemailer/lib/smtp-transport';
-import Email from '../../entities/Email';
-import { ISendEmailToVolunteer } from '../ISendEmailToVolunteer';
+import { createTransport, Transporter } from "nodemailer";
+import { SentMessageInfo, Options } from "nodemailer/lib/smtp-transport";
+import { ISendEmailToVolunteer } from "../ISendEmailToVolunteer";
+import { Email } from "../../modules/volunteers/entities/Email";
 
 export class SendEmailToVolunteerNodemailer implements ISendEmailToVolunteer {
-    private gmail: string;
+    private readonly gmail: string;
 
-    private password: string;
+    private readonly password: string;
 
     constructor() {
         this.gmail = process.env.USER_NODEMAILER_GMAIL;
@@ -16,7 +16,7 @@ export class SendEmailToVolunteerNodemailer implements ISendEmailToVolunteer {
     public async sendEmail(email: Email): Promise<void> {
         const mailOptions: Options = {
             from: {
-                name: 'Tech Pro Bem',
+                name: "Tech Pro Bem",
                 address: this.gmail,
             },
             to: email.to,
@@ -25,8 +25,8 @@ export class SendEmailToVolunteerNodemailer implements ISendEmailToVolunteer {
         };
 
         const smtpOptions: Options = {
-            service: 'gmail',
-            host: 'smtp.gmail.com',
+            service: "gmail",
+            host: "smtp.gmail.com",
             secure: false,
             auth: {
                 user: this.gmail,

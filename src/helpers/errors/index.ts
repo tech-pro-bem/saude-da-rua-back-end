@@ -82,13 +82,14 @@ class ValidationError extends DefaultError {
     }
 }
 
-class UnknownError extends DefaultError {
+class InternalServerError extends DefaultError {
     constructor() {
         super({
             code: 418,
-            name: 'UnknownError',
-            generalErrorMessage: 'Unknown error',
-            mainErrorMessage: 'Unknown error',
+            name: 'InternalServerError',
+            generalErrorMessage: 'Internal Server Error',
+            mainErrorMessage:
+                "Oops! Something bad happened to the server, i'll restart the router.",
         });
     }
 }
@@ -100,5 +101,5 @@ export {
     NotFoundError,
     ConflictError,
     ValidationError,
-    UnknownError,
+    InternalServerError,
 };

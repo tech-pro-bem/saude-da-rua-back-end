@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const {
     handler,
-} = require('./.esbuild/.build/src/lambdas/AuthenticateAdminProxy.js'); // I know what you're thinking, don't judge me pls
+} = require('./.esbuild/.build/src/infra/lambda/handlers/AuthenticateAdminProxy.js'); // I know what you're thinking, don't judge me pls
 
 const mylocalAuthProxyFn = async (event, context) => {
     const result = await handler(event, context, (err) => {

@@ -6,7 +6,7 @@ type BodyBeforeValidate = {
     [name: string]: unknown;
 };
 
-type TErrorDetails = {
+type ErrorDetails = {
     message: string;
     path: Array<string>;
     type: string;
@@ -49,7 +49,7 @@ export class CreateAdminValidation extends AdminValidationBase {
             let allErrorMessages = '';
             let firstInteract = true;
 
-            const errorDetails: Array<TErrorDetails> = error.details;
+            const errorDetails: Array<ErrorDetails> = error.details;
 
             errorDetails.forEach((details) => {
                 const pretfifyErrors = details.message.replace(/"/g, '***');

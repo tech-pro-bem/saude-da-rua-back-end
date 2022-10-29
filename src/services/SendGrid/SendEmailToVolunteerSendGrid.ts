@@ -1,5 +1,5 @@
 import sgMail, { MailDataRequired } from '@sendgrid/mail';
-import Email from '../../entities/Email';
+import { Email } from '../../modules/volunteers/entities/Email';
 import { ISendEmailToVolunteer } from '../ISendEmailToVolunteer';
 
 export class SendEmailToVolunteerSendGrid implements ISendEmailToVolunteer {
