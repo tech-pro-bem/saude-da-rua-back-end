@@ -1,5 +1,5 @@
 import { hash } from 'bcryptjs';
-import Admin from '../../entities/Admin';
+import { Admin } from '../../modules/admins/entities/Admin';
 import { PrismaPostgresClient } from '../database/PrismaPostgresClient';
 
 const prismaPostgres = new PrismaPostgresClient();

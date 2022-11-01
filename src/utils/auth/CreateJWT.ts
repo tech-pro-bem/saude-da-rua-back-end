@@ -1,12 +1,12 @@
 import { sign, SignOptions, Algorithm } from 'jsonwebtoken';
 
-type TPayloadJwt = {
+type PayloadJwt = {
     id?: string;
     email: string;
 };
 
-type TConstructorCreateJwtProps = {
-    payload: TPayloadJwt;
+type ConstructorCreateJwtProps = {
+    payload: PayloadJwt;
     options?: string;
     jwtType?: string;
 };
@@ -18,11 +18,11 @@ export class CreateJwt {
 
     private readonly secretKey: string;
 
-    private payload: TPayloadJwt;
+    private payload: PayloadJwt;
 
     private options: string;
 
-    constructor(props: TConstructorCreateJwtProps) {
+    constructor(props: ConstructorCreateJwtProps) {
         this.payload = props.payload;
 
         if (props.options) this.options = props.options;

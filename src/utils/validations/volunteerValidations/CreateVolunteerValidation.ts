@@ -6,13 +6,13 @@ import Joi, {
     ArraySchema,
 } from 'joi';
 import { ValidationError } from '../../../helpers/errors';
-import * as Volunteer from '../../../entities/Volunteer';
+import * as Volunteer from '../../../modules/volunteers/entities/Volunteer';
 
-type TBodyBeforeValidate = {
+type BodyBeforeValidate = {
     [name: string]: any;
 };
 
-type TErrorDetails = {
+type ErrorDetails = {
     message: string;
     path: Array<string>;
     type: string;
@@ -20,7 +20,7 @@ type TErrorDetails = {
 };
 
 export class CreateVolunteerValidation {
-    private body: TBodyBeforeValidate;
+    private body: BodyBeforeValidate;
 
     private id: Schema = Joi.forbidden();
 
@@ -87,7 +87,7 @@ export class CreateVolunteerValidation {
         .valid(...Object.values(Volunteer.howDidKnowOfSDR))
         .required();
 
-    constructor(body: TBodyBeforeValidate) {
+    constructor(body: BodyBeforeValidate) {
         this.body = body;
     }
 
@@ -122,7 +122,7 @@ export class CreateVolunteerValidation {
             let allErrorMessages = '';
             let firstInteract = true;
 
-            const errorDetails: Array<TErrorDetails> = error.details;
+            const errorDetails: Array<BodyBeforeValidate> = error.details;
 
             errorDetails.forEach((details) => {
                 const pretfifyErrors = details.message.replace(/"/g, '***');

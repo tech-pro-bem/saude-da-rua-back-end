@@ -52,32 +52,29 @@ custom:
 functions:
     authenticationProxy:
         name: lambda-authenticate
-        handler: src/lambdas/AuthenticateAdminProxy.handler
+        handler: src/infra/lambda/handlers/AuthenticateAdminProxy.handler
     authorizationProxy:
         name: lambda-authorize
-        handler: src/lambdas/AuthenticateAndAuthorizationAdminProxy.handler
+        handler: src/infra/lambda/handlers/AuthenticateAndAuthorizationAdminProxy.handler
     loginAdmin:
         name: login-admin
-        handler: src/lambdas/LoginAdmin.handler
+        handler: src/infra/lambda/handlers/LoginAdmin.main
         events:
             - httpApi:
                   path: /login
                   method: POST
     createAdmin:
         name: create-admin
-        handler: src/lambdas/CreateAdmin.handler
+        handler: src/infra/lambda/handlers/CreateAdmin.main
         events:
             - httpApi:
                   path: /create/admin
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
     createVolunteer:
         name: create-volunteer
-        handler: src/lambdas/CreateVolunteer.handler
+        handler: src/infra/lambda/handlers/CreateVolunteer.main
         events:
             - httpApi:
                   path: /create/volunteer
@@ -90,16 +87,13 @@ functions:
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
     deleteFile:
         name: delete-file
-        handler: src/lambdas/DeleteFile.handler
+        handler: src/infra/lambda/handlers/DeleteFile.main
         events:
             - httpApi:
                   path: /file/{fileId}
                   method: DELETE
                   authorizer:
-                     name: jwtAuthorizationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
+                      name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -108,16 +102,13 @@ functions:
                   - "arn:aws:s3:::*"
     createFile:
         name: create-file
-        handler: src/lambdas/CreateFile.handler
+        handler: src/infra/lambda/handlers/CreateFile.main
         events:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -126,31 +117,25 @@ functions:
                   - "arn:aws:s3:::*"
     listFiles:
         name: list-files
-        handler: src/lambdas/ListFiles.handler
+        handler: src/infra/lambda/handlers/ListFiles.main
         events:
             - httpApi:
                   path: /file/{fileType}
                   method: GET
                   authorizer:
                       name: jwtAuthorizationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
     getVolunteers:
         name: get-volunteers
-        handler: src/lambdas/GetVolunteers.handler
+        handler: src/infra/lambda/handlers/GetVolunteers.main
         events:
             - httpApi:
                   path: /get/volunteers
                   method: GET
                   authorizer:
                       name: jwtAuthorizationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
     getInstagramToken:
         name: get-instagram-INSTAGRAM_TOKEN
-        handler: src/lambdas/GetInstagramToken.handler
+        handler: src/infra/lambda/handlers/GetInstagramToken.main
         events:
             - http:
                   path: /get/instagram-token
@@ -158,29 +143,25 @@ functions:
 
     getOneVolunteer:
         name: get-one-volunteer
-        handler: src/lambdas/GetOneVolunteer.handler
+        handler: src/infra/lambda/handlers/GetOneVolunteer.main
         events:
             - httpApi:
                   path: /get/one_volunteer
                   method: GET
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
+                  authorizer:
+                      name: jwtAuthenticationLambda
     getAuthenticatedUser:
         name: get-authenticated-user
-        handler: src/lambdas/GetAuthenticatedAdmin.handler
+        handler: src/infra/lambda/handlers/GetAuthenticatedAdmin.main
         events:
             - httpApi:
                   path: /get/admin/me
                   method: GET
                   authorizer:
-                       name: jwtAuthenticationLambda
-                  localAuthorizer:
-                      name: "mylocalAuthProxyFn"
-                      type: "request"
+                      name: jwtAuthenticationLambda
     sendEmailToVolunteer:
         name: send-email-to-volunteer
-        handler: src/lambdas/SendEmailToVolunteer.handler
+        handler: src/infra/lambda/handlers/SendEmailToVolunteer.main
         events:
             - sns:
                   topicName: ${self:custom.sendEmailTopicName}
@@ -192,7 +173,7 @@ functions:
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
     verifyVolunteerEmail:
         name: verify-volunteer-email
-        handler: src/lambdas/VerifyVolunteerEmail.handler
+        handler: src/infra/lambda/handlers/VerifyVolunteerEmail.main
         events:
             - httpApi:
                   path: /verify/volunteer-email
@@ -207,7 +188,6 @@ functions:
 plugins:
     - serverless-esbuild
     - serverless-iam-roles-per-function
-    - serverless-offline-local-authorizers-plugin
     - serverless-offline
 
 resources:
