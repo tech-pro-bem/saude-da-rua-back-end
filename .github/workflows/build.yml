@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Get secrets
-        env:
+      - env:
           TOKEN_ONE: ${{ secrets.TOKEN_ONE }}
           TOKEN_TWO: ${{ secrets.TOKEN_TWO }}
           USER_NODEMAILER_GMAIL: ${{ secrets.USER_NODEMAILER_GMAIL }}
@@ -21,6 +20,7 @@ jobs:
           VOLUNTEER_JWT_SECRET_KEY: ${{ secrets.VOLUNTEER_JWT_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+
       - uses: actions/checkout@v3
 
       - name: Setup NodeJS
