@@ -50,12 +50,12 @@ custom:
     filesBucketName: fileuploadbucket-123-lagum
 
 functions:
-    #authenticationProxy:
-    #    name: lambda-authenticate
-    #    handler: src/infra/lambda/handlers/AuthenticateAdminProxy.handler
-    #authorizationProxy:
-    #    name: lambda-authorize
-    #    handler: src/infra/lambda/handlers/AuthenticateAndAuthorizationAdminProxy.handler
+    authenticationProxy:
+        name: lambda-authenticate
+        handler: src/infra/lambda/handlers/AuthenticateAdminProxy.handler
+    authorizationProxy:
+        name: lambda-authorize
+        handler: src/infra/lambda/handlers/AuthenticateAndAuthorizationAdminProxy.handler
     loginAdmin:
         name: login-admin
         handler: src/infra/lambda/handlers/LoginAdmin.main
@@ -70,11 +70,8 @@ functions:
             - httpApi:
                   path: /create/admin
                   method: POST
-                  #authorizer:
-                  #    name: jwtAuthorizationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthorizationLambda
     createVolunteer:
         name: create-volunteer
         handler: src/infra/lambda/handlers/CreateVolunteer.main
@@ -95,11 +92,8 @@ functions:
             - httpApi:
                   path: /file/{fileId}
                   method: DELETE
-                  #authorizer:
-                  #   name: jwtAuthorizationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -113,11 +107,8 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: POST
-                  #authorizer:
-                  #    name: jwtAuthorizationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthorizationLambda
         iamRoleStatements:
             - Effect: "Allow"
               Action:
@@ -131,11 +122,8 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: GET
-                  #authorizer:
-                  #    name: jwtAuthorizationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthorizationLambda
     getVolunteers:
         name: get-volunteers
         handler: src/infra/lambda/handlers/GetVolunteers.main
@@ -143,11 +131,8 @@ functions:
             - httpApi:
                   path: /get/volunteers
                   method: GET
-                  #authorizer:
-                  #    name: jwtAuthorizationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthorizationLambda
     getInstagramToken:
         name: get-instagram-INSTAGRAM_TOKEN
         handler: src/infra/lambda/handlers/GetInstagramToken.main
@@ -163,9 +148,8 @@ functions:
             - httpApi:
                   path: /get/one_volunteer
                   method: GET
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthenticationLambda
     getAuthenticatedUser:
         name: get-authenticated-user
         handler: src/infra/lambda/handlers/GetAuthenticatedAdmin.main
@@ -173,11 +157,8 @@ functions:
             - httpApi:
                   path: /get/admin/me
                   method: GET
-                  #authorizer:
-                  #     name: jwtAuthenticationLambda
-                  #localAuthorizer:
-                  #    name: "mylocalAuthProxyFn"
-                  #    type: "request"
+                  authorizer:
+                      name: jwtAuthenticationLambda
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/infra/lambda/handlers/SendEmailToVolunteer.main
@@ -207,7 +188,6 @@ functions:
 plugins:
     - serverless-esbuild
     - serverless-iam-roles-per-function
-    - serverless-offline-local-authorizers-plugin
     - serverless-offline
 
 resources:

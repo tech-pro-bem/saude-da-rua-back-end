@@ -7232,11 +7232,6 @@ serverless-iam-roles-per-function@^3.2.0:
   dependencies:
     lodash "^4.17.20"
 
-serverless-offline-local-authorizers-plugin@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/serverless-offline-local-authorizers-plugin/-/serverless-offline-local-authorizers-plugin-1.2.0.tgz#ae681273721129e0759e99c39bac5e132cf89b84"
-  integrity sha512-DkAja346r5t6GebvJpz5xtqlWMRouljoMnxYFWB8Ezy9kq1YqvDbDUPCU3ZfGfDjvPnheUabnOXI0uxlQwy90A==
-
 serverless-offline@^9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-9.2.0.tgz#e685541675f842484f4962a485af8e21998f10fa"
