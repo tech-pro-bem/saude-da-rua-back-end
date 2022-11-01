@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    environment: production
     env:
       TOKEN_ONE: ${{ secrets.TOKEN_ONE }}
       TOKEN_TWO: ${{ secrets.TOKEN_TWO }}
