@@ -1,3 +1,3 @@
 export type GetInstagramTokenResponseDTO = {
-    itoken: string | null;
+    token: string | null;
 };

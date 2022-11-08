@@ -31,7 +31,9 @@ provider:
         VOLUNTEER_JWT_LIFE_CYCLE: 30d
         VOLUNTEER_JWT_SECRET_KEY: ${env:VOLUNTEER_JWT_SECRET_KEY}
         DATABASE_URL: ${env:DATABASE_URL}
-        INSTAGRAM_TOKEN: ${env:INSTAGRAM_TOKEN}
+        INSTAGRAM_APP_ID: ${env:INSTAGRAM_APP_ID}
+        INSTAGRAM_APP_SECRET: ${env:INSTAGRAM_APP_SECRET}
+        INSTAGRAM_APP_REDIRECT_URI: ${env:INSTAGRAM_APP_REDIRECT_URI}
     iamRoleStatements:
         - Effect: Allow
           Action:
@@ -137,10 +139,21 @@ functions:
         name: get-instagram-INSTAGRAM_TOKEN
         handler: src/infra/lambda/handlers/GetInstagramToken.main
         events:
-            - http:
+            - httpApi:
                   path: /get/instagram-token
                   method: GET
-
+    getLongLivedToken:
+        name: get-long-lived-token
+        handler: src/infra/lambda/handlers/GetLongLivedToken.main
+        events:
+            - httpApi:
+                  path: /get/long-lived-token
+                  method: GET
+    refreshLongLivedToken:
+        name: refresh-long-lived-token
+        handler: src/infra/lambda/handlers/RefreshLongLivedToken.main
+        events:
+            - schedule: rate(1 day)
     getOneVolunteer:
         name: get-one-volunteer
         handler: src/infra/lambda/handlers/GetOneVolunteer.main

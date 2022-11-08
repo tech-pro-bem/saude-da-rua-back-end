@@ -110,3 +110,11 @@ model File {
 
   @@map("files")
 }
+
+model InstagramToken {
+  id String @id
+
+  longLivedToken String
+
+  @@map("instagram_tokens")
+}
