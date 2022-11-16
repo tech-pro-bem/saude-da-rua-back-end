@@ -18,6 +18,11 @@ jobs:
       VOLUNTEER_JWT_SECRET_KEY: ${{ secrets.VOLUNTEER_JWT_SECRET_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      INSTAGRAM_APP_ID: ${{ secrets.INSTAGRAM_APP_ID }}
+      INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
+      INSTAGRAM_APP_REDIRECT_URI: ${{ secrets.INSTAGRAM_APP_REDIRECT_URI }}
 
     runs-on: ubuntu-22.04
 
