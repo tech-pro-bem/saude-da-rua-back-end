@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     environment: production
     env:
       TOKEN_ONE: ${{ secrets.TOKEN_ONE }}
@@ -37,5 +37,5 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build (with serverless and esbuild)
+      - name: Deploy to AWS
         run: yarn deploy
