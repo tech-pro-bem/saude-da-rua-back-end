@@ -1,8 +1,9 @@
-import { constEnumType } from "../../../utils/ConstEnumType";
+import { v4 as uuidV4 } from 'uuid';
+import { constEnumType } from '../../../utils/ConstEnumType';
 
-export const FileType: { [x: string]: "IMAGE" | "PDF" } = {
-    IMAGE: "IMAGE",
-    PDF: "PDF",
+export const FileType: { [x: string]: 'IMAGE' | 'PDF' } = {
+    IMAGE: 'IMAGE',
+    PDF: 'PDF',
 };
 
 interface TFileProps {
@@ -26,6 +27,7 @@ export class File {
     constructor(props: TFileProps) {
         Object.assign(this, {
             ...props,
+            id: props.id || uuidV4(),
             createdAt: props.createdAt || Date.now(),
         });
     }

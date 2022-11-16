@@ -26,6 +26,7 @@
                 "parser": "typescript"
             }
         ],
+        "class-methods-use-this": "off",
         "no-shadow": "off",
         "import/extensions": "off",
         "import/no-extraneous-dependencies": "off",
