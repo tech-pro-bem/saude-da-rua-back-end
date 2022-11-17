@@ -14,7 +14,7 @@ export class GetVolunteersValidation {
         .integer()
         .positive()
         .min(1)
-        .max(10)
+        .max(100)
         .required();
 
     constructor(queryString: queryStringBeforeValidate) {
