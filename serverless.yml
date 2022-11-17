@@ -102,6 +102,21 @@ functions:
                   - "s3:*"
               Resource:
                   - "arn:aws:s3:::*"
+    deleteAdmin:
+        name: delete-file
+        handler: src/infra/lambda/handlers/DeleteAdmin.main
+        events:
+            - httpApi:
+                  path: /admin/{adminId}
+                  method: DELETE
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "s3:*"
+              Resource:
+                  - "arn:aws:s3:::*"
     createFile:
         name: create-file
         handler: src/infra/lambda/handlers/CreateFile.main

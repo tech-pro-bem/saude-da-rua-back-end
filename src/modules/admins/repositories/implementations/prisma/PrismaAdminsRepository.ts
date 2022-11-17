@@ -43,4 +43,8 @@ export class PrismaAdminsRepository
 
         return true;
     }
+
+    async deleteAdmin(id: string): Promise<void> {
+        await this.prisma.file.delete({ where: { id } });
+    }
 }

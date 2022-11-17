@@ -5,5 +5,7 @@ export interface IAdminsRepository {
 
     saveAdmin(admin: Admin): Promise<boolean>;
 
+    deleteAdmin(id: string): Promise<void>;
+
     getAdminByEmail(email: string): Promise<Admin>;
 }
