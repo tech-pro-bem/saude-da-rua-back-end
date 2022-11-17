@@ -70,21 +70,6 @@ const howMuchParticipate: {
     MORE_THAN_FIVE_PARTICIPATION: 'MORE_THAN_FIVE_PARTICIPATION',
 };
 
-const howDidKnowOfSDR: {
-    [x: string]:
-        | 'SITE'
-        | 'INSTAGRAM'
-        | 'POSTS'
-        | 'EDUCATIONAL_INSTITUTIONS'
-        | 'OTHER';
-} = {
-    SITE: 'SITE',
-    INSTAGRAM: 'INSTAGRAM',
-    POSTS: 'POSTS',
-    EDUCATIONAL_INSTITUTIONS: 'EDUCATIONAL_INSTITUTIONS',
-    OTHER: 'OTHER',
-};
-
 type VolunteerProps = {
     id?: string;
 
@@ -102,7 +87,7 @@ type VolunteerProps = {
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
     howMuchParticipate: constEnumType<typeof howMuchParticipate>;
-    howDidKnowOfSDR: constEnumType<typeof howDidKnowOfSDR>;
+    howDidKnowOfSDR: string;
 };
 
 class Volunteer {
@@ -147,7 +132,7 @@ class Volunteer {
 
     public howMuchParticipate: constEnumType<typeof howMuchParticipate>;
 
-    public howDidKnowOfSDR: constEnumType<typeof howDidKnowOfSDR>;
+    public howDidKnowOfSDR: string;
 
     public verifiedEmail: boolean;
 }
@@ -158,6 +143,5 @@ export {
     occupation,
     semester,
     freeDaysOfWeek,
-    howDidKnowOfSDR,
     howMuchParticipate,
 };
