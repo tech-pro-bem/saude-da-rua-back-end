@@ -1,7 +1,6 @@
 import { constEnumType } from '../../../../utils/ConstEnumType';
 import {
     freeDaysOfWeek,
-    howDidKnowOfSDR,
     howMuchParticipate,
     occupation,
     semester,
@@ -19,7 +18,7 @@ type ICreateVolunteerRequestDTO = {
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
     howMuchParticipate: constEnumType<typeof howMuchParticipate>;
-    howDidKnowOfSDR: constEnumType<typeof howDidKnowOfSDR>;
+    howDidKnowOfSDR: string;
 };
 
 export { ICreateVolunteerRequestDTO };

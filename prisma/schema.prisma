@@ -49,14 +49,6 @@ enum HowMuchParticipate {
   MORE_THAN_FIVE_PARTICIPATION
 }
 
-enum HowDidKnowOfSDR {
-  SITE
-  INSTAGRAM
-  POSTS
-  EDUCATIONAL_INSTITUTIONS
-  OTHER
-}
-
 model Volunteer {
   id String @id
 
@@ -69,7 +61,7 @@ model Volunteer {
   listFreeDaysOfWeek     FreeDaysOfWeek[] // enum
   numberOfFreeDaysOfWeek Int
   howMuchParticipate     HowMuchParticipate // enum
-  howDidKnowOfSDR        HowDidKnowOfSDR //enum
+  howDidKnowOfSDR        String
   verifiedEmail          Boolean
   timeOfExperience       String?
   speciality             String?

@@ -84,7 +84,8 @@ export class CreateVolunteerValidation {
         .required();
 
     private howDidKnowOfSDR: StringSchema = Joi.string()
-        .valid(...Object.values(Volunteer.howDidKnowOfSDR))
+        .min(1)
+        .max(80)
         .required();
 
     constructor(body: BodyBeforeValidate) {
