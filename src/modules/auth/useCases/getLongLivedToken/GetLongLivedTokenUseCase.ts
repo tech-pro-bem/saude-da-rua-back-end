@@ -14,7 +14,10 @@ export class GetLongLivedTokenUseCase implements IGetLongLivedTokenUseCase {
         private instagramTokensRepository: IInstagramTokensRepository
     ) {}
 
-    async execute({ code }: GetLongLivedTokenDTO): Promise<void> {
+    async execute({ code, state }: GetLongLivedTokenDTO): Promise<void> {
+        if (state !== process.env.INSTAGRAM_APP_SECRET)
+            throw new AuthenticationError('invalid secret');
+
         const accessToken = await this.basicDisplayInstagramAPI.getAccessToken(
             code
         );
