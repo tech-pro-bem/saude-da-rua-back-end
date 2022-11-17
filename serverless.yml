@@ -124,8 +124,7 @@ functions:
             - httpApi:
                   path: /file/{fileType}
                   method: GET
-                  authorizer:
-                      name: jwtAuthorizationLambda
+
     getVolunteers:
         name: get-volunteers
         handler: src/infra/lambda/handlers/GetVolunteers.main
@@ -134,7 +133,7 @@ functions:
                   path: /get/volunteers
                   method: GET
                   authorizer:
-                      name: jwtAuthorizationLambda
+                      name: jwtAuthenticationLambda
     getInstagramToken:
         name: get-instagram-INSTAGRAM_TOKEN
         handler: src/infra/lambda/handlers/GetInstagramToken.main
