@@ -13,12 +13,12 @@ export class GetLongLivedTokenValidation {
 
     public async validate() {
         try {
-            const getLongLivedTokenValidation: ObjectSchema = Joi.object().keys(
-                {
+            const getLongLivedTokenValidation: ObjectSchema = Joi.object()
+                .keys({
                     code: this.code,
                     state: this.secret,
-                }
-            );
+                })
+                .required();
 
             const validatedPayload =
                 await getLongLivedTokenValidation.validateAsync(
