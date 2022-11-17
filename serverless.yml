@@ -103,7 +103,7 @@ functions:
               Resource:
                   - "arn:aws:s3:::*"
     deleteAdmin:
-        name: delete-file
+        name: delete-admin
         handler: src/infra/lambda/handlers/DeleteAdmin.main
         events:
             - httpApi:
@@ -146,6 +146,16 @@ functions:
         events:
             - httpApi:
                   path: /get/volunteers
+                  method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
+
+    listAdmins:
+        name: list-admins
+        handler: src/infra/lambda/handlers/ListAdmins.main
+        events:
+            - httpApi:
+                  path: /admins
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
