@@ -1,41 +1,44 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build:
-    environment: production
-    env:
-      TOKEN_ONE: ${{ secrets.TOKEN_ONE }}
-      TOKEN_TWO: ${{ secrets.TOKEN_TWO }}
-      USER_NODEMAILER_GMAIL: ${{ secrets.USER_NODEMAILER_GMAIL }}
-      PASSWORD_NODEMAILER_GMAIL: ${{ secrets.PASSWORD_NODEMAILER_GMAIL }}
-      ADMIN_JWT_LIFE_CYCLE: ${{ secrets.ADMIN_JWT_LIFE_CYCLE }}
-      ADMIN_JWT_SECRET_KEY: ${{ secrets.ADMIN_JWT_SECRET_KEY }}
-      VOLUNTEER_JWT_LIFE_CYCLE: ${{ secrets.VOLUNTEER_JWT_LIFE_CYCLE }}
-      VOLUNTEER_JWT_SECRET_KEY: ${{ secrets.VOLUNTEER_JWT_SECRET_KEY }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      INSTAGRAM_APP_ID: ${{ secrets.INSTAGRAM_APP_ID }}
-      INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
-      INSTAGRAM_APP_REDIRECT_URI: ${{ secrets.INSTAGRAM_APP_REDIRECT_URI }}
+    deploy:
+        environment: production
+        env:
+            TOKEN_ONE: ${{ secrets.TOKEN_ONE }}
+            TOKEN_TWO: ${{ secrets.TOKEN_TWO }}
+            USER_NODEMAILER_GMAIL: ${{ secrets.USER_NODEMAILER_GMAIL }}
+            PASSWORD_NODEMAILER_GMAIL: ${{ secrets.PASSWORD_NODEMAILER_GMAIL }}
+            ADMIN_JWT_LIFE_CYCLE: ${{ secrets.ADMIN_JWT_LIFE_CYCLE }}
+            ADMIN_JWT_SECRET_KEY: ${{ secrets.ADMIN_JWT_SECRET_KEY }}
+            VOLUNTEER_JWT_LIFE_CYCLE: ${{ secrets.VOLUNTEER_JWT_LIFE_CYCLE }}
+            VOLUNTEER_JWT_SECRET_KEY: ${{ secrets.VOLUNTEER_JWT_SECRET_KEY }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            INSTAGRAM_APP_ID: ${{ secrets.INSTAGRAM_APP_ID }}
+            INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
+            INSTAGRAM_APP_REDIRECT_URI: ${{ secrets.INSTAGRAM_APP_REDIRECT_URI }}
 
-    runs-on: ubuntu-22.04
+        runs-on: ubuntu-22.04
 
-    steps:
-      - uses: actions/checkout@v3
+        steps:
+            - uses: actions/checkout@v3
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.17.0"
+            - name: Setup NodeJS
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "16.17.0"
 
-      - name: Install dependencies
-        run: yarn
+            - name: Install dependencies
+              run: yarn
 
-      - name: Build (with serverless and esbuild)
-        run: yarn deploy
+            - name: Run migrations on deploy
+              run: yarn prisma migrate deploy
+
+            - name: Deploy to AWS
+              run: yarn deploy
