@@ -1,8 +1,14 @@
-import { Volunteer } from '../entities/Volunteer';
+import { constEnumType } from '../../../utils/ConstEnumType';
+import { participation, Volunteer } from '../entities/Volunteer';
 
 export type GetVolunteersInput = {
     limit: number;
     lastVolunteerId: string | null;
+};
+
+export type UpdateVolunteersInput = {
+    id: string;
+    participation: constEnumType<typeof participation>;
 };
 
 export interface IVolunteersRepository {
@@ -16,6 +22,11 @@ export interface IVolunteersRepository {
         limit,
         lastVolunteerId,
     }: GetVolunteersInput): Promise<Volunteer[]>;
+
+    updateVolunteerParticipation({
+        id,
+        participation,
+    }: UpdateVolunteersInput): Promise<void>;
 
     setVerifiedEmailToTrue(email: string): Promise<void>;
 }

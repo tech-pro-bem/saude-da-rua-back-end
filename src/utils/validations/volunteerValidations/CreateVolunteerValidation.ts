@@ -79,8 +79,8 @@ export class CreateVolunteerValidation {
 
     private timeOfExperience: StringSchema = Joi.string();
 
-    private howMuchParticipate: StringSchema = Joi.string()
-        .valid(...Object.values(Volunteer.howMuchParticipate))
+    private hasParticipated: StringSchema = Joi.string()
+        .valid(...Object.values(Volunteer.participation))
         .required();
 
     private howDidKnowOfSDR: StringSchema = Joi.string()
@@ -108,7 +108,7 @@ export class CreateVolunteerValidation {
                 speciality: this.speciality,
                 listFreeDaysOfWeek: this.listFreeDaysOfWeek,
                 timeOfExperience: this.timeOfExperience,
-                howMuchParticipate: this.howMuchParticipate,
+                hasParticipated: this.hasParticipated,
                 howDidKnowOfSDR: this.howDidKnowOfSDR,
             });
 

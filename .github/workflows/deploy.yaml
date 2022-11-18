@@ -37,6 +37,9 @@ jobs:
             - name: Install dependencies
               run: yarn
 
+            - name: Run tests
+              run: yarn tests
+
             - name: Run migrations on deploy
               run: yarn prisma migrate deploy
 

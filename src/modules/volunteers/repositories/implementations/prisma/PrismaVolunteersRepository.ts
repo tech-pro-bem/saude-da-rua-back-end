@@ -4,6 +4,7 @@ import { Volunteer } from '../../../entities/Volunteer';
 import {
     GetVolunteersInput,
     IVolunteersRepository,
+    UpdateVolunteersInput,
 } from '../../IVolunteersRepository';
 
 export class PrismaVolunteersRepository
@@ -15,6 +16,16 @@ export class PrismaVolunteersRepository
     constructor() {
         super();
         this.prisma = this.getPrismaClient();
+    }
+
+    async updateVolunteerParticipation({
+        id,
+        participation,
+    }: UpdateVolunteersInput): Promise<void> {
+        await this.prisma.volunteer.update({
+            where: { id },
+            data: { hasParticipated: participation },
+        });
     }
 
     async setVerifiedEmailToTrue(email: string): Promise<void> {
