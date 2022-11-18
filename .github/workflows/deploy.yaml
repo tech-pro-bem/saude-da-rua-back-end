@@ -38,7 +38,7 @@ jobs:
               run: yarn
 
             - name: Run tests
-              run: yarn tests
+              run: yarn test
 
             - name: Run migrations on deploy
               run: yarn prisma migrate deploy
