@@ -42,11 +42,9 @@ enum FreeDaysOfWeek {
   SABADO
 }
 
-enum HowMuchParticipate {
+enum Participation {
+  PARTICIPATED
   NOT_PARTICIPATED
-  ONE_PARTICIPATION
-  BETWEEN_TWO_AND_FIVE_PARTICIPATION
-  MORE_THAN_FIVE_PARTICIPATION
 }
 
 model Volunteer {
@@ -60,7 +58,7 @@ model Volunteer {
   semester               Semester? // enum
   listFreeDaysOfWeek     FreeDaysOfWeek[] // enum
   numberOfFreeDaysOfWeek Int
-  howMuchParticipate     HowMuchParticipate // enum
+  hasParticipated        Participation // enum
   howDidKnowOfSDR        String
   verifiedEmail          Boolean
   timeOfExperience       String?

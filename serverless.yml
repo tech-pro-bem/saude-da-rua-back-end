@@ -171,6 +171,15 @@ functions:
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
+    updateVolunteerParticipation:
+        name: update-volunteer-participation
+        handler: src/infra/lambda/handlers/UpdateVolunteerParticipation.main
+        events:
+            - httpApi:
+                  path: /volunteers/{id}/participation
+                  method: PATCH
+                  authorizer:
+                    name: jwtAuthenticationLambda
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/infra/lambda/handlers/SendEmailToVolunteer.main

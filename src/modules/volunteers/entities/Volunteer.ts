@@ -57,17 +57,11 @@ const freeDaysOfWeek: {
     SABADO: 'SABADO',
 };
 
-const howMuchParticipate: {
-    [x: string]:
-        | 'NOT_PARTICIPATED'
-        | 'ONE_PARTICIPATION'
-        | 'BETWEEN_TWO_AND_FIVE_PARTICIPATION'
-        | 'MORE_THAN_FIVE_PARTICIPATION';
+const participation: {
+    [x: string]: 'NOT_PARTICIPATED' | 'PARTICIPATED';
 } = {
     NOT_PARTICIPATED: 'NOT_PARTICIPATED',
-    ONE_PARTICIPATION: 'ONE_PARTICIPATION',
-    BETWEEN_TWO_AND_FIVE_PARTICIPATION: 'BETWEEN_TWO_AND_FIVE_PARTICIPATION',
-    MORE_THAN_FIVE_PARTICIPATION: 'MORE_THAN_FIVE_PARTICIPATION',
+    PARTICIPATED: 'PARTICIPATED',
 };
 
 type VolunteerProps = {
@@ -86,7 +80,7 @@ type VolunteerProps = {
     speciality?: string;
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
-    howMuchParticipate: constEnumType<typeof howMuchParticipate>;
+    hasParticipated: constEnumType<typeof participation>;
     howDidKnowOfSDR: string;
 };
 
@@ -130,7 +124,7 @@ class Volunteer {
 
     public timeOfExperience?: string;
 
-    public howMuchParticipate: constEnumType<typeof howMuchParticipate>;
+    public hasParticipated: constEnumType<typeof participation>;
 
     public howDidKnowOfSDR: string;
 
@@ -143,5 +137,5 @@ export {
     occupation,
     semester,
     freeDaysOfWeek,
-    howMuchParticipate,
+    participation,
 };
