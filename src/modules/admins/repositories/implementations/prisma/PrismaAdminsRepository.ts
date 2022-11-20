@@ -46,7 +46,16 @@ export class PrismaAdminsRepository
     }
 
     async deleteAdmin(id: string): Promise<void> {
-        await this.prisma.file.delete({ where: { id } });
+        await this.prisma.admin.delete({ where: { id } });
+    }
+
+    async updateAdminPermissionLevelUseCase(id: string, level: string): Promise<void> {
+        await this.prisma.admin.update({
+            where: { id },
+            data: { 
+                permissionLevel: level
+            }
+        });
     }
 
     async list(params: IGetAdminsRequestDTO): Promise<Admin[]> {

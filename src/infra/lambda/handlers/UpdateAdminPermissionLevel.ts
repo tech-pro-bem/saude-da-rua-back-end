@@ -1,13 +1,15 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { deleteAdminUseCase } from '../../../modules/admins/useCases/deleteAdmin';
+import { updateAdminPermissionLevelUseCase } from '../../../modules/admins/useCases/updatePermissionLevel';
 import { APIEventBodySchema, formatJSONResponse, middyfy } from '../middyfy';
 
 const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters?.adminId || '';
-    await deleteAdminUseCase.execute({
+    const permissionLevel = event.pathParameters?.permissionLevel || '';
+    await updateAdminPermissionLevelUseCase.execute({
         id,
+        permissionLevel
     });
 
     return formatJSONResponse(undefined, 204);

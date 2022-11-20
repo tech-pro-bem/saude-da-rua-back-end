@@ -11,4 +11,6 @@ export interface IAdminsRepository {
     getAdminByEmail(email: string): Promise<Admin>;
 
     list(params: IGetAdminsRequestDTO) : Promise<Admin[]>;
+
+    updateAdminPermissionLevelUseCase(id: string, level: string): Promise<void>
 }

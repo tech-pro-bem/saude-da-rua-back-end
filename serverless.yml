@@ -117,6 +117,15 @@ functions:
                   - "s3:*"
               Resource:
                   - "arn:aws:s3:::*"
+    updateAdminPermissions:
+        name: update-admin-permissions
+        handler: src/infra/lambda/handlers/UpdateAdminPermissions.main
+        events:
+            - httpApi:
+                  path: /admin/{adminId}/level/{adminLevel}
+                  method: PATCH
+                  authorizer:
+                      name: jwtAuthorizationLambda
     createFile:
         name: create-file
         handler: src/infra/lambda/handlers/CreateFile.main

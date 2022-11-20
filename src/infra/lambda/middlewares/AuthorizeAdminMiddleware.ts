@@ -1,5 +1,5 @@
-import md5 from 'md5';
 import { AuthorizationError } from '../../../helpers/errors';
+import { AdminPermissionLevels } from '../../../modules/admins/entities/Admin'
 
 class AuthorizeAdminMiddleware {
     private subToAuthorize: string;
@@ -9,9 +9,9 @@ class AuthorizeAdminMiddleware {
     }
 
     public authorize = (): void => {
-        const envPermissionLevel: string = md5(process.env.TOKEN_TWO);
+        const adminPermissionLevel: string = AdminPermissionLevels.Admin
 
-        if (this.subToAuthorize !== envPermissionLevel) {
+        if (this.subToAuthorize !== adminPermissionLevel) {
             throw new AuthorizationError(
                 'This Admin account does not have access to this feature'
             );
