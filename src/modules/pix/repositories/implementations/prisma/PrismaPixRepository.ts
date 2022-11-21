@@ -27,7 +27,7 @@ export class PrismaPixRepository
 
         if (pixExists) {
             await this.prisma.pix.update({
-                where: { id: pix.id },
+                where: { id: pixExists.id },
                 data: pix,
             });
 
