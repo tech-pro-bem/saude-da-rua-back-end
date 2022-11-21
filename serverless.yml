@@ -122,7 +122,7 @@ functions:
         handler: src/infra/lambda/handlers/UpdateAdminPermissionLevel.main
         events:
             - httpApi:
-                  path: /admin/{adminId}/level/{adminLevel}
+                  path: /admin/{adminId}/level/{permissionLevel}
                   method: PATCH
                   authorizer:
                       name: jwtAuthorizationLambda
