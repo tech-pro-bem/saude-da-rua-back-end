@@ -25,6 +25,9 @@ export type APIEventBodySchema<S = { [name: string]: any }> = Omit<
 
 export const formatJSONResponse = (response?: unknown, statusCode = 200) => ({
     statusCode,
+    headers: {
+        "Content-Type": "application/json",
+    },
     body: response ? JSON.stringify(response) : undefined,
 });
 
