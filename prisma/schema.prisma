@@ -108,3 +108,11 @@ model InstagramToken {
 
   @@map("instagram_tokens")
 }
+
+model Pix {
+  id String @id
+
+  key String
+
+  @@map("pix")
+}
