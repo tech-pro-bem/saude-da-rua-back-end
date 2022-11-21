@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import md5 from 'md5';
 
 type AdminProps = {
     id?: string;
@@ -15,6 +14,11 @@ type AdminProps = {
     updatedAt?: number;
 };
 
+export enum AdminPermissionLevels {
+    Volunteer = "1",
+    Admin = "2"
+}
+
 class Admin {
     public readonly id: string;
 
@@ -28,7 +32,7 @@ class Admin {
 
     public passwordHash: string;
 
-    public readonly permissionLevel = md5(process.env.TOKEN_ONE);
+    public readonly permissionLevel: string;
 
     constructor(props: AdminProps) {
         Object.assign(this, {

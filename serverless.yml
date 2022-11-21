@@ -102,6 +102,30 @@ functions:
                   - "s3:*"
               Resource:
                   - "arn:aws:s3:::*"
+    deleteAdmin:
+        name: delete-admin
+        handler: src/infra/lambda/handlers/DeleteAdmin.main
+        events:
+            - httpApi:
+                  path: /admin/{adminId}
+                  method: DELETE
+                  authorizer:
+                      name: jwtAuthorizationLambda
+        iamRoleStatements:
+            - Effect: "Allow"
+              Action:
+                  - "s3:*"
+              Resource:
+                  - "arn:aws:s3:::*"
+    updateAdminPermissions:
+        name: update-admin-permissions
+        handler: src/infra/lambda/handlers/UpdateAdminPermissions.main
+        events:
+            - httpApi:
+                  path: /admin/{adminId}/level/{adminLevel}
+                  method: PATCH
+                  authorizer:
+                      name: jwtAuthorizationLambda
     createFile:
         name: create-file
         handler: src/infra/lambda/handlers/CreateFile.main
@@ -131,6 +155,16 @@ functions:
         events:
             - httpApi:
                   path: /get/volunteers
+                  method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
+
+    listAdmins:
+        name: list-admins
+        handler: src/infra/lambda/handlers/ListAdmins.main
+        events:
+            - httpApi:
+                  path: /admins
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
