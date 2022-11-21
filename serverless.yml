@@ -122,7 +122,7 @@ functions:
         handler: src/infra/lambda/handlers/UpdateAdminPermissionLevel.main
         events:
             - httpApi:
-                  path: /admin/{adminId}/level/{permissionLevel}
+                  path: /admin/{adminId}/level/{adminLevel}
                   method: PATCH
                   authorizer:
                       name: jwtAuthorizationLambda
@@ -213,7 +213,7 @@ functions:
                   path: /volunteers/{id}/participation
                   method: PATCH
                   authorizer:
-                    name: jwtAuthenticationLambda
+                      name: jwtAuthenticationLambda
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/infra/lambda/handlers/SendEmailToVolunteer.main

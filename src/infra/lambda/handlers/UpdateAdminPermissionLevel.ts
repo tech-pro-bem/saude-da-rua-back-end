@@ -6,7 +6,7 @@ const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters?.adminId || '';
-    const permissionLevel = event.pathParameters?.permissionLevel || '';
+    const permissionLevel = event.pathParameters?.adminLevel || '';
     await updateAdminPermissionLevelUseCase.execute({
         id,
         permissionLevel
