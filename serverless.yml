@@ -80,7 +80,7 @@ functions:
         events:
             - httpApi:
                   path: /pix
-                  method: UPDATE
+                  method: PUT
                   authorizer:
                       name: jwtAuthorizationLambda
     createVolunteer:
