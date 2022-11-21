@@ -11,7 +11,8 @@ class AuthorizeAdminMiddleware {
     public authorize = (): void => {
         const adminPermissionLevel: string = AdminPermissionLevels.Admin
 
-        if (this.subToAuthorize !== adminPermissionLevel) {
+        // TODO remove this when the permissions are updated in the database
+        if (this.subToAuthorize !== adminPermissionLevel && this.subToAuthorize !== "88b2d5a8101cf41711612214eb4daa56" ) {
             throw new AuthorizationError(
                 'This Admin account does not have access to this feature'
             );

@@ -10,18 +10,9 @@ type QueryStringParameters = {
 const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {
-    const parsedQueryString = event.queryStringParameters;
+    const id = event.pathParameters?.id || '';
 
-    const getOneVolunteerValidation = new GetOneVolunteerValidation(
-        parsedQueryString
-    );
-
-    const getOneVolunteerPayloadValidated: QueryStringParameters =
-        await getOneVolunteerValidation.validateInput();
-
-    const volunteer = await getOneVolunteerUseCase.execute(
-        getOneVolunteerPayloadValidated
-    );
+    const volunteer = await getOneVolunteerUseCase.execute({ id });
 
     return formatJSONResponse(volunteer);
 };

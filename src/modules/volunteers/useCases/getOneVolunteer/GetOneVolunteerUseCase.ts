@@ -13,10 +13,10 @@ class GetOneVolunteerUseCase {
     async execute(
         getOneVolunteerRequestData: IGetOneVolunteerRequestDTO
     ): Promise<Volunteer> {
-        const { email } = getOneVolunteerRequestData;
+        const { id } = getOneVolunteerRequestData;
 
         const getOneVolunteerData: Volunteer =
-            await this.volunteersRepository.getVolunteer(email);
+            await this.volunteersRepository.getVolunteer(id);
 
         if (getOneVolunteerData === undefined) {
             throw new NotFoundError('There is no Voluntter with this email');

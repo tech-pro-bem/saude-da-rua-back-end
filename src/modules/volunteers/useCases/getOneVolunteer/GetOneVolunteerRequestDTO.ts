@@ -1,5 +1,5 @@
 type IGetOneVolunteerRequestDTO = {
-    email: string;
+    id: string;
 };
 
 export { IGetOneVolunteerRequestDTO };

@@ -154,7 +154,7 @@ functions:
         handler: src/infra/lambda/handlers/GetVolunteers.main
         events:
             - httpApi:
-                  path: /get/volunteers
+                  path: /volunteers
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
@@ -192,7 +192,7 @@ functions:
         handler: src/infra/lambda/handlers/GetOneVolunteer.main
         events:
             - httpApi:
-                  path: /get/one_volunteer
+                  path: /volunteer/{id}
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
