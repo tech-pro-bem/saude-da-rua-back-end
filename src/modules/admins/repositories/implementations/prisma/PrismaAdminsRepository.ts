@@ -70,7 +70,10 @@ export class PrismaAdminsRepository
         });
 
         return listOfAdmins.map(
-            (admin) => new Admin(admin)
+            (admin) => {
+                delete admin.passwordHash
+                return new Admin(admin)
+            }
         );
 ;
     }

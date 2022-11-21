@@ -11,7 +11,7 @@ class GetAdminsUseCase {
 
     async execute(getAdminRequestData: IGetAdminsRequestDTO) {
         console.log(getAdminRequestData)
-        const { lastAdminId, limit } = getAdminRequestData;
+        const { lastAdminId, limit = 10 } = getAdminRequestData;
 
         const adminListAndLastValueted =
             await this.adminRepository.list({
