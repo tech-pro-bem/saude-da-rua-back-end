@@ -29,8 +29,9 @@ export const handler = async (
         const authenticateAdminMiddlware = new AuthenticateAdminMiddleware(
             event
         );
-
+        
         response = authenticateAdminMiddlware.authenticate();
+        console.log(response);
     } catch (err) {
         callback('Unauthorized');
     }
