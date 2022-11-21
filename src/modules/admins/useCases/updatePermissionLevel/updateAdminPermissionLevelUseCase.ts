@@ -15,7 +15,7 @@ class UpdateAdminPermissionLevelUseCase {
     ): Promise<void> {
         const { id, permissionLevel } = updateAdminPermissionLevelRequestData;
 
-        if(Object.values(AdminPermissionLevels).includes(permissionLevel as AdminPermissionLevels)) {
+        if(!Object.values(AdminPermissionLevels).includes(permissionLevel as AdminPermissionLevels)) {
             throw new ValidationError("This permission level is not allowed")
         }
 
