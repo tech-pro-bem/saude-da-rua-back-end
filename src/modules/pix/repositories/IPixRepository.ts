@@ -1,6 +1,6 @@
 import { Pix } from '../entities/InstagramToken';
 
 export interface IPixRepository {
-    save(instagramToken: Pix): Promise<Pix>;
+    save(pix: Pix): Promise<Pix>;
     find(): Promise<Pix | null>;
 }
