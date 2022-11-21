@@ -141,14 +141,6 @@ functions:
                   - "s3:*"
               Resource:
                   - "arn:aws:s3:::*"
-    listFiles:
-        name: list-files
-        handler: src/infra/lambda/handlers/ListFiles.main
-        events:
-            - httpApi:
-                  path: /file/{fileType}
-                  method: GET
-
     getVolunteers:
         name: get-volunteers
         handler: src/infra/lambda/handlers/GetVolunteers.main
@@ -174,6 +166,13 @@ functions:
         events:
             - httpApi:
                   path: /get/instagram-token
+                  method: GET
+    listFiles:
+        name: list-files
+        handler: src/infra/lambda/handlers/ListFiles.main
+        events:
+            - httpApi:
+                  path: /files/{fileType}
                   method: GET
     getLongLivedToken:
         name: get-long-lived-token
