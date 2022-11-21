@@ -24,6 +24,7 @@ const prismaClient = prismaPostgres.getPrismaClient();
             email: 'test@example.com',
             name: 'test test',
             passwordHash,
+            permissionLevel: "1"
         }),
     });
 
