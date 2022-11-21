@@ -3,6 +3,8 @@ import { getAuthenticatedAdminUseCase } from '../../../modules/admins/useCases/g
 
 const handle = async (event: APIEventBodySchema) => {
     const { adminEmail } = event.requestContext.authorizer;
+    console.log(event)
+    console.log(event.requestContext)
     console.log(adminEmail)
     const admin = await getAuthenticatedAdminUseCase.execute({
         email: adminEmail,
