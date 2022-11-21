@@ -29,6 +29,7 @@ export const formatJSONResponse = (response?: unknown, statusCode = 200) => ({
 });
 
 function exceptionHandler({ error }: { error: Error | null }) {
+    console.log(error)
     if (error instanceof DefaultError) {
         return formatJSONResponse(
             {
