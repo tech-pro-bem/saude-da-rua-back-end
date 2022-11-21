@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { IPixRepository } from '../../IPixRepository';
 import { PrismaPostgresClient } from '../../../../../helpers/database/PrismaPostgresClient';
-import { Pix } from '../../../entities/InstagramToken';
+import { Pix } from '../../../entities/Pix';
 
 export class PrismaPixRepository
     extends PrismaPostgresClient

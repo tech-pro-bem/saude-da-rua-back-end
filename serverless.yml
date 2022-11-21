@@ -74,6 +74,15 @@ functions:
                   method: POST
                   authorizer:
                       name: jwtAuthorizationLambda
+    updatePixKey:
+        name: update-pix-key
+        handler: src/infra/lambda/handlers/UpdatePixKey.main
+        events:
+            - httpApi:
+                  path: /pix
+                  method: UPDATE
+                  authorizer:
+                      name: jwtAuthorizationLambda
     createVolunteer:
         name: create-volunteer
         handler: src/infra/lambda/handlers/CreateVolunteer.main
