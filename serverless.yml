@@ -182,6 +182,13 @@ functions:
             - httpApi:
                   path: /get/long-lived-token
                   method: GET
+    getPixKey:
+        name: get-pix-key
+        handler: src/infra/lambda/handlers/GetPixKey.main
+        events:
+            - httpApi:
+                  path: /pix
+                  method: GET
     refreshLongLivedToken:
         name: refresh-long-lived-token
         handler: src/infra/lambda/handlers/RefreshLongLivedToken.main
