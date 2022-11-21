@@ -119,7 +119,7 @@ functions:
                   - "arn:aws:s3:::*"
     updateAdminPermissions:
         name: update-admin-permissions
-        handler: src/infra/lambda/handlers/UpdateAdminPermissions.main
+        handler: src/infra/lambda/handlers/UpdateAdminPermissionLevel.main
         events:
             - httpApi:
                   path: /admin/{adminId}/level/{adminLevel}
