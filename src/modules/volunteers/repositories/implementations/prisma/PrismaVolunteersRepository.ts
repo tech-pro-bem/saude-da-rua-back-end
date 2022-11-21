@@ -66,9 +66,9 @@ export class PrismaVolunteersRepository
         return true;
     }
 
-    async getVolunteer(email: string): Promise<Volunteer> {
+    async getVolunteer(id: string): Promise<Volunteer> {
         const volunteer = await this.prisma.volunteer.findFirst({
-            where: { email },
+            where: { id },
         });
 
         if (!volunteer) return undefined;
