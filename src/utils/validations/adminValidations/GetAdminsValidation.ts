@@ -23,16 +23,17 @@ export class GetAdminsValidation {
 
     public async validateInput() {
         try {
-            const getVolunteersValidation: ObjectSchema = Joi.object().keys({
+            const getAdminsValidation: ObjectSchema = Joi.object().keys({
                 lastAdminId: this.lastAdminId,
                 limit: this.limit,
             });
 
             const validatedPayload =
-                await getVolunteersValidation.validateAsync(
+                await getAdminsValidation.validateAsync(
                     this.queryStringParameters
                 );
-
+            
+            console.log(validatedPayload)
             return validatedPayload;
         } catch (error) {
             const getDetailsError: string = error.details[0].message;

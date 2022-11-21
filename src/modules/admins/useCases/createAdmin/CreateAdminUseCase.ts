@@ -3,7 +3,7 @@ import { Admin } from '../../entities/Admin';
 import { ICreateAdminRequestDTO } from './CreateAdminRequestDTO';
 import { ConflictError } from '../../../../helpers/errors';
 import { IAdminsRepository } from '../../repositories/IAdminsRepository';
-
+import { AdminPermissionLevels } from '../../entities/Admin'
 class CreateAdminUseCase {
     private adminsRepository: IAdminsRepository;
 
@@ -25,7 +25,7 @@ class CreateAdminUseCase {
 
         const passwordHash = await hash(password, 10);
 
-        const newAdmin = new Admin({ email, name, passwordHash });
+        const newAdmin = new Admin({ email, name, passwordHash, permissionLevel: AdminPermissionLevels.Volunteer });
 
         await this.adminsRepository.saveAdmin(newAdmin);
     }

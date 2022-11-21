@@ -10,6 +10,7 @@ class GetAdminsUseCase {
     }
 
     async execute(getAdminRequestData: IGetAdminsRequestDTO) {
+        console.log(getAdminRequestData)
         const { lastAdminId, limit } = getAdminRequestData;
 
         const adminListAndLastValueted =

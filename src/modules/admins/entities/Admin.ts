@@ -9,6 +9,8 @@ type AdminProps = {
 
     passwordHash: string;
 
+    permissionLevel: string;
+
     createdAt?: number;
 
     updatedAt?: number;
