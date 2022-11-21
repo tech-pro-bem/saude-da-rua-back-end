@@ -49,7 +49,7 @@ custom:
     #dbName: "saudedarua"
     #dbHost: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Host"
     #dbPort: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Port"
-    filesBucketName: fileuploadbucket-123-lagum
+    filesBucketName: fileuploadbucket-prod
 
 functions:
     authenticationProxy:
