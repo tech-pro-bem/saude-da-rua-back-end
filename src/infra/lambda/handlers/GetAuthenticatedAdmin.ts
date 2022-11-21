@@ -2,10 +2,7 @@ import { formatJSONResponse, APIEventBodySchema, middyfy } from '../middyfy';
 import { getAuthenticatedAdminUseCase } from '../../../modules/admins/useCases/getAuthenticatedAdmin';
 
 const handle = async (event: APIEventBodySchema) => {
-    const { adminEmail } = event.requestContext.authorizer;
-    console.log(event)
-    console.log(event.requestContext)
-    console.log(adminEmail)
+    const { adminEmail } = event.requestContext.authorizer.lambda;
     const admin = await getAuthenticatedAdminUseCase.execute({
         email: adminEmail,
     });
