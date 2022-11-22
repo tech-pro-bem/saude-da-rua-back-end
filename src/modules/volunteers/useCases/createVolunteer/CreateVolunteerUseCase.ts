@@ -32,7 +32,7 @@ class CreateVolunteerUseCase {
             speciality,
             listFreeDaysOfWeek,
             timeOfExperience,
-            hasParticipated,
+            howMuchParticipate,
             howDidKnowOfSDR,
         } = createVolunteerRequestData;
 
@@ -60,7 +60,7 @@ class CreateVolunteerUseCase {
             speciality,
             listFreeDaysOfWeek,
             timeOfExperience,
-            hasParticipated,
+            howMuchParticipate,
             howDidKnowOfSDR,
         });
 

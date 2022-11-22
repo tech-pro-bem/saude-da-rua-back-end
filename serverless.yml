@@ -221,9 +221,9 @@ functions:
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
-    updateVolunteerParticipation:
+    updateCurrentlyParticipation:
         name: update-volunteer-participation
-        handler: src/infra/lambda/handlers/UpdateVolunteerParticipation.main
+        handler: src/infra/lambda/handlers/UpdateCurrentlyParticipation.main
         events:
             - httpApi:
                   path: /volunteers/{id}/participation

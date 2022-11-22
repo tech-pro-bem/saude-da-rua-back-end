@@ -1,19 +1,16 @@
-import Joi, { ObjectSchema, StringSchema } from 'joi';
+import Joi, { BooleanSchema, ObjectSchema, StringSchema } from 'joi';
 import { ValidationError } from '../../../helpers/errors';
-import { participation } from '../../../modules/volunteers/entities/Volunteer';
 
 type data = {
     [name: string]: string;
 };
 
-export class UpdateVolunteerParticipationValidation {
+export class UpdateCurrentlyParticipationValidation {
     private data: data;
 
     private id: StringSchema = Joi.string().uuid().required();
 
-    private participation: StringSchema = Joi.string()
-        .valid(...Object.values(participation))
-        .required();
+    private currentlyParticipation: BooleanSchema = Joi.boolean().required();
 
     constructor(data: data) {
         this.data = data;
@@ -21,14 +18,14 @@ export class UpdateVolunteerParticipationValidation {
 
     public async validateInput() {
         try {
-            const updateVolunteerParticipationValidation: ObjectSchema =
+            const updateCurrentlyParticipationValidation: ObjectSchema =
                 Joi.object().keys({
                     id: this.id,
-                    participation: this.participation,
+                    currentlyParticipation: this.currentlyParticipation,
                 });
 
             const validatedPayload =
-                await updateVolunteerParticipationValidation.validateAsync(
+                await updateCurrentlyParticipationValidation.validateAsync(
                     this.data
                 );
 

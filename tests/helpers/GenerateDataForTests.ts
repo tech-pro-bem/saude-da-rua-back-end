@@ -17,7 +17,7 @@ export async function getRandomVolunteer(options?: GetRandomVolunteerOptions) {
         email: faker.internet.email(),
         fullName: faker.name.fullName(),
         howDidKnowOfSDR: faker.hacker.phrase(),
-        hasParticipated: 'NOT_PARTICIPATED',
+        howMuchParticipate: 'NOT_PARTICIPATED',
         listFreeDaysOfWeek: ['DOMINGO', 'QUARTA'],
         occupation: 'ESTUDANTE',
         ...options?.customAttributes,

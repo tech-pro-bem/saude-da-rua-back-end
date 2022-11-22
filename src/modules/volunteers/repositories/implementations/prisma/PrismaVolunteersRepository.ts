@@ -18,13 +18,23 @@ export class PrismaVolunteersRepository
         this.prisma = this.getPrismaClient();
     }
 
-    async updateVolunteerParticipation({
+    async getVolunteerById(id: string): Promise<Volunteer | null> {
+        const volunteer = await this.prisma.volunteer.findUnique({
+            where: { id },
+        });
+
+        if (!volunteer) return null;
+
+        return new Volunteer(volunteer);
+    }
+
+    async updateCurrentlyParticipation({
         id,
-        participation,
+        currentlyParticipation,
     }: UpdateVolunteersInput): Promise<void> {
         await this.prisma.volunteer.update({
             where: { id },
-            data: { hasParticipated: participation },
+            data: { isCurrentlyParticipating: currentlyParticipation },
         });
     }
 

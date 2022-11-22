@@ -6,27 +6,27 @@ const prismaPostgres = new PrismaPostgresClient();
 const prismaClient = prismaPostgres.getPrismaClient();
 
 (async () => {
-    const passwordHash = await hash('test12345', 10);
+    if (!process.env.INITIAL_ADMIN_PASSWORD) return;
+
+    const passwordHash = await hash(process.env.INITIAL_ADMIN_PASSWORD, 10);
 
     const isAdminAlreadyCreated = await prismaClient.admin.findFirst({
-        where: { email: 'test@example.com' },
+        where: { email: 'teste@teste.com' },
     });
 
     if (isAdminAlreadyCreated) {
-        console.log(
-            'Seed created!\nEmail: test@example.com\nPassword: test12345'
-        );
+        console.log('Seed created!\nEmail: teste@teste.com');
         return;
     }
 
     await prismaClient.admin.create({
         data: new Admin({
-            email: 'test@example.com',
+            email: 'teste@teste.com',
             name: 'test test',
             passwordHash,
-            permissionLevel: "1"
+            permissionLevel: '1',
         }),
     });
 
-    console.log('Seed created!\nEmail: test@example.com\nPassword: test12345');
+    console.log('Seed created!\nEmail: test@example.com');
 })();

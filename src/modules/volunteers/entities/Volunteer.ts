@@ -57,11 +57,17 @@ const freeDaysOfWeek: {
     SABADO: 'SABADO',
 };
 
-const participation: {
-    [x: string]: 'NOT_PARTICIPATED' | 'PARTICIPATED';
+const howMuchParticipate: {
+    [x: string]:
+        | 'NOT_PARTICIPATED'
+        | 'ONE_PARTICIPATION'
+        | 'BETWEEN_TWO_AND_FIVE_PARTICIPATION'
+        | 'MORE_THAN_FIVE_PARTICIPATION';
 } = {
     NOT_PARTICIPATED: 'NOT_PARTICIPATED',
-    PARTICIPATED: 'PARTICIPATED',
+    ONE_PARTICIPATION: 'ONE_PARTICIPATION',
+    BETWEEN_TWO_AND_FIVE_PARTICIPATION: 'BETWEEN_TWO_AND_FIVE_PARTICIPATION',
+    MORE_THAN_FIVE_PARTICIPATION: 'MORE_THAN_FIVE_PARTICIPATION',
 };
 
 type VolunteerProps = {
@@ -73,6 +79,7 @@ type VolunteerProps = {
     email: string;
     fullName: string;
     birthdate: string;
+    isCurrentlyParticipating?: boolean;
     cellphoneNumberWithDDD: string;
     occupation: constEnumType<typeof occupation>;
     university?: string;
@@ -80,7 +87,7 @@ type VolunteerProps = {
     speciality?: string;
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
-    hasParticipated: constEnumType<typeof participation>;
+    howMuchParticipate: constEnumType<typeof howMuchParticipate>;
     howDidKnowOfSDR: string;
 };
 
@@ -91,8 +98,9 @@ class Volunteer {
             id: props.id || uuidv4(),
             createdAt: props.createdAt || Date.now(),
             updatedAt: props.updatedAt || Date.now(),
+            isCurrentlyParticipating: props.isCurrentlyParticipating ?? true,
             numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
-            verifiedEmail: props.verifiedEmail || false,
+            verifiedEmail: props.verifiedEmail ?? false,
         });
     }
 
@@ -124,7 +132,9 @@ class Volunteer {
 
     public timeOfExperience?: string;
 
-    public hasParticipated: constEnumType<typeof participation>;
+    public howMuchParticipate: constEnumType<typeof howMuchParticipate>;
+
+    public isCurrentlyParticipating: boolean;
 
     public howDidKnowOfSDR: string;
 
@@ -137,5 +147,5 @@ export {
     occupation,
     semester,
     freeDaysOfWeek,
-    participation,
+    howMuchParticipate,
 };

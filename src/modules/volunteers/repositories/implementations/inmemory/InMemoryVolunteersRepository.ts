@@ -6,15 +6,23 @@ import {
 } from '../../IVolunteersRepository';
 
 export class InMemoryVolunteersRepository implements IVolunteersRepository {
-    async updateVolunteerParticipation({
+    async getVolunteerById(id: string): Promise<Volunteer | null> {
+        const volunteer = this.volunteers.find((v) => v.id === id);
+
+        if (!volunteer) return null;
+
+        return volunteer;
+    }
+
+    async updateCurrentlyParticipation({
         id,
-        participation,
+        currentlyParticipation,
     }: UpdateVolunteersInput): Promise<void> {
         const volunteerIndex = this.volunteers.findIndex((v) => v.id === id);
 
         this.volunteers[volunteerIndex] = {
             ...this.volunteers[volunteerIndex],
-            hasParticipated: participation,
+            isCurrentlyParticipating: currentlyParticipation,
         };
     }
 
