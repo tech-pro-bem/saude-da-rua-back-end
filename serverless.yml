@@ -222,7 +222,7 @@ functions:
                   authorizer:
                       name: jwtAuthenticationLambda
     updateCurrentlyParticipation:
-        name: update-volunteer-participation
+        name: update-currently-participation
         handler: src/infra/lambda/handlers/UpdateCurrentlyParticipation.main
         events:
             - httpApi:
