@@ -19,7 +19,7 @@ provider:
     lambdaHashingVersion: 20201221
     environment:
         region: ${self:provider.region}
-        FILE_BUCKET_NAME: ${self:custom.filesBucketName}
+        FILE_BUCKET_NAME: ${env:FILE_BUCKET_NAME}
         SEND_EMAIL_TOPIC_NAME: ${self:custom.sendEmailTopicName}
         ACCOUNT_ID: ${aws:accountId}
         TOKEN_ONE: ${env:TOKEN_ONE}
@@ -49,7 +49,7 @@ custom:
     #dbName: "saudedarua"
     #dbHost: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Host"
     #dbPort: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Port"
-    filesBucketName: fileuploadbucket-prod
+    filesBucketName: ${self:custom.FILE_BUCKET_NAME}
 
 functions:
     authenticationProxy:
