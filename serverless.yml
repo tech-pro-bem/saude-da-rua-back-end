@@ -49,7 +49,7 @@ custom:
     #dbName: "saudedarua"
     #dbHost: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Host"
     #dbPort: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Port"
-    filesBucketName: ${self:custom.FILE_BUCKET_NAME}
+    filesBucketName: ${env:FILE_BUCKET_NAME}
 
 functions:
     authenticationProxy:
