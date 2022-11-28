@@ -50,7 +50,7 @@
 
 ### Descrição do ambiente técnico
 
-<p>O fluxo da API é composto por uma API Gateway que atua como uma proxy e processa as requisições. Funções Lambda, onde são feitas as validações e casos de uso. Banco de dados e banco de objetos para armazenamento dados e arquivos. Além de serviço gerenciado de mensageria de arquitetura Pub/Sub</p>
+<p>O fluxo da API é composto por uma API Gateway que atua como uma proxy e processa as requisições. Funções Lambda, onde são feitas as validações e casos de uso. Banco de dados e banco de objetos para armazenamento dados e arquivos. Além de serviço gerenciado de mensageria de arquitetura Pub/Sub.</p>
 
 <p>As funcionalidades principais são: </p> 
 <ul> 
