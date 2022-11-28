@@ -18,6 +18,10 @@ export class PrismaVolunteersRepository
         this.prisma = this.getPrismaClient();
     }
 
+    async deleteById(id: string): Promise<void> {
+        await this.prisma.volunteer.delete({ where: { id } });
+    }
+
     async getVolunteerById(id: string): Promise<Volunteer | null> {
         const volunteer = await this.prisma.volunteer.findUnique({
             where: { id },

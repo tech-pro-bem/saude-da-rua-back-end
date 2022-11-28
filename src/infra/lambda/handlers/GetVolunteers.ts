@@ -7,7 +7,7 @@ type QueryStringParameters = {
     lastVolunteerId: string | null;
     limit: number;
 };
-
+// TODO: search por email, nome, profissão, isCurrentlyParticipating asc desc
 const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {

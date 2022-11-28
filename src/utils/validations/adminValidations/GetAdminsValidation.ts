@@ -28,12 +28,10 @@ export class GetAdminsValidation {
                 limit: this.limit,
             });
 
-            const validatedPayload =
-                await getAdminsValidation.validateAsync(
-                    this.queryStringParameters
-                );
-            
-            console.log(validatedPayload)
+            const validatedPayload = await getAdminsValidation.validateAsync(
+                this.queryStringParameters
+            );
+
             return validatedPayload;
         } catch (error) {
             const getDetailsError: string = error.details[0].message;

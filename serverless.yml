@@ -96,6 +96,15 @@ functions:
                   - "sns:Publish"
               Resource:
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
+    deleteVolunteer:
+        name: delete-volunteer
+        handler: src/infra/lambda/handlers/DeleteVolunteer.main
+        events:
+            - httpApi:
+                  path: /volunteers/{id}
+                  method: DELETE
+                  authorizer:
+                      name: jwtAuthorizationLambda
     deleteFile:
         name: delete-file
         handler: src/infra/lambda/handlers/DeleteFile.main

@@ -26,13 +26,12 @@ export type APIEventBodySchema<S = { [name: string]: any }> = Omit<
 export const formatJSONResponse = (response?: unknown, statusCode = 200) => ({
     statusCode,
     headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
     },
     body: response ? JSON.stringify(response) : undefined,
 });
 
 function exceptionHandler({ error }: { error: Error | null }) {
-    console.log(error)
     if (error instanceof DefaultError) {
         return formatJSONResponse(
             {

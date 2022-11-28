@@ -19,6 +19,8 @@ export interface IVolunteersRepository {
 
     getVolunteerById(id: string): Promise<Volunteer | null>;
 
+    deleteById(id: string): Promise<void>;
+
     getVolunteers({
         limit,
         lastVolunteerId,

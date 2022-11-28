@@ -6,6 +6,12 @@ import {
 } from '../../IVolunteersRepository';
 
 export class InMemoryVolunteersRepository implements IVolunteersRepository {
+    async deleteById(id: string): Promise<void> {
+        const volunteerIndex = this.volunteers.findIndex((v) => v.id === id);
+
+        this.volunteers.splice(volunteerIndex, 1);
+    }
+
     async getVolunteerById(id: string): Promise<Volunteer | null> {
         const volunteer = this.volunteers.find((v) => v.id === id);
 

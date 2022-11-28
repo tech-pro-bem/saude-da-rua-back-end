@@ -7,8 +7,6 @@ const handle = async (event: APIEventBodySchema) => {
         email: adminEmail,
     });
 
-    console.log(admin)
-
     return formatJSONResponse(admin, 200);
 };
 

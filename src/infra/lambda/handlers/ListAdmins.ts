@@ -13,14 +13,10 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
     const parsedQueryString = event.queryStringParameters;
 
-    const getAdminsValidation = new GetAdminsValidation(
-        parsedQueryString
-    );
+    const getAdminsValidation = new GetAdminsValidation(parsedQueryString);
 
     const getAdminsPayloadValidated: QueryStringParameters =
         await getAdminsValidation.validateInput();
-
-    console.log(getAdminsPayloadValidated)
 
     const AdminsListAndLastValueted = await getAdminsUseCase.execute(
         getAdminsPayloadValidated

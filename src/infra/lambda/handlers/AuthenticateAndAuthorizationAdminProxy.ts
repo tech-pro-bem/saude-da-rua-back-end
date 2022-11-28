@@ -40,11 +40,10 @@ export const handler = async (
 
         response = authenticateAdminMiddlware.authenticate();
 
-        console.log(response);
         const { subject }: IContext = response.context;
 
         const authorizeAdminMiddleware = new AuthorizeAdminMiddleware(subject);
-        
+
         authorizeAdminMiddleware.authorize();
     } catch (error) {
         if (error.name === 'AuthorizationError') {
