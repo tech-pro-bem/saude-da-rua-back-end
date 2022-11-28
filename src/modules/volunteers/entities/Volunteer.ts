@@ -3,12 +3,28 @@ import { v4 as uuidv4 } from 'uuid';
 import { constEnumType } from '../../../utils/ConstEnumType';
 
 const occupation: {
-    [x: string]: 'MEDICO' | 'ENFERMEIRO' | 'FARMACEUTICO' | 'ESTUDANTE';
+    [x: string]:
+        | 'MEDICO'
+        | 'ENFERMEIRO'
+        | 'FARMACEUTICO'
+        | 'ESTUDANTE'
+        | 'TECNICO_DE_ENFERMAGEM'
+        | 'PSICOLOGO'
+        | 'NUTRICIONISTA'
+        | 'ASSISTENTE_SOCIAL'
+        | 'DENTISTA'
+        | 'VETERINARIO';
 } = {
     MEDICO: 'MEDICO',
     ENFERMEIRO: 'ENFERMEIRO',
     FARMACEUTICO: 'FARMACEUTICO',
     ESTUDANTE: 'ESTUDANTE',
+    TECNICO_DE_ENFERMAGEM: 'TECNICO_DE_ENFERMAGEM',
+    PSICOLOGO: 'PSICOLOGO',
+    NUTRICIONISTA: 'NUTRICIONISTA',
+    ASSISTENTE_SOCIAL: 'ASSISTENTE_SOCIAL',
+    DENTISTA: 'DENTISTA',
+    VETERINARIO: 'VETERINARIO',
 };
 
 const semester: {
