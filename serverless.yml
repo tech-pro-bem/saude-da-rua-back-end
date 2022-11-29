@@ -50,6 +50,9 @@ custom:
     #dbHost: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Host"
     #dbPort: "!GetAtt SaudeDaRuaPostgresDatabase.Endpoint.Port"
     filesBucketName: ${env:FILE_BUCKET_NAME}
+    prune:
+        automatic: true
+        number: 3
 
 functions:
     authenticationProxy:
@@ -266,6 +269,7 @@ functions:
                   - "arn:aws:sns:${aws:region}:${aws:accountId}:${self:custom.sendEmailTopicName}"
 
 plugins:
+    - serverless-prune-plugin
     - serverless-esbuild
     - serverless-iam-roles-per-function
     - serverless-offline

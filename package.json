@@ -49,6 +49,7 @@
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-offline": "^9.2.0",
     "serverless-plugin-typescript": "^2.1.2",
+    "serverless-prune-plugin": "^2.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.5.4",
     "vitest": "^0.25.2"
