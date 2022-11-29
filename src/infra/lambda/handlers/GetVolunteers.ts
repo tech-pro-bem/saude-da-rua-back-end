@@ -11,6 +11,7 @@ type QueryStringParameters = {
 const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {
+    event.queryStringParameters.limit = event.queryStringParameters.limit || "20";
     const parsedQueryString = event.queryStringParameters;
 
     const getVolunteersValidation = new GetVolunteersValidation(
