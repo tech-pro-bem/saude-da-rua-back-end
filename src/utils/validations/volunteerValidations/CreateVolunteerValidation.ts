@@ -42,8 +42,7 @@ export class CreateVolunteerValidation {
 
     private fullName: StringSchema = Joi.string()
         .min(3)
-        .max(60)
-        .pattern(/^[A-Z]{1}[a-zà-ú`]+(\s[A-Z]{1}[a-zà-ú`]+)+$/)
+        .max(100)
         .trim()
         .required();
 
