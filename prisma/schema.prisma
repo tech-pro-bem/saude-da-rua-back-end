@@ -74,8 +74,8 @@ model Volunteer {
   speciality               String?
 
   university String?
-  createdAt  Int
-  updatedAt  Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("volunteers")
 }
@@ -88,8 +88,8 @@ model Admin {
   permissionLevel String
   passwordHash    String
 
-  createdAt Int
-  updatedAt Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("admins")
 }
@@ -105,7 +105,7 @@ model File {
   fileType FileType
   url      String
 
-  createdAt Int
+  createdAt DateTime @default(now())
 
   @@map("files")
 }

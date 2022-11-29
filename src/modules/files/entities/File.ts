@@ -11,8 +11,8 @@ interface TFileProps {
 
     fileType: constEnumType<typeof FileType>;
     url: string;
-    createdAt?: number;
-    updatedAt?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export class File {
@@ -22,13 +22,13 @@ export class File {
 
     public url: string;
 
-    public createdAt: number;
+    public createdAt: Date;
 
     constructor(props: TFileProps) {
         Object.assign(this, {
             ...props,
             id: props.id || uuidV4(),
-            createdAt: props.createdAt || Date.now(),
+            createdAt: props.createdAt || new Date(),
         });
     }
 }

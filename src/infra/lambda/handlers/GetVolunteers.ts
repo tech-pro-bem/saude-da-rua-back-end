@@ -24,6 +24,15 @@ const handler = async (
         getVolunteersPayloadValidated
     );
 
+    // Sort from not currently participating volunteers to participating
+    volunteersListAndLastValueted.sort(
+        (last, next) => Number(last) - Number(next)
+    );
+    // Sort from oldest to newest
+    volunteersListAndLastValueted.sort(
+        (last, next) => last.createdAt.getTime() - next.createdAt.getTime()
+    );
+
     return formatJSONResponse(volunteersListAndLastValueted);
 };
 

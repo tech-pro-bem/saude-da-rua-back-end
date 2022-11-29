@@ -89,8 +89,8 @@ const howMuchParticipate: {
 type VolunteerProps = {
     id?: string;
 
-    updatedAt?: number;
-    createdAt?: number;
+    updatedAt?: Date;
+    createdAt?: Date;
     verifiedEmail?: boolean;
     email: string;
     fullName: string;
@@ -112,8 +112,8 @@ class Volunteer {
         Object.assign(this, {
             ...props,
             id: props.id || uuidv4(),
-            createdAt: props.createdAt || Date.now(),
-            updatedAt: props.updatedAt || Date.now(),
+            createdAt: props.createdAt || new Date(),
+            updatedAt: props.updatedAt || new Date(),
             isCurrentlyParticipating: props.isCurrentlyParticipating ?? true,
             numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
             verifiedEmail: props.verifiedEmail ?? false,
@@ -122,9 +122,9 @@ class Volunteer {
 
     public readonly id: string;
 
-    public readonly createdAt: number;
+    public readonly createdAt: Date;
 
-    public updatedAt?: number;
+    public updatedAt: Date;
 
     public email: string;
 

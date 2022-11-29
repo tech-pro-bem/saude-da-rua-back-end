@@ -11,22 +11,22 @@ type AdminProps = {
 
     permissionLevel: string;
 
-    createdAt?: number;
+    createdAt?: Date;
 
-    updatedAt?: number;
+    updatedAt?: Date;
 };
 
 export enum AdminPermissionLevels {
-    Volunteer = "1",
-    Admin = "2"
+    Volunteer = '1',
+    Admin = '2',
 }
 
 class Admin {
     public readonly id: string;
 
-    public readonly createdAt: number;
+    public readonly createdAt: Date;
 
-    public updatedAt: number;
+    public updatedAt: Date;
 
     public email: string;
 
@@ -40,8 +40,8 @@ class Admin {
         Object.assign(this, {
             ...props,
             id: props.id || uuidv4(),
-            createdAt: props.createdAt || Date.now(),
-            updatedAt: props.updatedAt || Date.now(),
+            createdAt: props.createdAt || new Date(),
+            updatedAt: props.updatedAt || new Date(),
         });
     }
 }
