@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Occupation } from '@prisma/client';
 import { PrismaPostgresClient } from '../../../../../helpers/database/PrismaPostgresClient';
 import { Volunteer, occupation } from '../../../entities/Volunteer';
 import {
@@ -97,6 +97,8 @@ export class PrismaVolunteersRepository
     }: GetVolunteersInput): Promise<Volunteer[]> {
         const parsedPage = page || 0
         const parsedLimit = limit || 20
+        const occupationKey = Object.keys(occupation).find(key => key.includes(searchTerm))
+    
         const listOfVolunteers = await this.prisma.volunteer.findMany({
             orderBy: [
                 {
@@ -112,13 +114,16 @@ export class PrismaVolunteersRepository
                 email: {
                     contains: '@',
                 },
-                ...searchTerm && {
+                ...searchTerm && !occupationKey && {
                     OR: [ 
                         {
                             fullName: { contains: searchTerm, mode: 'insensitive' },
                         },
                         {
                             email: { contains: searchTerm, mode: 'insensitive' },
+                        },
+                        {
+                            occupation: occupationKey as unknown as Occupation,
                         }
                     ]
                 }
