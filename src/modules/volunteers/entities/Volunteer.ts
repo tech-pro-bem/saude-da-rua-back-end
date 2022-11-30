@@ -114,7 +114,7 @@ class Volunteer {
             id: props.id || uuidv4(),
             createdAt: props.createdAt || new Date(),
             updatedAt: props.updatedAt || new Date(),
-            isCurrentlyParticipating: props.isCurrentlyParticipating ?? true,
+            isCurrentlyParticipating: props.isCurrentlyParticipating ?? false,
             numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
             verifiedEmail: props.verifiedEmail ?? false,
         });

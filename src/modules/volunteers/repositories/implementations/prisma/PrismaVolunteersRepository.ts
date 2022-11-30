@@ -113,7 +113,14 @@ export class PrismaVolunteersRepository
                     contains: '@',
                 },
                 ...searchTerm && {
-                    body: searchTerm
+                    OR: [ 
+                        {
+                            fullName: { contains: searchTerm },
+                        },
+                        {
+                            email: { contains: searchTerm },
+                        }
+                    ]
                 }
             },
         });
