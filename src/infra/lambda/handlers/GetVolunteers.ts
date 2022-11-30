@@ -27,10 +27,11 @@ const handler = async (
     const [count, volunteersListAndLastValueted] = await getVolunteersUseCase.execute(
         getVolunteersPayloadValidated
     );
-    const headers = {
-        'X-Total-Count': String(count)
-    }
-    return formatJSONResponse(volunteersListAndLastValueted, 200, headers);
+    
+    return formatJSONResponse({
+        volunteers: volunteersListAndLastValueted,
+        count,
+    }, 200);
 };
 
 export const main = middyfy(handler);
