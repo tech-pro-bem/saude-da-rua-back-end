@@ -104,14 +104,9 @@ export class PrismaVolunteersRepository
                 email: {
                     contains: '@',
                 },
-                OR: [ 
-                    {
-                        fullName: { contains: searchTerm },
-                    },
-                    {
-                        email: { contains: searchTerm },
-                    }
-                ],
+                ...searchTerm && {
+                    body: searchTerm
+                }
              
             },
         });
