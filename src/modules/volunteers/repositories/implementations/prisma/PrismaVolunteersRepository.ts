@@ -94,7 +94,7 @@ export class PrismaVolunteersRepository
         limit,
         page,
         searchTerm
-    }: GetVolunteersInput): Promise<Volunteer[]> {
+    }: GetVolunteersInput): Promise<[number, Volunteer[]]> {
         const parsedPage = page || 0
         const parsedLimit = limit || 20
         const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm?.toLowerCase()))
@@ -134,9 +134,11 @@ export class PrismaVolunteersRepository
             this.prisma.volunteer.count(),
             listOfVolunteers
           ])
-        return [results, listOfVolunteers.map(
+        const count = results[0]
+        const volunteers = results[1].map(
             (volunteer) => new Volunteer(volunteer)
-        )];
+        )
+        return [count, volunteers];
 
         
     }
