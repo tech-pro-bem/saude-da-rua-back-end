@@ -131,7 +131,26 @@ export class PrismaVolunteersRepository
         });
 
         const results = await this.prisma.$transaction([
-            this.prisma.volunteer.count(),
+            this.prisma.volunteer.count({
+                where: {
+                    email: {
+                        contains: '@',
+                    },
+                    ...searchTerm && {
+                        OR: [ 
+                            {
+                                fullName: { contains: searchTerm, mode: 'insensitive' },
+                            },
+                            {
+                                email: { contains: searchTerm, mode: 'insensitive' },
+                            },
+                            {
+                                occupation: occupationKey as unknown as Occupation,
+                            }
+                        ]
+                    }
+                },
+            }),
             listOfVolunteers
           ])
         const count = results[0]
