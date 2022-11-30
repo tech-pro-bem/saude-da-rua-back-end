@@ -2,7 +2,8 @@ import { Volunteer } from '../entities/Volunteer';
 
 export type GetVolunteersInput = {
     limit: number;
-    lastVolunteerId: string | null;
+    page: number | null;
+    searchTerm?: string;
 };
 
 export type UpdateVolunteersInput = {
@@ -23,7 +24,8 @@ export interface IVolunteersRepository {
 
     getVolunteers({
         limit,
-        lastVolunteerId,
+        page,
+        searchTerm
     }: GetVolunteersInput): Promise<Volunteer[]>;
 
     updateCurrentlyParticipation({

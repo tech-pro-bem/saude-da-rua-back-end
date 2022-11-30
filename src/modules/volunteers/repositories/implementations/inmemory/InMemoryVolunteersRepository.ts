@@ -60,18 +60,8 @@ export class InMemoryVolunteersRepository implements IVolunteersRepository {
         return this.volunteers.find((v) => v.email === email);
     }
 
-    async getVolunteers({
-        limit,
-        lastVolunteerId,
-    }: GetVolunteersInput): Promise<Volunteer[]> {
-        const lastVolunteerIndex = this.volunteers.findIndex(
-            (v) => v.id === lastVolunteerId
-        );
-
-        return this.volunteers.slice(
-            lastVolunteerIndex,
-            lastVolunteerIndex + limit
-        );
+    async getVolunteers(_: GetVolunteersInput): Promise<Volunteer[]> {
+        return this.volunteers
     }
 
     async setVerifiedEmailToTrue(email: string): Promise<void> {

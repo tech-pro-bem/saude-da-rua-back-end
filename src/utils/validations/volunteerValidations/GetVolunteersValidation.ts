@@ -1,4 +1,4 @@
-import Joi, { NumberSchema, ObjectSchema, StringSchema } from 'joi';
+import Joi, { NumberSchema, ObjectSchema } from 'joi';
 import { ValidationError } from '../../../helpers/errors';
 
 type queryStringBeforeValidate = {
@@ -8,14 +8,15 @@ type queryStringBeforeValidate = {
 export class GetVolunteersValidation {
     private queryStringParameters: queryStringBeforeValidate;
 
-    private lastVolunteerId: StringSchema = Joi.string().uuid();
+    private page: NumberSchema =  Joi.number()
+        .integer()
+        .positive()
 
     private limit: NumberSchema = Joi.number()
         .integer()
         .positive()
         .min(1)
         .max(100)
-        .required();
 
     constructor(queryString: queryStringBeforeValidate) {
         this.queryStringParameters = queryString;
@@ -24,7 +25,7 @@ export class GetVolunteersValidation {
     public async validateInput() {
         try {
             const getVolunteersValidation: ObjectSchema = Joi.object().keys({
-                lastVolunteerId: this.lastVolunteerId,
+                page: this.page,
                 limit: this.limit,
             });
 

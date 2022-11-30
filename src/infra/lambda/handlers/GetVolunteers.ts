@@ -4,8 +4,9 @@ import { getVolunteersUseCase } from '../../../modules/volunteers/useCases/getVo
 import { GetVolunteersValidation } from '../../../utils/validations/volunteerValidations';
 
 type QueryStringParameters = {
-    lastVolunteerId: string | null;
+    page: number | null;
     limit: number;
+    searchTerm?: string
 };
 // TODO: search por email, nome, profissão, isCurrentlyParticipating asc desc
 const handler = async (
@@ -25,15 +26,6 @@ const handler = async (
 
     const volunteersListAndLastValueted = await getVolunteersUseCase.execute(
         getVolunteersPayloadValidated
-    );
-
-    // Sort from not currently participating volunteers to participating
-    volunteersListAndLastValueted.sort(
-        (last, next) => Number(last) - Number(next)
-    );
-    // Sort from oldest to newest
-    volunteersListAndLastValueted.sort(
-        (last, next) => last.createdAt.getTime() - next.createdAt.getTime()
     );
 
     return formatJSONResponse(volunteersListAndLastValueted);

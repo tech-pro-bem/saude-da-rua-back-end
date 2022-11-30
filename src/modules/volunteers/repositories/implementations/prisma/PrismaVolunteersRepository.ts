@@ -92,24 +92,30 @@ export class PrismaVolunteersRepository
 
     async getVolunteers({
         limit,
-        lastVolunteerId,
+        page,
+        searchTerm
     }: GetVolunteersInput): Promise<Volunteer[]> {
+        const parsedPage = page || 0
+        const parsedLimit = limit || 20
         const listOfVolunteers = await this.prisma.volunteer.findMany({
-            take: limit,
-            cursor: lastVolunteerId ? { id: lastVolunteerId } : undefined,
+            take: parsedLimit,
+            skip: parsedPage * parsedLimit,
             where: {
                 email: {
                     contains: '@',
                 },
+                ...searchTerm && {
+                    body: {
+                        search: searchTerm
+                    }
+                }
             },
         });
 
-        const volunteers = listOfVolunteers.map(
+        return listOfVolunteers.map(
             (volunteer) => new Volunteer(volunteer)
         );
 
-        return volunteers.filter(
-            (volunteer) => volunteer.id !== lastVolunteerId
-        );
+        
     }
 }
