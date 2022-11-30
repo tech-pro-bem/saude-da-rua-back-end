@@ -115,10 +115,10 @@ export class PrismaVolunteersRepository
                 ...searchTerm && {
                     OR: [ 
                         {
-                            fullName: { contains: searchTerm },
+                            fullName: { contains: searchTerm, mode: 'insensitive' },
                         },
                         {
-                            email: { contains: searchTerm },
+                            email: { contains: searchTerm, mode: 'insensitive' },
                         }
                     ]
                 }
