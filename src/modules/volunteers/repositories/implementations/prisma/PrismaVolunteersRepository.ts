@@ -114,7 +114,7 @@ export class PrismaVolunteersRepository
                 email: {
                     contains: '@',
                 },
-                ...searchTerm && !occupationKey && {
+                ...searchTerm && {
                     OR: [ 
                         {
                             fullName: { contains: searchTerm, mode: 'insensitive' },
