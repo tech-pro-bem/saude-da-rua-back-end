@@ -10,7 +10,6 @@ export class GetVolunteersValidation {
 
     private page: NumberSchema =  Joi.number()
         .integer()
-        .positive()
 
     private limit: NumberSchema = Joi.number()
         .integer()
