@@ -97,7 +97,7 @@ export class PrismaVolunteersRepository
     }: GetVolunteersInput): Promise<Volunteer[]> {
         const parsedPage = page || 0
         const parsedLimit = limit || 20
-        const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm))
+        const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm?.toLowerCase()))
     
         const listOfVolunteers = await this.prisma.volunteer.findMany({
             orderBy: [
