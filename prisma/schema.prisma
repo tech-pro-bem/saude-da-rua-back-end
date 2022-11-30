@@ -36,6 +36,8 @@ enum Semester {
   EIGHTH
   NINTH
   TENTH
+  ELEVENTH
+  TWELFTH
   MORE
 }
 

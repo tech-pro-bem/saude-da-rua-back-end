@@ -39,6 +39,8 @@ const semester: {
         | 'EIGHTH'
         | 'NINTH'
         | 'TENTH'
+        | 'ELEVENTH'
+        | 'TWELFTH'
         | 'MORE';
 } = {
     FIRST: 'FIRST',
@@ -51,6 +53,8 @@ const semester: {
     EIGHTH: 'EIGHTH',
     NINTH: 'NINTH',
     TENTH: 'TENTH',
+    ELEVENTH: 'ELEVENTH',
+    TWELFTH: 'TWELFTH',
     MORE: 'MORE',
 };
 

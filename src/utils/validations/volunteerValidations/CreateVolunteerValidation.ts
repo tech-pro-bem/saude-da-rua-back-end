@@ -57,13 +57,13 @@ export class CreateVolunteerValidation {
         .trim()
         .required();
 
-    private university: StringSchema = Joi.string().trim();
+    private university: StringSchema = Joi.string().trim().allow("");
 
     private semester: StringSchema = Joi.string().valid(
         ...Object.values(Volunteer.semester)
-    );
+    ).allow("");
 
-    private speciality: StringSchema = Joi.string().trim();
+    private speciality: StringSchema = Joi.string().trim().allow("");
 
     private listFreeDaysOfWeek: ArraySchema = Joi.array()
         .unique()
