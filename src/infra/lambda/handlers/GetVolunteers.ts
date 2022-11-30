@@ -24,11 +24,13 @@ const handler = async (
     const getVolunteersPayloadValidated: QueryStringParameters =
         await getVolunteersValidation.validateInput();
 
-    const volunteersListAndLastValueted = await getVolunteersUseCase.execute(
+    const [count, volunteersListAndLastValueted] = await getVolunteersUseCase.execute(
         getVolunteersPayloadValidated
     );
-
-    return formatJSONResponse(volunteersListAndLastValueted);
+    const headers = {
+        'X-Total-Count': String(count)
+    }
+    return formatJSONResponse(volunteersListAndLastValueted, 200, headers);
 };
 
 export const main = middyfy(handler);

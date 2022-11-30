@@ -99,7 +99,7 @@ export class PrismaVolunteersRepository
         const parsedLimit = limit || 20
         const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm?.toLowerCase()))
     
-        const listOfVolunteers = await this.prisma.volunteer.findMany({
+        const listOfVolunteers =  this.prisma.volunteer.findMany({
             orderBy: [
                 {
                     isCurrentlyParticipating: 'desc',
@@ -130,9 +130,13 @@ export class PrismaVolunteersRepository
             },
         });
 
-        return listOfVolunteers.map(
+        const results = await this.prisma.$transaction([
+            this.prisma.volunteer.count(),
+            listOfVolunteers
+          ])
+        return [results, listOfVolunteers.map(
             (volunteer) => new Volunteer(volunteer)
-        );
+        )];
 
         
     }

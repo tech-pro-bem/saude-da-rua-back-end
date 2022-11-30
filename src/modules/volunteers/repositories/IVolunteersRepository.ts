@@ -26,7 +26,7 @@ export interface IVolunteersRepository {
         limit,
         page,
         searchTerm
-    }: GetVolunteersInput): Promise<Volunteer[]>;
+    }: GetVolunteersInput): Promise<[number, Volunteer[]]>;
 
     updateCurrentlyParticipation({
         id,
