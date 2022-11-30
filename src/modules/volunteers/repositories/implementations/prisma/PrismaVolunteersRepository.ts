@@ -98,6 +98,14 @@ export class PrismaVolunteersRepository
         const parsedPage = page || 0
         const parsedLimit = limit || 20
         const listOfVolunteers = await this.prisma.volunteer.findMany({
+            orderBy: [
+                {
+                    isCurrentlyParticipating: 'desc',
+                },
+                {
+                    createdAt: 'desc',
+                },
+              ],
             take: parsedLimit,
             skip: parsedPage * parsedLimit,
             where: {
@@ -107,7 +115,6 @@ export class PrismaVolunteersRepository
                 ...searchTerm && {
                     body: searchTerm
                 }
-             
             },
         });
 
