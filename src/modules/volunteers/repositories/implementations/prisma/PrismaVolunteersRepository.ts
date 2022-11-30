@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaPostgresClient } from '../../../../../helpers/database/PrismaPostgresClient';
-import { Volunteer } from '../../../entities/Volunteer';
+import { Volunteer, occupation } from '../../../entities/Volunteer';
 import {
     GetVolunteersInput,
     IVolunteersRepository,
@@ -105,10 +105,19 @@ export class PrismaVolunteersRepository
                     contains: '@',
                 },
                 ...searchTerm && {
-                    body: {
-                        search: searchTerm
-                    }
-                }
+                    OR: [
+                        {
+                            occupation: { contains: searchTerm },
+                        },
+                        {
+                            fullName: { contains: searchTerm },
+                        },
+                        {
+                            email: { contains: searchTerm },
+                        },
+
+                      ],
+                },
             },
         });
 
