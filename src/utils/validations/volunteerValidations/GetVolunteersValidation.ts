@@ -1,4 +1,4 @@
-import Joi, { NumberSchema, ObjectSchema } from 'joi';
+import Joi, { NumberSchema, ObjectSchema, StringSchema } from 'joi';
 import { ValidationError } from '../../../helpers/errors';
 
 type queryStringBeforeValidate = {
@@ -18,6 +18,9 @@ export class GetVolunteersValidation {
         .min(1)
         .max(100)
 
+    private searchTerm: StringSchema = Joi.string()
+
+
     constructor(queryString: queryStringBeforeValidate) {
         this.queryStringParameters = queryString;
     }
@@ -27,6 +30,7 @@ export class GetVolunteersValidation {
             const getVolunteersValidation: ObjectSchema = Joi.object().keys({
                 page: this.page,
                 limit: this.limit,
+                searchTerm: this.searchTerm
             });
 
             const validatedPayload =
