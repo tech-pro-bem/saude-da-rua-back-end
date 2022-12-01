@@ -177,6 +177,7 @@ functions:
             - httpApi:
                   path: /volunteers
                   method: GET
+                  cors: true
                   authorizer:
                       name: jwtAuthenticationLambda
 

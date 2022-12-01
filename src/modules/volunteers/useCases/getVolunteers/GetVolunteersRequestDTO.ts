@@ -1,6 +1,7 @@
 type IGetVolunteersRequestDTO = {
-    lastVolunteerId: string | null;
+    page: number | null;
     limit: number;
+    searchTerm?: string;
 };
 
 export { IGetVolunteersRequestDTO };

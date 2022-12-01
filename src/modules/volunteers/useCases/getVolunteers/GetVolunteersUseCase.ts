@@ -9,12 +9,13 @@ class GetVolunteersUseCase {
     }
 
     async execute(getVolunteersRequestData: IGetVolunteersRequestDTO) {
-        const { lastVolunteerId, limit } = getVolunteersRequestData;
+        const { page, limit, searchTerm } = getVolunteersRequestData;
 
         const volunteersListAndLastValueted =
             await this.volunteersRepository.getVolunteers({
-                lastVolunteerId,
+                page,
                 limit,
+                searchTerm
             });
 
         return volunteersListAndLastValueted;

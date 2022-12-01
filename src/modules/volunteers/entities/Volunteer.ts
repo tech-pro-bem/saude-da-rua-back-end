@@ -39,6 +39,8 @@ const semester: {
         | 'EIGHTH'
         | 'NINTH'
         | 'TENTH'
+        | 'ELEVENTH'
+        | 'TWELFTH'
         | 'MORE';
 } = {
     FIRST: 'FIRST',
@@ -51,6 +53,8 @@ const semester: {
     EIGHTH: 'EIGHTH',
     NINTH: 'NINTH',
     TENTH: 'TENTH',
+    ELEVENTH: 'ELEVENTH',
+    TWELFTH: 'TWELFTH',
     MORE: 'MORE',
 };
 
@@ -114,7 +118,7 @@ class Volunteer {
             id: props.id || uuidv4(),
             createdAt: props.createdAt || new Date(),
             updatedAt: props.updatedAt || new Date(),
-            isCurrentlyParticipating: props.isCurrentlyParticipating ?? true,
+            isCurrentlyParticipating: props.isCurrentlyParticipating ?? false,
             numberOfFreeDaysOfWeek: props.listFreeDaysOfWeek.length,
             verifiedEmail: props.verifiedEmail ?? false,
         });

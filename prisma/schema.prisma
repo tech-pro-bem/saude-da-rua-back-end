@@ -3,6 +3,7 @@
 
 generator client {
   provider      = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -35,6 +36,8 @@ enum Semester {
   EIGHTH
   NINTH
   TENTH
+  ELEVENTH
+  TWELFTH
   MORE
 }
 

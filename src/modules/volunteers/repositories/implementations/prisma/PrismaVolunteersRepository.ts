@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Occupation } from '@prisma/client';
 import { PrismaPostgresClient } from '../../../../../helpers/database/PrismaPostgresClient';
-import { Volunteer } from '../../../entities/Volunteer';
+import { Volunteer, occupation } from '../../../entities/Volunteer';
 import {
     GetVolunteersInput,
     IVolunteersRepository,
@@ -92,24 +92,73 @@ export class PrismaVolunteersRepository
 
     async getVolunteers({
         limit,
-        lastVolunteerId,
-    }: GetVolunteersInput): Promise<Volunteer[]> {
-        const listOfVolunteers = await this.prisma.volunteer.findMany({
-            take: limit,
-            cursor: lastVolunteerId ? { id: lastVolunteerId } : undefined,
+        page,
+        searchTerm
+    }: GetVolunteersInput): Promise<[number, Volunteer[]]> {
+        const parsedPage = page || 0
+        const parsedLimit = limit || 20
+        const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm?.toLowerCase()))
+    
+        const listOfVolunteers =  this.prisma.volunteer.findMany({
+            orderBy: [
+                {
+                    isCurrentlyParticipating: 'desc',
+                },
+                {
+                    createdAt: 'desc',
+                },
+              ],
+            take: parsedLimit,
+            skip: parsedPage * parsedLimit,
             where: {
                 email: {
                     contains: '@',
                 },
+                ...searchTerm && {
+                    OR: [ 
+                        {
+                            fullName: { contains: searchTerm, mode: 'insensitive' },
+                        },
+                        {
+                            email: { contains: searchTerm, mode: 'insensitive' },
+                        },
+                        {
+                            occupation: occupationKey as unknown as Occupation,
+                        }
+                    ]
+                }
             },
         });
 
-        const volunteers = listOfVolunteers.map(
+        const results = await this.prisma.$transaction([
+            this.prisma.volunteer.count({
+                where: {
+                    email: {
+                        contains: '@',
+                    },
+                    ...searchTerm && {
+                        OR: [ 
+                            {
+                                fullName: { contains: searchTerm, mode: 'insensitive' },
+                            },
+                            {
+                                email: { contains: searchTerm, mode: 'insensitive' },
+                            },
+                            {
+                                occupation: occupationKey as unknown as Occupation,
+                            }
+                        ]
+                    }
+                },
+            }),
+            listOfVolunteers
+          ])
+        const count = results[0]
+        const volunteers = results[1].map(
             (volunteer) => new Volunteer(volunteer)
-        );
+        )
+        return [count, volunteers];
 
-        return volunteers.filter(
-            (volunteer) => volunteer.id !== lastVolunteerId
-        );
+        
     }
 }
