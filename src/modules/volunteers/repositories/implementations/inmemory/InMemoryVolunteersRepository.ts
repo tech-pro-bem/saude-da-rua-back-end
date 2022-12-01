@@ -6,6 +6,14 @@ import {
 } from '../../IVolunteersRepository';
 
 export class InMemoryVolunteersRepository implements IVolunteersRepository {
+    async getVolunteers({
+        limit,
+        page,
+        searchTerm,
+    }: GetVolunteersInput): Promise<[number, Volunteer[]]> {
+        return [this.volunteers.length, this.volunteers]; // TODO: use limit, page and searchterms
+    }
+
     async deleteById(id: string): Promise<void> {
         const volunteerIndex = this.volunteers.findIndex((v) => v.id === id);
 
@@ -58,10 +66,6 @@ export class InMemoryVolunteersRepository implements IVolunteersRepository {
 
     async getVolunteer(email: string): Promise<Volunteer> {
         return this.volunteers.find((v) => v.email === email);
-    }
-
-    async getVolunteers(_: GetVolunteersInput): Promise<Volunteer[]> {
-        return this.volunteers
     }
 
     async setVerifiedEmailToTrue(email: string): Promise<void> {
