@@ -125,3 +125,24 @@ model Pix {
 
   @@map("pix")
 }
+
+model Medicine {
+  id String @id
+
+  fullName           String
+  CEP                String
+  state              String
+  cellPhoneWithDDD   String
+  email              String
+  medicineName       String
+  milligrams         Int
+  quantity           Int
+  expirationDate     DateTime
+  pharmaceuticalForm String
+  wasRead            Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("medicines")
+}

@@ -242,6 +242,13 @@ functions:
                   method: PATCH
                   authorizer:
                       name: jwtAuthenticationLambda
+    createMedicine:
+        name: create-medicine
+        handler: src/infra/lambda/handlers/CreateMedicine.main
+        events:
+            - httpApi:
+                  path: /medicines
+                  method: POST
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/infra/lambda/handlers/SendEmailToVolunteer.main
