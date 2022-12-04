@@ -24,4 +24,27 @@ describe('ListMedicinesUseCase', () => {
         expect(medicines.length).toEqual(1);
         expect(medicines[0].id).toEqual(randomMedicine.id);
     });
+
+    it('should be able to list all unread medicines', async () => {
+        const notReadMedicine = await getRandomMedicine({
+            repository: medicinesRepository,
+            customAttributes: {
+                wasRead: false,
+            },
+        });
+
+        await getRandomMedicine({
+            repository: medicinesRepository,
+            customAttributes: {
+                wasRead: true,
+            },
+        });
+
+        const medicines = await listMedicinesUseCase.execute({
+            wasRead: false,
+        });
+
+        expect(medicines.length).toEqual(1);
+        expect(medicines[0].id).toEqual(notReadMedicine.id);
+    });
 });

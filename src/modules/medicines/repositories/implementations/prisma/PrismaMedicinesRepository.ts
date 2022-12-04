@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaPostgresClient } from '../../../../../helpers/database/PrismaPostgresClient';
 import { Medicine } from '../../../entities/Medicine';
-import { IMedicinesRepository } from '../../IMedicinesRepository';
+import {
+    IMedicinesRepository,
+    ListMedicinesProps,
+} from '../../IMedicinesRepository';
 
 export class PrismaMedicinesRepository
     extends PrismaPostgresClient
@@ -14,8 +17,12 @@ export class PrismaMedicinesRepository
         this.prisma = this.getPrismaClient();
     }
 
-    async list(): Promise<Medicine[]> {
-        const medicines = await this.prisma.medicine.findMany();
+    async list(listMedicinesProps?: ListMedicinesProps): Promise<Medicine[]> {
+        const medicines = await this.prisma.medicine.findMany({
+            where: {
+                wasRead: listMedicinesProps.wasRead,
+            },
+        });
 
         return medicines.map((medicine) => new Medicine(medicine));
     }

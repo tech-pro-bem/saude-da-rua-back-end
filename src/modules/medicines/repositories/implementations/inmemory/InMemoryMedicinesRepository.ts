@@ -1,9 +1,20 @@
 import { Medicine } from '../../../entities/Medicine';
-import { IMedicinesRepository } from '../../IMedicinesRepository';
+import {
+    IMedicinesRepository,
+    ListMedicinesProps,
+} from '../../IMedicinesRepository';
 
 export class InMemoryMedicinesRepository implements IMedicinesRepository {
-    async list(): Promise<Medicine[]> {
-        return this.medicines;
+    async list(listMedicinesProps?: ListMedicinesProps): Promise<Medicine[]> {
+        let { medicines } = this;
+
+        if (typeof listMedicinesProps?.wasRead === 'boolean') {
+            medicines = medicines.filter(
+                (medicine) => medicine.wasRead === listMedicinesProps.wasRead
+            );
+        }
+
+        return medicines;
     }
 
     async getById(id: string): Promise<Medicine> {

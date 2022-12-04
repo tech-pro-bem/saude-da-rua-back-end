@@ -12,11 +12,11 @@ import { IVolunteersRepository } from '../../src/modules/volunteers/repositories
 
 type GetRandomVolunteerOptions = {
     repository?: IVolunteersRepository;
-    customAttributes?: VolunteerProps;
+    customAttributes?: Partial<VolunteerProps>;
 };
 type GetRandomMedicineOptions = {
     repository?: IMedicinesRepository;
-    customAttributes?: MedicineProps;
+    customAttributes?: Partial<MedicineProps>;
 };
 
 export async function getRandomVolunteer(options?: GetRandomVolunteerOptions) {

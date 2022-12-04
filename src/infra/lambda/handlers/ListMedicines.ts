@@ -1,9 +1,18 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
+import { ListMedicinesValidation } from '../../../utils/validations/medicineValidations/ListMedicinesValidation';
 import { listMedicinesUseCase } from '../../../modules/medicines/useCases/listMedicines';
-import { formatJSONResponse, middyfy } from '../middyfy';
+import { APIEventBodySchema, formatJSONResponse, middyfy } from '../middyfy';
 
-const handler = async (): Promise<APIGatewayProxyResult> => {
-    const medicines = await listMedicinesUseCase.execute();
+const handler = async (
+    event: APIEventBodySchema
+): Promise<APIGatewayProxyResult> => {
+    const listMedicinesValidation = new ListMedicinesValidation(
+        event.queryStringParameters
+    );
+
+    const listMedicinesPayload = await listMedicinesValidation.validate();
+
+    const medicines = await listMedicinesUseCase.execute(listMedicinesPayload);
 
     return formatJSONResponse(medicines);
 };
