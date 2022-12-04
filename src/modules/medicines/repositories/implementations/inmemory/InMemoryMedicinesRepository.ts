@@ -5,6 +5,16 @@ import {
 } from '../../IMedicinesRepository';
 
 export class InMemoryMedicinesRepository implements IMedicinesRepository {
+    async deleteById(id: string): Promise<void> {
+        const medicineIndex = this.medicines.findIndex(
+            (medicine) => medicine.id === id
+        );
+
+        if (medicineIndex <= -1) return;
+
+        this.medicines.splice(medicineIndex, 1);
+    }
+
     async list(listMedicinesProps?: ListMedicinesProps): Promise<Medicine[]> {
         let { medicines } = this;
 

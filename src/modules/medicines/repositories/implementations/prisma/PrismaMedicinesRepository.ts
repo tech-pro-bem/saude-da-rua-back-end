@@ -17,6 +17,10 @@ export class PrismaMedicinesRepository
         this.prisma = this.getPrismaClient();
     }
 
+    async deleteById(id: string): Promise<void> {
+        await this.prisma.medicine.delete({ where: { id } });
+    }
+
     async list(listMedicinesProps?: ListMedicinesProps): Promise<Medicine[]> {
         const medicines = await this.prisma.medicine.findMany({
             where: {

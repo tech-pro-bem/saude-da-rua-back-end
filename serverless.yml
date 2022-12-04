@@ -263,8 +263,17 @@ functions:
         handler: src/infra/lambda/handlers/GetMedicine.main
         events:
             - httpApi:
-                  path: /medicine/{id}
+                  path: /medicines/{id}
                   method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
+    deleteMedicine:
+        name: delete-medicine
+        handler: src/infra/lambda/handlers/DeleteMedicine.main
+        events:
+            - httpApi:
+                  path: /medicines/{id}
+                  method: DELETE
                   authorizer:
                       name: jwtAuthenticationLambda
     sendEmailToVolunteer:
