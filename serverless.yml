@@ -177,7 +177,6 @@ functions:
             - httpApi:
                   path: /volunteers
                   method: GET
-                  cors: true
                   authorizer:
                       name: jwtAuthenticationLambda
 
@@ -256,6 +255,15 @@ functions:
         events:
             - httpApi:
                   path: /medicines
+                  method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
+    getMedicine:
+        name: get-medicine
+        handler: src/infra/lambda/handlers/GetMedicine.main
+        events:
+            - httpApi:
+                  path: /medicine/{id}
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda

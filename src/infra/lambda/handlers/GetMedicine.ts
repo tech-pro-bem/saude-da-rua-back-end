@@ -1,15 +1,15 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
 import { APIEventBodySchema, formatJSONResponse, middyfy } from '../middyfy';
-import { getOneVolunteerUseCase } from '../../../modules/volunteers/useCases/getOneVolunteer';
+import { getMedicineUseCase } from '../../../modules/medicines/useCases/getMedicine';
 
 const handler = async (
     event: APIEventBodySchema
 ): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters?.id || '';
 
-    const volunteer = await getOneVolunteerUseCase.execute({ id });
+    const medicine = await getMedicineUseCase.execute({ id });
 
-    return formatJSONResponse(volunteer);
+    return formatJSONResponse(medicine);
 };
 
 export const main = middyfy(handler);
