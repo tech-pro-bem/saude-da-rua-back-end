@@ -2,6 +2,10 @@ import { Medicine } from '../../../entities/Medicine';
 import { IMedicinesRepository } from '../../IMedicinesRepository';
 
 export class InMemoryMedicinesRepository implements IMedicinesRepository {
+    async list(): Promise<Medicine[]> {
+        return this.medicines;
+    }
+
     async getById(id: string): Promise<Medicine> {
         const medicine = this.medicines.find((m) => m.id === id);
 

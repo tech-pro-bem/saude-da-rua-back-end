@@ -14,6 +14,12 @@ export class PrismaMedicinesRepository
         this.prisma = this.getPrismaClient();
     }
 
+    async list(): Promise<Medicine[]> {
+        const medicines = await this.prisma.medicine.findMany();
+
+        return medicines.map((medicine) => new Medicine(medicine));
+    }
+
     async save(medicine: Medicine): Promise<Medicine> {
         await this.prisma.medicine.upsert({
             create: medicine,

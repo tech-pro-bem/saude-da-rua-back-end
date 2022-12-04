@@ -250,6 +250,15 @@ functions:
             - httpApi:
                   path: /medicines
                   method: POST
+    listMedicines:
+        name: list-medicines
+        handler: src/infra/lambda/handlers/ListMedicines.main
+        events:
+            - httpApi:
+                  path: /medicines
+                  method: GET
+                  authorizer:
+                      name: jwtAuthenticationLambda
     sendEmailToVolunteer:
         name: send-email-to-volunteer
         handler: src/infra/lambda/handlers/SendEmailToVolunteer.main
