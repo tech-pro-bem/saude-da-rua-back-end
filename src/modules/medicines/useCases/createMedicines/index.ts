@@ -1,7 +1,7 @@
 import { PrismaMedicinesRepository } from '../../repositories/implementations/prisma/PrismaMedicinesRepository';
-import { CreateMedicineUseCase } from './CreateMedicineUseCase';
+import { CreateMedicinesUseCase } from './CreateMedicinesUseCase';
 
 export const medicinesRepository = new PrismaMedicinesRepository();
-export const createMedicineUseCase = new CreateMedicineUseCase(
+export const createMedicinesUseCase = new CreateMedicinesUseCase(
     medicinesRepository
 );

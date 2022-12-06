@@ -5,7 +5,7 @@ type data = {
     [name: string]: string;
 };
 
-export class CreateMedicineValidation {
+export class CreateMedicinesValidation {
     private data: data;
 
     id = Joi.forbidden();
@@ -24,15 +24,15 @@ export class CreateMedicineValidation {
 
     email = Joi.string().email().required();
 
-    medicineName = Joi.string().max(60).required();
-
-    milligrams = Joi.number().required();
-
-    quantity = Joi.number().required();
-
-    expirationDate = Joi.date().required();
-
-    pharmaceuticalForm = Joi.string().required();
+    medicines = Joi.array()
+        .max(20)
+        .items({
+            medicineName: Joi.string().max(60).required(),
+            milligrams: Joi.number().required(),
+            quantity: Joi.number().required(),
+            expirationDate: Joi.date().required(),
+            pharmaceuticalForm: Joi.string().required(),
+        });
 
     wasRead = Joi.forbidden();
 
@@ -46,25 +46,21 @@ export class CreateMedicineValidation {
 
     public async validateInput() {
         try {
-            const createMedicineValidation: ObjectSchema = Joi.object().keys({
+            const createMedicinesValidation: ObjectSchema = Joi.object().keys({
                 id: this.id,
                 fullName: this.fullName,
                 CEP: this.CEP,
                 state: this.state,
                 cellPhoneWithDDD: this.cellPhoneWithDDD,
                 email: this.email,
-                medicineName: this.medicineName,
-                milligrams: this.milligrams,
-                quantity: this.quantity,
-                expirationDate: this.expirationDate,
-                pharmaceuticalForm: this.pharmaceuticalForm,
+                medicines: this.medicines,
                 wasRead: this.wasRead,
                 createdAt: this.createdAt,
                 updatedAt: this.updatedAt,
             });
 
             const validatedPayload =
-                await createMedicineValidation.validateAsync(this.data);
+                await createMedicinesValidation.validateAsync(this.data);
 
             return validatedPayload;
         } catch (error) {

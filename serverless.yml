@@ -242,9 +242,9 @@ functions:
                   method: PATCH
                   authorizer:
                       name: jwtAuthenticationLambda
-    createMedicine:
-        name: create-medicine
-        handler: src/infra/lambda/handlers/CreateMedicine.main
+    createMedicines:
+        name: create-medicines
+        handler: src/infra/lambda/handlers/CreateMedicines.main
         events:
             - httpApi:
                   path: /medicines
