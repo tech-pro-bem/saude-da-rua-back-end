@@ -13,15 +13,17 @@ const handler = async (
 
     const data = body?.image?.data || body?.file?.data;
     const mime = body?.image?.mime || body?.file?.mime;
+    const name = body?.name
     await createFileUseCase.execute({
         base64File: data,
         fileType: fileType as constEnumType<typeof FileType>,
         fileMimeType: mime,
+        name
     });
 
     return formatJSONResponse(
         {
-            message: 'Successfully create a new file',
+            message: 'Successfully created a new file',
         },
         201
     );

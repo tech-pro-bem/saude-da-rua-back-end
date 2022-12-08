@@ -11,6 +11,7 @@ interface TFileProps {
 
     fileType: constEnumType<typeof FileType>;
     url: string;
+    name: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -23,6 +24,8 @@ export class File {
     public url: string;
 
     public createdAt: Date;
+
+    public name: string;
 
     constructor(props: TFileProps) {
         Object.assign(this, {

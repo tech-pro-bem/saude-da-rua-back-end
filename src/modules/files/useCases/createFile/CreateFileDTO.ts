@@ -6,5 +6,6 @@ export namespace CreateFileDTO {
         base64File: string;
         fileMimeType: string;
         fileType: constEnumType<typeof FileType>;
+        name: string;
     };
 }

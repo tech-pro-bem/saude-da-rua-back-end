@@ -108,6 +108,8 @@ model File {
   fileType FileType
   url      String
 
+  name String
+
   createdAt DateTime @default(now())
 
   @@map("files")
