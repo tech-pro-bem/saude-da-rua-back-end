@@ -20,12 +20,13 @@ export class CreateMedicinesUseCase implements ICreateMedicinesUseCase {
 
         const medicines: Medicine[] = [];
 
-        const { CEP, cellPhoneWithDDD, email, fullName, state } =
+        const { CEP, cellPhoneWithDDD, email, fullName, state, address } =
             createMedicinesRequestDTO;
 
         createMedicinesRequestDTO.medicines.forEach((medicine) => {
             medicines.push(
                 new Medicine({
+                    address,
                     cellPhoneWithDDD,
                     CEP,
                     email,

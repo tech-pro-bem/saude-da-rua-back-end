@@ -12,9 +12,11 @@ export class CreateMedicinesValidation {
 
     fullName = Joi.string().min(3).max(120).required();
 
+    address = Joi.string().min(1).max(240).required();
+
     CEP = Joi.string()
-        .pattern(/[0-9]{5}-?[0-9]{3}/)
-        .required(); // 01310-100 or 01310100
+        .pattern(/[0-9]{5}-?[0-9]{3}/) // 01310-100 or 01310100
+        .required();
 
     state = Joi.string().max(2).required();
 
@@ -49,6 +51,7 @@ export class CreateMedicinesValidation {
             const createMedicinesValidation: ObjectSchema = Joi.object().keys({
                 id: this.id,
                 fullName: this.fullName,
+                address: this.address,
                 CEP: this.CEP,
                 state: this.state,
                 cellPhoneWithDDD: this.cellPhoneWithDDD,

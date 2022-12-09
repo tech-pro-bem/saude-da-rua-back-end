@@ -3,6 +3,7 @@ import { v4 as uuidV4 } from 'uuid';
 export type MedicineProps = {
     id?: string;
     fullName: string;
+    address: string;
     CEP: string;
     state: string;
     cellPhoneWithDDD: string;
@@ -31,6 +32,8 @@ export class Medicine {
     id: string;
 
     fullName: string;
+
+    address: string;
 
     CEP: string;
 

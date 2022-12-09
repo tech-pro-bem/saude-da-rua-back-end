@@ -1,5 +1,6 @@
 export type CreateMedicinesRequestDTO = {
     fullName: string;
+    address: string;
     CEP: string;
     state: string;
     cellPhoneWithDDD: string;
