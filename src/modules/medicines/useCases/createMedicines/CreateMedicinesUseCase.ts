@@ -20,7 +20,7 @@ export class CreateMedicinesUseCase implements ICreateMedicinesUseCase {
 
         const medicines: Medicine[] = [];
 
-        const { CEP, cellPhoneWithDDD, email, fullName, state, address } =
+        const { CEP, cellPhoneWithDDD, email, fullName, state, address, city } =
             createMedicinesRequestDTO;
 
         createMedicinesRequestDTO.medicines.forEach((medicine) => {
@@ -30,6 +30,7 @@ export class CreateMedicinesUseCase implements ICreateMedicinesUseCase {
                     cellPhoneWithDDD,
                     CEP,
                     email,
+                    city,
                     fullName,
                     state,
                     ...medicine,

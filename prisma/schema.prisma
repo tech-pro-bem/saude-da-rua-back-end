@@ -136,6 +136,7 @@ model Medicine {
 
   fullName           String
   address            String
+  city               String
   CEP                String
   state              String
   cellPhoneWithDDD   String
