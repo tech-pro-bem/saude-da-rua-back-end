@@ -3,12 +3,11 @@ export type CreateMedicinesRequestDTO = {
     address: string;
     CEP: string;
     city: string;
-    state: string;
     cellPhoneWithDDD: string;
     email: string;
     medicines: {
         medicineName: string;
-        milligrams: number;
+        milligrams: string;
         quantity: number;
         expirationDate: Date;
         pharmaceuticalForm: string;

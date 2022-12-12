@@ -6,11 +6,10 @@ export type MedicineProps = {
     address: string;
     city: string;
     CEP: string;
-    state: string;
     cellPhoneWithDDD: string;
     email: string;
     medicineName: string;
-    milligrams: number;
+    milligrams: string;
     quantity: number;
     expirationDate: Date;
     pharmaceuticalForm: string;
@@ -40,15 +39,13 @@ export class Medicine {
 
     CEP: string;
 
-    state: string;
-
     cellPhoneWithDDD: string;
 
     email: string;
 
     medicineName: string;
 
-    milligrams: number;
+    milligrams: string;
 
     quantity: number;
 

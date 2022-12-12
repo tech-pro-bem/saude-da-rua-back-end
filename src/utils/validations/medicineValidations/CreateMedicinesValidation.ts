@@ -20,8 +20,6 @@ export class CreateMedicinesValidation {
         .pattern(/[0-9]{5}-?[0-9]{3}/) // 01310-100 or 01310100
         .required();
 
-    state = Joi.string().max(2).required();
-
     cellPhoneWithDDD = Joi.string()
         .pattern(/^\([1-9]{2}\) 9[1-9][0-9]{3}-[0-9]{4}$/, '(xx) 9xxxx-xxxx')
         .required();
@@ -32,7 +30,7 @@ export class CreateMedicinesValidation {
         .max(20)
         .items({
             medicineName: Joi.string().max(60).required(),
-            milligrams: Joi.number().required(),
+            milligrams: Joi.string().max(240).required(),
             quantity: Joi.number().required(),
             expirationDate: Joi.date().required(),
             pharmaceuticalForm: Joi.string().required(),
@@ -56,7 +54,6 @@ export class CreateMedicinesValidation {
                 address: this.address,
                 CEP: this.CEP,
                 city: this.city,
-                state: this.state,
                 cellPhoneWithDDD: this.cellPhoneWithDDD,
                 email: this.email,
                 medicines: this.medicines,

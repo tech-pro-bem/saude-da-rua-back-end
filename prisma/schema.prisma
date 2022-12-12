@@ -138,11 +138,10 @@ model Medicine {
   address            String
   city               String
   CEP                String
-  state              String
   cellPhoneWithDDD   String
   email              String
   medicineName       String
-  milligrams         Int
+  milligrams         String
   quantity           Int
   expirationDate     DateTime
   pharmaceuticalForm String
