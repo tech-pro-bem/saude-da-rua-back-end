@@ -15,6 +15,11 @@ export class GetMedicineUseCase implements IGetMedicineUseCase {
 
         if (!medicine) throw new NotFoundError('medicine not found');
 
+        // TODO: This should be moved to a separate route, but due to frontend time and resources
+        // It will be in here for now
+        medicine.wasRead = true;
+        await this.medicinesRepository.save(medicine);
+
         return medicine;
     }
 }

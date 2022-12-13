@@ -30,6 +30,24 @@ describe('GetMedicineUseCase', () => {
         expect(medicine.id).toEqual(randomMedicine.id);
     });
 
+    it('should mark the medicine as read', async () => {
+        const randomMedicine = await getRandomMedicine({
+            repository: medicinesRepository,
+            customAttributes: {
+                wasRead: false,
+            },
+        });
+
+        const { id } = await getMedicineUseCase.execute({
+            id: randomMedicine.id,
+        });
+
+        const medicine = await medicinesRepository.getById(id);
+
+        expect(medicine?.wasRead).not.toBeUndefined();
+        expect(medicine?.wasRead).toEqual(true);
+    });
+
     it("shouldn't be able to get a medicine that doesnt exists", async () => {
         await expect(async () => {
             await getMedicineUseCase.execute({ id: randomUUID() });
