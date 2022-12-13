@@ -1,44 +1,47 @@
 import { randomUUID } from 'crypto';
+import {
+    IUpdateVolunteerUseCase,
+    UpdateVolunteerUseCase,
+} from '../../src/modules/volunteers/useCases/updateVolunteer/UpdateVolunteerUseCase';
 import { InMemoryVolunteersRepository } from '../../src/modules/volunteers/repositories/implementations/inmemory/InMemoryVolunteersRepository';
 import { IVolunteersRepository } from '../../src/modules/volunteers/repositories/IVolunteersRepository';
-import {
-    IUpdateCurrentlyParticipationUseCase,
-    UpdateCurrentlyParticipationUseCase,
-} from '../../src/modules/volunteers/useCases/updateCurrentlyParticipation/UpdateCurrentlyParticipationUseCase';
 import { getRandomVolunteer } from '../helpers/GenerateDataForTests';
 import { NotFoundError } from '../../src/helpers/errors';
 
 let volunteersRepository: IVolunteersRepository;
-let updateCurrentlyParticipationUseCase: IUpdateCurrentlyParticipationUseCase;
-describe('UpdateCurrentlyParticipation', () => {
+let updateVolunteerUseCase: IUpdateVolunteerUseCase;
+describe('UpdateVolunteer', () => {
     beforeEach(() => {
         volunteersRepository = new InMemoryVolunteersRepository();
-        updateCurrentlyParticipationUseCase =
-            new UpdateCurrentlyParticipationUseCase(volunteersRepository);
+        updateVolunteerUseCase = new UpdateVolunteerUseCase(
+            volunteersRepository
+        );
     });
 
-    it('should be able to update a volunteer currently participation', async () => {
+    it('should be able to update a volunteer', async () => {
         const volunteer = await getRandomVolunteer({
             repository: volunteersRepository,
         });
 
-        await updateCurrentlyParticipationUseCase.execute({
+        await updateVolunteerUseCase.execute({
             id: volunteer.id,
-            currentlyParticipation: false,
+            fullName: 'test test',
+            email: 'test@test.com',
         });
 
         const updatedVolunteer = await volunteersRepository.getVolunteer(
-            volunteer.email
+            'test@test.com'
         );
 
-        expect(updatedVolunteer.isCurrentlyParticipating).toEqual(false);
+        expect(updatedVolunteer).not.toBeNull();
+        expect(updatedVolunteer.fullName).toEqual('test test');
+        expect(updatedVolunteer.email).toEqual('test@test.com');
     });
 
-    it("shouldn't be able to update a currently participation of a volunteer that doesn't exists", async () => {
+    it("shouldn't be able to update a volunteer that doesn't exists", async () => {
         await expect(async () => {
-            await updateCurrentlyParticipationUseCase.execute({
+            await updateVolunteerUseCase.execute({
                 id: randomUUID(),
-                currentlyParticipation: false,
             });
         }).rejects.toEqual(new NotFoundError('Volunteer not found'));
     });

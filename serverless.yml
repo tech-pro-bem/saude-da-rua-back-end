@@ -233,12 +233,12 @@ functions:
                   method: GET
                   authorizer:
                       name: jwtAuthenticationLambda
-    updateCurrentlyParticipation:
-        name: update-currently-participation
-        handler: src/infra/lambda/handlers/UpdateCurrentlyParticipation.main
+    updateVolunteer:
+        name: update-volunteer
+        handler: src/infra/lambda/handlers/UpdateVolunteer.main
         events:
             - httpApi:
-                  path: /volunteers/{id}/participation
+                  path: /volunteers/{id}
                   method: PATCH
                   authorizer:
                       name: jwtAuthenticationLambda
