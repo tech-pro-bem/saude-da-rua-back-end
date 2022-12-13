@@ -16,6 +16,8 @@ export class CreateMedicinesValidation {
 
     city = Joi.string().min(1).max(240).required();
 
+    state = Joi.string().max(1).max(240).required();
+
     CEP = Joi.string()
         .pattern(/[0-9]{5}-?[0-9]{3}/) // 01310-100 or 01310100
         .required();
@@ -54,6 +56,7 @@ export class CreateMedicinesValidation {
                 address: this.address,
                 CEP: this.CEP,
                 city: this.city,
+                state: this.state,
                 cellPhoneWithDDD: this.cellPhoneWithDDD,
                 email: this.email,
                 medicines: this.medicines,
