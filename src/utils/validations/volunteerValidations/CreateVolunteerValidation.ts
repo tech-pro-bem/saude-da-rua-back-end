@@ -87,6 +87,8 @@ export class CreateVolunteerValidation {
         .max(80)
         .required();
 
+    private observations: StringSchema = Joi.string().min(1).max(255);
+
     constructor(body: BodyBeforeValidate) {
         this.body = body;
     }
@@ -104,6 +106,7 @@ export class CreateVolunteerValidation {
                 occupation: this.occupation,
                 university: this.university,
                 semester: this.semester,
+                observations: this.observations,
                 speciality: this.speciality,
                 listFreeDaysOfWeek: this.listFreeDaysOfWeek,
                 timeOfExperience: this.timeOfExperience,

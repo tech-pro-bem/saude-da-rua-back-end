@@ -17,6 +17,7 @@ type ICreateVolunteerRequestDTO = {
     speciality?: string;
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
+    observations?: string;
     howMuchParticipate: constEnumType<typeof howMuchParticipate>;
     howDidKnowOfSDR: string;
 };

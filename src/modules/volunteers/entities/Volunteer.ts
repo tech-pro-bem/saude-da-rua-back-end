@@ -105,6 +105,7 @@ type VolunteerProps = {
     university?: string;
     semester?: constEnumType<typeof semester>;
     speciality?: string;
+    observations?: string;
     listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
     timeOfExperience?: string;
     howMuchParticipate: constEnumType<typeof howMuchParticipate>;
@@ -151,6 +152,8 @@ class Volunteer {
     public numberOfFreeDaysOfWeek: number;
 
     public timeOfExperience?: string;
+
+    public observations?: string;
 
     public howMuchParticipate: constEnumType<typeof howMuchParticipate>;
 

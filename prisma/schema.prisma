@@ -73,6 +73,7 @@ model Volunteer {
   isCurrentlyParticipating Boolean
   howDidKnowOfSDR          String
   verifiedEmail            Boolean
+  observations             String?
   timeOfExperience         String?
   speciality               String?
 

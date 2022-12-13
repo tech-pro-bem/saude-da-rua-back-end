@@ -76,6 +76,8 @@ export class UpdateVolunteerValidation {
 
     private isCurrentlyParticipating: BooleanSchema = Joi.boolean();
 
+    private observations: StringSchema = Joi.string().min(1).max(255);
+
     constructor(data: data) {
         this.data = data;
     }
@@ -100,6 +102,7 @@ export class UpdateVolunteerValidation {
                         timeOfExperience: this.timeOfExperience,
                         howMuchParticipate: this.howMuchParticipate,
                         howDidKnowOfSDR: this.howDidKnowOfSDR,
+                        observations: this.observations,
                         currentlyParticipation: this.currentlyParticipation,
                         isCurrentlyParticipating: this.isCurrentlyParticipating,
                     })
