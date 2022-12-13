@@ -5,6 +5,7 @@ export type MedicineProps = {
     fullName: string;
     address: string;
     city: string;
+    state: string;
     CEP: string;
     cellPhoneWithDDD: string;
     email: string;
@@ -36,6 +37,8 @@ export class Medicine {
     address: string;
 
     city: string;
+
+    state: string;
 
     CEP: string;
 

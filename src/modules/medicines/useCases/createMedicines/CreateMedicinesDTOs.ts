@@ -5,6 +5,7 @@ export type CreateMedicinesRequestDTO = {
     city: string;
     cellPhoneWithDDD: string;
     email: string;
+    state: string;
     medicines: {
         medicineName: string;
         milligrams: string;
