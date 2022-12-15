@@ -93,13 +93,15 @@ export class PrismaVolunteersRepository
     async getVolunteers({
         limit,
         page,
-        searchTerm
+        searchTerm,
     }: GetVolunteersInput): Promise<[number, Volunteer[]]> {
-        const parsedPage = page || 0
-        const parsedLimit = limit || 20
-        const occupationKey = Object.keys(occupation).find(key => key.toLowerCase().includes(searchTerm?.toLowerCase()))
-    
-        const listOfVolunteers =  this.prisma.volunteer.findMany({
+        const parsedPage = page || 0;
+        const parsedLimit = limit || 20;
+        const occupationKey = Object.keys(occupation).find((key) =>
+            key.toLowerCase().includes(searchTerm?.toLowerCase())
+        );
+
+        const listOfVolunteers = this.prisma.volunteer.findMany({
             orderBy: [
                 {
                     isCurrentlyParticipating: 'desc',
@@ -107,26 +109,32 @@ export class PrismaVolunteersRepository
                 {
                     createdAt: 'desc',
                 },
-              ],
+            ],
             take: parsedLimit,
             skip: parsedPage * parsedLimit,
             where: {
                 email: {
                     contains: '@',
                 },
-                ...searchTerm && {
-                    OR: [ 
+                ...(searchTerm && {
+                    OR: [
                         {
-                            fullName: { contains: searchTerm, mode: 'insensitive' },
+                            fullName: {
+                                contains: searchTerm,
+                                mode: 'insensitive',
+                            },
                         },
                         {
-                            email: { contains: searchTerm, mode: 'insensitive' },
+                            email: {
+                                contains: searchTerm,
+                                mode: 'insensitive',
+                            },
                         },
                         {
                             occupation: occupationKey as unknown as Occupation,
-                        }
-                    ]
-                }
+                        },
+                    ],
+                }),
             },
         });
 
@@ -136,29 +144,34 @@ export class PrismaVolunteersRepository
                     email: {
                         contains: '@',
                     },
-                    ...searchTerm && {
-                        OR: [ 
+                    ...(searchTerm && {
+                        OR: [
                             {
-                                fullName: { contains: searchTerm, mode: 'insensitive' },
+                                fullName: {
+                                    contains: searchTerm,
+                                    mode: 'insensitive',
+                                },
                             },
                             {
-                                email: { contains: searchTerm, mode: 'insensitive' },
+                                email: {
+                                    contains: searchTerm,
+                                    mode: 'insensitive',
+                                },
                             },
                             {
-                                occupation: occupationKey as unknown as Occupation,
-                            }
-                        ]
-                    }
+                                occupation:
+                                    occupationKey as unknown as Occupation,
+                            },
+                        ],
+                    }),
                 },
             }),
-            listOfVolunteers
-          ])
-        const count = results[0]
+            listOfVolunteers,
+        ]);
+        const count = results[0];
         const volunteers = results[1].map(
             (volunteer) => new Volunteer(volunteer)
-        )
+        );
         return [count, volunteers];
-
-        
     }
 }

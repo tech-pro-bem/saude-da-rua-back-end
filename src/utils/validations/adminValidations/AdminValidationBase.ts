@@ -3,11 +3,7 @@ import Joi, { ObjectSchema, StringSchema } from 'joi';
 class AdminValidationBase {
     private emailJoiSchema: StringSchema = Joi.string()
         .pattern(/^\w+([.\-_]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-        .email({
-            tlds: {
-                allow: ['com', 'br', 'net'],
-            },
-        })
+        .email()
         .lowercase()
         .required();
 

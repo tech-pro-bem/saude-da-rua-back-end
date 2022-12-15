@@ -8,17 +8,15 @@ type queryStringBeforeValidate = {
 export class GetVolunteersValidation {
     private queryStringParameters: queryStringBeforeValidate;
 
-    private page: NumberSchema =  Joi.number()
-        .integer()
+    private page: NumberSchema = Joi.number().integer();
 
     private limit: NumberSchema = Joi.number()
         .integer()
         .positive()
         .min(1)
-        .max(100)
+        .max(100);
 
-    private searchTerm: StringSchema = Joi.string()
-
+    private searchTerm: StringSchema = Joi.string();
 
     constructor(queryString: queryStringBeforeValidate) {
         this.queryStringParameters = queryString;
@@ -29,7 +27,7 @@ export class GetVolunteersValidation {
             const getVolunteersValidation: ObjectSchema = Joi.object().keys({
                 page: this.page,
                 limit: this.limit,
-                searchTerm: this.searchTerm
+                searchTerm: this.searchTerm,
             });
 
             const validatedPayload =
