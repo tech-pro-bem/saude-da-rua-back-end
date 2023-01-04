@@ -103,6 +103,7 @@ type VolunteerProps = {
     cellphoneNumberWithDDD: string;
     occupation: constEnumType<typeof occupation>;
     university?: string;
+    course?: string;
     semester?: constEnumType<typeof semester>;
     speciality?: string;
     observations?: string;
@@ -146,6 +147,8 @@ class Volunteer {
     public semester?: constEnumType<typeof semester>;
 
     public speciality?: string;
+
+    public course?: string;
 
     public listFreeDaysOfWeek: Array<constEnumType<typeof freeDaysOfWeek>>;
 

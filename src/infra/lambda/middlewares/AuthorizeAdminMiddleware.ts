@@ -1,5 +1,5 @@
 import { AuthorizationError } from '../../../helpers/errors';
-import { AdminPermissionLevels } from '../../../modules/admins/entities/Admin'
+import { AdminPermissionLevels } from '../../../modules/admins/entities/Admin';
 
 class AuthorizeAdminMiddleware {
     private subToAuthorize: string;
@@ -9,10 +9,13 @@ class AuthorizeAdminMiddleware {
     }
 
     public authorize = (): void => {
-        const adminPermissionLevel: string = AdminPermissionLevels.Admin
+        const adminPermissionLevel: string = AdminPermissionLevels.Admin;
 
         // TODO remove this when the permissions are updated in the database
-        if (this.subToAuthorize !== adminPermissionLevel && this.subToAuthorize !== "0d39d2b19ff1484b4ab06ef219463d55" ) {
+        if (
+            this.subToAuthorize !== adminPermissionLevel &&
+            this.subToAuthorize !== '0d39d2b19ff1484b4ab06ef219463d55'
+        ) {
             throw new AuthorizationError(
                 'This Admin account does not have access to this feature'
             );

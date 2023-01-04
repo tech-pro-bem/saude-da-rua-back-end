@@ -69,6 +69,7 @@ model Volunteer {
   semester                 Semester? // enum
   listFreeDaysOfWeek       FreeDaysOfWeek[] // enum
   numberOfFreeDaysOfWeek   Int
+  course                   String?
   howMuchParticipate       HowMuchParticipate // enum
   isCurrentlyParticipating Boolean
   howDidKnowOfSDR          String

@@ -57,6 +57,13 @@ export class CreateVolunteerValidation {
         .trim()
         .required();
 
+    private course = Joi.string()
+        .required()
+        .when('occupation', {
+            is: Joi.equal('ESTUDANTE'),
+            otherwise: Joi.forbidden(),
+        });
+
     private university: StringSchema = Joi.string().trim().allow('');
 
     private semester: StringSchema = Joi.string()
@@ -106,6 +113,7 @@ export class CreateVolunteerValidation {
                 occupation: this.occupation,
                 university: this.university,
                 semester: this.semester,
+                course: this.course,
                 observations: this.observations,
                 speciality: this.speciality,
                 listFreeDaysOfWeek: this.listFreeDaysOfWeek,
